@@ -1,0 +1,8 @@
+rule sumbmission_check_1 {
+	when {
+		o : order o.Items[0].AccountingSplits.length > 0;
+	}
+	then{
+		console.log('found multiple accounting splits');
+	}
+}
