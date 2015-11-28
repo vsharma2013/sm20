@@ -1,17 +1,18 @@
 var nools = require('nools');
-var order = require('./order');
+var oe = require('./orderEntities');
 
 
 var flow = nools.compile("orderFlow.nools", {
     define: {
-        order: order
+        item : oe.item
     }
 });
 
 var session = flow.getSession();
 
-session.assert(order);
-
+oe.defaultOrder.Items.forEach(function(item){
+	session.assert(new oe.item(item));
+});
 
 session.match(function(err){
     if(err){

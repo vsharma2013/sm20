@@ -1,8 +1,26 @@
+function checkItemAccSplitsForDepAndCC(item){
+	var cnt = item.AccountingSplits.length;
+	if(cnt > 1){
+		var first = {
+			cc : item.AccountingSplits[0].CostCenter,
+			dep : item.AccountingSplits[0].Department
+		};
+		for(var i = 1 ; i < cnt; i++){
+			if(first.cc !== item.AccountingSplits[i].CostCenter  ||  first.dep !== item.AccountingSplits[i].Department)
+				return false;
+		}
+		return true;
+	}
+	return false;
+}
+
+
+
 rule sumbmission_check_1 {
 	when {
-		o : order o.Items[0].AccountingSplits.length > 0;
+		i : item checkItemAccSplitsForDepAndCC(i);
 	}
 	then{
-		console.log('found multiple accounting splits');
+		console.log('Item \"%s\" account split have same cost center & department, executing GEP consolidator.', i.Name);
 	}
 }

@@ -1,4 +1,46 @@
-module.exports = {
+function order(o){
+  this.Id            =  o.Id,
+  this.PartnerId     =  o.PartnerId,
+  this.CreatedOn     =  o.CreatedOn,
+  this.CreatedBy     =  o.CreatedBy, 
+  this.Currency      =  o.Currency, 
+  this.PaymentTerm   =  o.PaymentTerm, 
+  this.BusinessUnit  =  o.BusinessUnit, 
+  this.Number        =  o.Number, 
+  this.Name          =  o.Name, 
+  this.Items         =  o.Items
+}
+
+function item(o){
+  this.Id                =  o.Id,
+  this.SortOrder         =  o.SortOrder,
+  this.Name              =  o.Name,
+  this.UnitPrice         =  o.UnitPrice, 
+  this.Taxes             =  o.Taxes, 
+  this.Shipping          =  o.Shipping, 
+  this.OtherCharges      =  o.OtherCharges, 
+  this.Quantity          =  o.Quantity, 
+  this.UOM               =  o.UOM, 
+  this.Partner           =  o.Partner,
+  this.Manufacturer      =  o.Manufacturer, 
+  this.Contracted        =  o.Contracted, 
+  this.ContractedPrice   =  o.ContractedPrice, 
+  this.SplitType         =  o.SplitType,
+  this.AccountingSplits  =  o.AccountingSplits  
+}
+
+function accountSplit(o){
+  this.Id            =  o.Id,
+  this.SortOrder     =  o.SortOrder,
+  this.SplitValue    =  o.SplitValue,
+  this.Project       =  o.Project, 
+  this.CostCenter    =  o.CostCenter, 
+  this.LegalEntity   =  o.LegalEntity, 
+  this.Department    =  o.Department
+}
+
+
+var defaultOrder = {
   "Id": 1,
   "PartnerId": 1,
   "CreatedOn": "2015-11-11",
@@ -110,4 +152,11 @@ module.exports = {
       "Department": "A-0000011" 
     }]
   }]
+}
+
+module.exports = {
+  order : order,
+  item : item,
+  accountSplit : accountSplit,
+  defaultOrder : defaultOrder
 }
