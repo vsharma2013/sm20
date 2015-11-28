@@ -1,3 +1,15 @@
+
+rule sumbmission_check_1 {
+	when {
+		i : item checkItemAccSplitsForDepAndCC(i);
+	}
+	then{
+		console.log('Item \"%s\" account splits have same cost center & department, executing GEP consolidator.', i.Name);
+	}
+}
+
+
+
 function checkItemAccSplitsForDepAndCC(item){
 	var cnt = item.AccountingSplits.length;
 	if(cnt > 1){
@@ -12,15 +24,4 @@ function checkItemAccSplitsForDepAndCC(item){
 		return true;
 	}
 	return false;
-}
-
-
-
-rule sumbmission_check_1 {
-	when {
-		i : item checkItemAccSplitsForDepAndCC(i);
-	}
-	then{
-		console.log('Item \"%s\" account split have same cost center & department, executing GEP consolidator.', i.Name);
-	}
 }
