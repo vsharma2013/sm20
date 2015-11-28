@@ -8,6 +8,14 @@ rule sumbmission_check_1 {
 	}
 }
 
+rule sumbmission_check_2 {
+	when {
+		i : item checkItemAccSplitsForEmptyProjectCostCenterAndLegalEntity(i, ['CC1', 'CC100', 'CC10000'], ['A', 'B', 'C']);
+	}
+	then{
+	}
+}
+
 
 
 function checkItemAccSplitsForDepAndCC(item){
@@ -23,5 +31,17 @@ function checkItemAccSplitsForDepAndCC(item){
 		}
 		return true;
 	}
+	return false;
+}
+
+function checkItemAccSplitsForEmptyProjectCostCenterAndLegalEntity(item, arrCC, arrLE){
+	var arrAccSplitIds = [];
+	item.AccountingSplits.forEach(function(as){
+		if(as.Project.length === 0 && arrCC.indexOf(as.CostCenter) !== -1 && arrLE.indexOf(as.LegalEntity[0]) !== -1)
+			arrAccSplitIds.push(as.Id);
+	});
+	if(arrAccSplitIds.length > 0)
+		console.log('Empty project, cost center and legal entity validation error or for item Id : %s and account split Ids : %s', item.Id, arrAccSplitIds.join(','));
+	
 	return false;
 }
