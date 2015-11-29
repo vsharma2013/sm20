@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nools": "^0.4.1"
+    "nools": "^0.4.1",
+    "underscore": "^1.8.3"
   }
 }

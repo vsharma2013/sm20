@@ -4,7 +4,7 @@ rule sumbmission_check_1 {
 		i : item checkItemAccSplitsForDepAndCC(i);
 	}
 	then{
-		console.log('Item \"%s\" account splits have same cost center & department, executing GEP consolidator.', i.Name);
+		console.log('Item \"%s\" account splits have same cost center & department, executing GEP consolidator.\n', i.Name);
 	}
 }
 
@@ -16,6 +16,31 @@ rule sumbmission_check_2 {
 	}
 }
 
+rule approval_check{
+	when {
+		i : item checkContractedItemApprovalForUnitPriceVsContractedPrice(i);
+	}
+	then{
+		console.log('Approval rejected for item \"%s\" as its Unit Price > Contrated price\n', i.Name);
+	}
+}
+
+rule send_approval_department_manager{
+	when {
+		i : item sendApprovalToDepartmentManager(i);
+	}
+	then{
+	}
+}
+
+rule send_approval_distinct_costcenters{
+	when{
+		i : item sendApprovalToDistinctCostCenters(i);
+	}
+	then{
+
+	}
+}
 
 
 function checkItemAccSplitsForDepAndCC(item){
@@ -41,7 +66,25 @@ function checkItemAccSplitsForEmptyProjectCostCenterAndLegalEntity(item, arrCC, 
 			arrAccSplitIds.push(as.Id);
 	});
 	if(arrAccSplitIds.length > 0)
-		console.log('Empty project, cost center and legal entity validation error or for item Id : %s and account split Ids : %s', item.Id, arrAccSplitIds.join(','));
+		console.log('Empty project, cost center and legal entity validation error or for item Id : %s and account split Ids : %s\n', item.Id, arrAccSplitIds.join(','));
 	
 	return false;
+}
+
+function checkContractedItemApprovalForUnitPriceVsContractedPrice(item){
+	if(item.Contracted && item.UnitPrice && item.ContractedPrice){
+		return item.Contracted && (item.UnitPrice > item.ContractedPrice);
+	}
+	return false;
+}
+
+function sendApprovalToDepartmentManager(item){
+	var managerSorted = _.sortBy(item.AccountingSplits, function(as) { return as.SortOrder;});
+	console.log('Sending approval to manager of department : %s    for item : \"%s\" \n', managerSorted[0].Department, item.Name);
+}
+
+function sendApprovalToDistinctCostCenters(item){
+	var allCC = _.pluck(item.AccountingSplits, 'CostCenter');
+	var distinctCC = _.uniq(allCC);
+	console.log('Sending approval for item : \"%s\" to distinct cost centers : %s\n', item.Name, distinctCC.join(','));
 }
