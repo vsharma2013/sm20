@@ -58,6 +58,15 @@ rule send_approval_contact_manager_group {
 	}
 }
 
+rule send_approval_adhoc_cc_group{
+	when {
+		o : order sendApprovalToAdhocCCGroup(o);
+	}
+	then{
+		console.log('There exists a cost center \"CC10\"" and a contracted item on order id : %s, sending approal to ad-hoc cost center group\n', o.Id);
+	}
+}
+
 function checkItemAccSplitsForDepAndCC(item){
 	var cnt = item.AccountingSplits.length;
 	if(cnt > 1){
@@ -144,4 +153,22 @@ function sendApprovalToContactManagerGroup(order){
 		}
 	}
 	return hasNoCC1;
+}
+
+function sendApprovalToAdhocCCGroup(order){
+	var hasContractedItem = false;
+	var hasCC10 = false;
+	for(var i = 0 ; i < order.Items.length; i++){
+		var item = order.Items[i];
+		if(item.Contracted && !hasContractedItem)
+			hasContractedItem = true;
+
+		for(var j = 0 ; j < item.AccountingSplits.length; j++){
+			var accSplit = item.AccountingSplits[j];
+			if(accSplit.CostCenter === 'CC10' && !hasCC10){
+				hasCC10 = true;
+			}
+		}
+	}
+	return hasContractedItem && hasCC10;
 }
