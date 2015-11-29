@@ -86,5 +86,6 @@ function sendApprovalToDepartmentManager(item){
 function sendApprovalToDistinctCostCenters(item){
 	var allCC = _.pluck(item.AccountingSplits, 'CostCenter');
 	var distinctCC = _.uniq(allCC);
-	console.log('Sending approval for item : \"%s\" to distinct cost centers : %s\n', item.Name, distinctCC.join(','));
+	console.log('Sending approval to distinct cost centers : \"%s\"   for item : \"%s\"\n', distinctCC.join(','), item.Name );
 }
+
