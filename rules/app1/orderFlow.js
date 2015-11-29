@@ -6,6 +6,7 @@ var oe = require('./orderEntities');
 
 var flow = nools.compile("orderFlow.nools", {
     define: {
+    	order : oe.order,
         item : oe.item,
         _ : _
     }
@@ -29,7 +30,13 @@ function runItemRules(){
 	oe.defaultOrder.Items.forEach(function(item){
 		session.assert(new oe.item(item));
 	});
-	runMatch(runAllComplete)
+	runMatch(runOrderRules);
+}
+
+function runOrderRules(){
+	session.dispose();
+	session.assert(new oe.order(oe.defaultOrder));
+	runMatch(runAllComplete);
 }
 
 function runAllComplete(){

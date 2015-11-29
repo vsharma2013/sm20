@@ -38,10 +38,16 @@ rule send_approval_distinct_costcenters{
 		i : item sendApprovalToDistinctCostCenters(i);
 	}
 	then{
-
 	}
 }
 
+rule send_approval_for_total_accounting_split_value {
+	when {
+		o : order sendApprovalForTotalAccountingSplitValue(o);
+	}
+	then{
+	}
+}
 
 function checkItemAccSplitsForDepAndCC(item){
 	var cnt = item.AccountingSplits.length;
@@ -89,3 +95,29 @@ function sendApprovalToDistinctCostCenters(item){
 	console.log('Sending approval to distinct cost centers : \"%s\"   for item : \"%s\"\n', distinctCC.join(','), item.Name );
 }
 
+function sendApprovalForTotalAccountingSplitValue(order){
+	var ccVsTotalAccSplit = {};
+	order.Items.forEach(function(item){
+		item.AccountingSplits.forEach(function(as){
+			if(!ccVsTotalAccSplit[as.CostCenter])
+				ccVsTotalAccSplit[as.CostCenter] = 0;
+
+			var accSplitValue = 0;
+			if(item.SplitType === '#')
+				accSplitValue = (as.SplitValue * item.UnitPrice) + item.Taxes + item.Shipping + item.OtherCharges;
+			else if (item.SplitType === '%')
+				accSplitValue = (((item.Quantity * item.UnitPrice) + item.Taxes + item.Shipping + item.OtherCharges) * as.SplitValue)/100;
+
+			ccVsTotalAccSplit[as.CostCenter] += accSplitValue;
+		});
+	});
+	console.log('Total accounting split for distinct cost centers : %s\n', JSON.stringify(ccVsTotalAccSplit));
+	var ccAccSplitGT50K = [];
+	for(var cc in ccVsTotalAccSplit){
+		if(ccVsTotalAccSplit[cc] > 50000)
+			ccAccSplitGT50K.push(cc);
+	}
+
+	if(ccAccSplitGT50K.length > 0)
+		console.log('Sending approval to cost center auditors as TotalAccountingSplit > 50000 for : \"%s\"\n', ccAccSplitGT50K.join(','));
+}
