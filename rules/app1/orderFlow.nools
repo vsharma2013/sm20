@@ -67,6 +67,15 @@ rule send_approval_adhoc_cc_group{
 	}
 }
 
+rule send_approval_logger_group {
+	when{
+		o : order sendApprovalToLoggerGroup(o);
+	}
+	then{
+		console.log('Order Id : %s either has a non-contracted item or an item with 1 accounting split, sending approval to logger group\n', o.Id);
+	}
+}
+
 function checkItemAccSplitsForDepAndCC(item){
 	var cnt = item.AccountingSplits.length;
 	if(cnt > 1){
@@ -171,4 +180,22 @@ function sendApprovalToAdhocCCGroup(order){
 		}
 	}
 	return hasContractedItem && hasCC10;
+}
+
+function sendApprovalToLoggerGroup(order){
+	var hasNonContractedItem = false;
+	var has1AccSplit = false;
+	for(var i = 0 ; i < order.Items.length; i++){
+		var item = order.Items[i];
+		if(!item.Contracted && !hasNonContractedItem)
+			hasNonContractedItem = true;
+
+		for(var j = 0 ; j < item.AccountingSplits.length; j++){
+			var accSplit = item.AccountingSplits[j];
+			if(accSplit.length === 1 && !has1AccSplit){
+				has1AccSplit = true;
+			}
+		}
+	}
+	return hasNonContractedItem || has1AccSplit;
 }
