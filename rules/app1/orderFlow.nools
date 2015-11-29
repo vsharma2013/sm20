@@ -49,6 +49,15 @@ rule send_approval_for_total_accounting_split_value {
 	}
 }
 
+rule send_approval_contact_manager_group {
+	when {
+		o : order sendApprovalToContactManagerGroup(o);
+	}
+	then{
+		console.log('All the items in order id : %s are contracted with no \"CC1\" as cost center, sending approval to contact manager group\n', o.Id);
+	}
+}
+
 function checkItemAccSplitsForDepAndCC(item){
 	var cnt = item.AccountingSplits.length;
 	if(cnt > 1){
@@ -120,4 +129,19 @@ function sendApprovalForTotalAccountingSplitValue(order){
 
 	if(ccAccSplitGT50K.length > 0)
 		console.log('Sending approval to cost center auditors as TotalAccountingSplit > 50000 for : \"%s\"\n', ccAccSplitGT50K.join(','));
+}
+
+function sendApprovalToContactManagerGroup(order){
+	var hasNoCC1 = true;
+	for(var i = 0 ; i < order.Items.length; i++){
+		if(!order.Items[i].Contracted) return false;
+
+		for(var j = 0; j < order.Items[i].AccountingSplits.length; j++){
+			if(order.Items[i].AccountingSplits[j].CostCenter === 'CC11' && hasNoCC1){
+				hasNoCC1 = false;
+				break;
+			}
+		}
+	}
+	return hasNoCC1;
 }
