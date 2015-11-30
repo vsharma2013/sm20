@@ -8,7 +8,7 @@ function orderFlow(){
 }
 
 orderFlow.prototype.init = function(){
-	this.flow = nools.compile("orderFlow.nools", {
+	var noolsOptions = {
 	    define: {
 	    	order : oe.order,
 	        item : oe.item
@@ -16,7 +16,8 @@ orderFlow.prototype.init = function(){
 	    scope:{
 	        ruleUtils : ruleUtils
 	    }
-	});
+	};
+	this.flow = nools.compile("orderFlow.nools", noolsOptions);
 	this.session = this.flow.getSession();
 }
 
