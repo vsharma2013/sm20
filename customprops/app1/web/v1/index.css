@@ -11,9 +11,17 @@
 	margin-right : 60%;
 }
 
-.primary-container {
+.primary-container, .item-container {
 	border-style: solid;
     border-width: 1px;
     border-color: #ccc;
     border-radius: 5px;
+}
+
+#item-list .list-group-item{
+	cursor: pointer;
+}
+
+.item-container{
+	margin-top : 20px;
 }
