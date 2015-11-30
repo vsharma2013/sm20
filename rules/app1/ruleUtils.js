@@ -127,4 +127,6 @@ ruleUtils.prototype.sendApprovalToLoggerGroup = function(order){
 	}
 	return hasNonContractedItem || has1AccSplit;
 }
+
+
 module.exports = new ruleUtils();
