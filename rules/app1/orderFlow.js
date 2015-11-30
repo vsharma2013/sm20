@@ -1,14 +1,14 @@
 var nools = require('nools');
-var _ = require('underscore');
-
 var oe = require('./orderEntities');
-
+var ruleUtils = require('./ruleUtils');
 
 var flow = nools.compile("orderFlow.nools", {
     define: {
     	order : oe.order,
-        item : oe.item,
-        _ : _
+        item : oe.item
+    },
+    scope:{
+        ruleUtils : ruleUtils
     }
 });
 

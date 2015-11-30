@@ -1,7 +1,7 @@
 
 rule sumbmission_check_1 {
 	when {
-		i : item checkItemAccSplitsForDepAndCC(i);
+		i : item ruleUtils.checkItemAccSplitsForDepAndCC(i);
 	}
 	then{
 		console.log('Item \"%s\" account splits have same cost center & department, executing GEP consolidator.\n', i.Name);
@@ -10,7 +10,7 @@ rule sumbmission_check_1 {
 
 rule sumbmission_check_2 {
 	when {
-		i : item checkItemAccSplitsForEmptyProjectCostCenterAndLegalEntity(i, ['CC1', 'CC100', 'CC10000'], ['A', 'B', 'C']);
+		i : item ruleUtils.checkItemAccSplitsForEmptyProjectCostCenterAndLegalEntity(i, ['CC1', 'CC100', 'CC10000'], ['A', 'B', 'C']);
 	}
 	then{
 	}
@@ -18,7 +18,7 @@ rule sumbmission_check_2 {
 
 rule approval_check{
 	when {
-		i : item checkContractedItemApprovalForUnitPriceVsContractedPrice(i);
+		i : item ruleUtils.checkContractedItemApprovalForUnitPriceVsContractedPrice(i);
 	}
 	then{
 		console.log('Approval rejected for item \"%s\" as its Unit Price > Contrated price\n', i.Name);
@@ -27,7 +27,7 @@ rule approval_check{
 
 rule send_approval_department_manager{
 	when {
-		i : item sendApprovalToDepartmentManager(i);
+		i : item ruleUtils.sendApprovalToDepartmentManager(i);
 	}
 	then{
 	}
@@ -35,7 +35,7 @@ rule send_approval_department_manager{
 
 rule send_approval_distinct_costcenters{
 	when{
-		i : item sendApprovalToDistinctCostCenters(i);
+		i : item ruleUtils.sendApprovalToDistinctCostCenters(i);
 	}
 	then{
 	}
@@ -43,7 +43,7 @@ rule send_approval_distinct_costcenters{
 
 rule send_approval_for_total_accounting_split_value {
 	when {
-		o : order sendApprovalForTotalAccountingSplitValue(o);
+		o : order ruleUtils.sendApprovalForTotalAccountingSplitValue(o);
 	}
 	then{
 	}
@@ -51,7 +51,7 @@ rule send_approval_for_total_accounting_split_value {
 
 rule send_approval_contact_manager_group {
 	when {
-		o : order sendApprovalToContactManagerGroup(o);
+		o : order ruleUtils.sendApprovalToContactManagerGroup(o);
 	}
 	then{
 		console.log('All the items in order id : %s are contracted with no \"CC1\" as cost center, sending approval to contact manager group\n', o.Id);
@@ -60,7 +60,7 @@ rule send_approval_contact_manager_group {
 
 rule send_approval_adhoc_cc_group{
 	when {
-		o : order sendApprovalToAdhocCCGroup(o);
+		o : order ruleUtils.sendApprovalToAdhocCCGroup(o);
 	}
 	then{
 		console.log('There exists a cost center \"CC10\"" and a contracted item on order id : %s, sending approal to ad-hoc cost center group\n', o.Id);
@@ -69,133 +69,10 @@ rule send_approval_adhoc_cc_group{
 
 rule send_approval_logger_group {
 	when{
-		o : order sendApprovalToLoggerGroup(o);
+		o : order ruleUtils.sendApprovalToLoggerGroup(o);
 	}
 	then{
 		console.log('Order Id : %s either has a non-contracted item or an item with 1 accounting split, sending approval to logger group\n', o.Id);
 	}
 }
 
-function checkItemAccSplitsForDepAndCC(item){
-	var cnt = item.AccountingSplits.length;
-	if(cnt > 1){
-		var first = {
-			cc : item.AccountingSplits[0].CostCenter,
-			dep : item.AccountingSplits[0].Department
-		};
-		for(var i = 1 ; i < cnt; i++){
-			if(first.cc !== item.AccountingSplits[i].CostCenter  ||  first.dep !== item.AccountingSplits[i].Department)
-				return false;
-		}
-		return true;
-	}
-	return false;
-}
-
-function checkItemAccSplitsForEmptyProjectCostCenterAndLegalEntity(item, arrCC, arrLE){
-	var arrAccSplitIds = [];
-	item.AccountingSplits.forEach(function(as){
-		if(as.Project.length === 0 && arrCC.indexOf(as.CostCenter) !== -1 && arrLE.indexOf(as.LegalEntity[0]) !== -1)
-			arrAccSplitIds.push(as.Id);
-	});
-	if(arrAccSplitIds.length > 0)
-		console.log('Empty project, cost center and legal entity validation error or for item Id : %s and account split Ids : %s\n', item.Id, arrAccSplitIds.join(','));
-	
-	return false;
-}
-
-function checkContractedItemApprovalForUnitPriceVsContractedPrice(item){
-	if(item.Contracted && item.UnitPrice && item.ContractedPrice){
-		return item.Contracted && (item.UnitPrice > item.ContractedPrice);
-	}
-	return false;
-}
-
-function sendApprovalToDepartmentManager(item){
-	var managerSorted = _.sortBy(item.AccountingSplits, function(as) { return as.SortOrder;});
-	console.log('Sending approval to manager of department : %s    for item : \"%s\" \n', managerSorted[0].Department, item.Name);
-}
-
-function sendApprovalToDistinctCostCenters(item){
-	var allCC = _.pluck(item.AccountingSplits, 'CostCenter');
-	var distinctCC = _.uniq(allCC);
-	console.log('Sending approval to distinct cost centers : \"%s\"   for item : \"%s\"\n', distinctCC.join(','), item.Name );
-}
-
-function sendApprovalForTotalAccountingSplitValue(order){
-	var ccVsTotalAccSplit = {};
-	order.Items.forEach(function(item){
-		item.AccountingSplits.forEach(function(as){
-			if(!ccVsTotalAccSplit[as.CostCenter])
-				ccVsTotalAccSplit[as.CostCenter] = 0;
-
-			var accSplitValue = 0;
-			if(item.SplitType === '#')
-				accSplitValue = (as.SplitValue * item.UnitPrice) + item.Taxes + item.Shipping + item.OtherCharges;
-			else if (item.SplitType === '%')
-				accSplitValue = (((item.Quantity * item.UnitPrice) + item.Taxes + item.Shipping + item.OtherCharges) * as.SplitValue)/100;
-
-			ccVsTotalAccSplit[as.CostCenter] += accSplitValue;
-		});
-	});
-	console.log('Total accounting split for distinct cost centers : %s\n', JSON.stringify(ccVsTotalAccSplit));
-	var ccAccSplitGT50K = [];
-	for(var cc in ccVsTotalAccSplit){
-		if(ccVsTotalAccSplit[cc] > 50000)
-			ccAccSplitGT50K.push(cc);
-	}
-
-	if(ccAccSplitGT50K.length > 0)
-		console.log('Sending approval to cost center auditors as TotalAccountingSplit > 50000 for : \"%s\"\n', ccAccSplitGT50K.join(','));
-}
-
-function sendApprovalToContactManagerGroup(order){
-	var hasNoCC1 = true;
-	for(var i = 0 ; i < order.Items.length; i++){
-		if(!order.Items[i].Contracted) return false;
-
-		for(var j = 0; j < order.Items[i].AccountingSplits.length; j++){
-			if(order.Items[i].AccountingSplits[j].CostCenter === 'CC11' && hasNoCC1){
-				hasNoCC1 = false;
-				break;
-			}
-		}
-	}
-	return hasNoCC1;
-}
-
-function sendApprovalToAdhocCCGroup(order){
-	var hasContractedItem = false;
-	var hasCC10 = false;
-	for(var i = 0 ; i < order.Items.length; i++){
-		var item = order.Items[i];
-		if(item.Contracted && !hasContractedItem)
-			hasContractedItem = true;
-
-		for(var j = 0 ; j < item.AccountingSplits.length; j++){
-			var accSplit = item.AccountingSplits[j];
-			if(accSplit.CostCenter === 'CC10' && !hasCC10){
-				hasCC10 = true;
-			}
-		}
-	}
-	return hasContractedItem && hasCC10;
-}
-
-function sendApprovalToLoggerGroup(order){
-	var hasNonContractedItem = false;
-	var has1AccSplit = false;
-	for(var i = 0 ; i < order.Items.length; i++){
-		var item = order.Items[i];
-		if(!item.Contracted && !hasNonContractedItem)
-			hasNonContractedItem = true;
-
-		for(var j = 0 ; j < item.AccountingSplits.length; j++){
-			var accSplit = item.AccountingSplits[j];
-			if(accSplit.length === 1 && !has1AccSplit){
-				has1AccSplit = true;
-			}
-		}
-	}
-	return hasNonContractedItem || has1AccSplit;
-}
