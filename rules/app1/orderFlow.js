@@ -3,6 +3,7 @@ var oe = require('./orderEntities');
 var ruleUtils = require('./ruleUtils');
 
 function orderFlow(){
+	console.log('\n');
 	this.init();
 }
 
@@ -52,5 +53,4 @@ orderFlow.prototype.runMatch = function(cbOnDone){
 	})
 }
 
-console.log('\n');
 new orderFlow().run();
