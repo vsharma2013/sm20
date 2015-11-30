@@ -3,10 +3,17 @@
 	width: 100%;
 }
 
-.right-container {
+.right-container, .left-container {
 	margin-top: 20px;
 }
 
 .prim-right{
 	margin-right : 60%;
+}
+
+.primary-container {
+	border-style: solid;
+    border-width: 1px;
+    border-color: #ccc;
+    border-radius: 5px;
 }

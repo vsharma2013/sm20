@@ -22,7 +22,17 @@ App.prototype.render = function(){
 }
 
 App.prototype.renderLeftContainer = function(){
+	if(!this.order.Items) return;
+	if(!this.order.Items.length) return;
 
+	var $ul = $('#item-list');
+	for(var i = 0; i < this.order.Items.length; i++){
+	  var $li = $('<li class="list-group-item"></li');
+	  $li.attr('id',  'item' + this.order.Items[i].Id);
+	  $li.text(this.order.Items[i].Name);
+	  $li.appendTo($ul);
+	}
+	$('.list-group-item').first().addClass('active');
 }
 
 App.prototype.renderRightContainer = function(){
