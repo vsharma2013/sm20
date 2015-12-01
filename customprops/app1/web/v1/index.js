@@ -62,8 +62,8 @@ App.prototype.renderItemProps = function(idx){
 
 	var item = this.order.Items[idx];
 	var $itemContainer = $('.item-container');
-	$('.item-container').empty();
-
+	$itemContainer.empty();
+	$('<h4>Item properties</h4>').appendTo($itemContainer);
 	for(var key in item){
 		if(typeof(item[key]) !== 'object'){
 			var html = '<div class="col-md-6"><div class="pull-left">ID_KEY</div><div class="pull-right prim-right">ID_VAL</div></div>';
@@ -71,5 +71,38 @@ App.prototype.renderItemProps = function(idx){
 			$(html).appendTo($itemContainer);
 		}
 	}
+	this.renderAccountSplit(item);
+}
+
+App.prototype.renderAccountSplit = function(item){	
+	var accSplits = item.AccountingSplits;
+	if(!accSplits) return;
+	if(!accSplits.length) return;
+
+	var $itemContainer = $('.item-container');
+	var $table =  $('<div class="acc-split-table"><h4>Accounting splits</h4>'+
+					'<table class="table table-bordered">'+
+				    '<thead><tr></tr></thead>' +
+				    '<tbody></tbody></table></div>');
+	$table.appendTo($itemContainer);
+	var $thead = $('.acc-split-table table thead tr');
+	var $tbody = $('.acc-split-table table tbody');
+	var hAdded = false;
+	accSplits.forEach(function(as){
+		var $tr = $('<tr></tr>');
+		for(var key in as){
+			if(typeof(as[key]) !== 'object'){
+				if(!hAdded){
+					var $h = $('<th>' + key + '</th>');
+					$h.appendTo($thead);
+				}
+				var $td = $('<td>' + as[key] + '</td>');
+				$td.appendTo($tr);				
+			}
+		}
+		$tr.appendTo($tbody);				
+		hAdded = true;
+	})
+	
 }
 
