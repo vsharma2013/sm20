@@ -119,6 +119,22 @@ ApiController.prototype.handleGetOrderRequest = function(req, res){
 	    }]
 	  }]
 	}
+
+	defaultOrder.customProps = [{
+			key : 'order_category',
+			label : 'Category',
+			value : 'OC-2',
+			type : 'ddlist',
+			allValues : ['OC-1', 'OC-2', 'OC-3']
+		},
+		{
+			key : 'order_priority',
+			label : 'Is Urgent',
+			value : 1,
+			type : 'bool',
+			allValues : [0, 1]
+		}
+	];
 	res.json(defaultOrder);
 }
 

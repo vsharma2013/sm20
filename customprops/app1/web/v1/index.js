@@ -1,5 +1,6 @@
 function App(){
 	this.order = null;
+	this.cpMgr = new CustomProps();
 }
 var app = new App();
 
@@ -7,6 +8,10 @@ $(document).ready(function(){
 	app.run();
 })
 
+App.prototype.isEmptyArray = function(arr){
+	if(!arr) return true;
+	if(!arr.length) return true;
+}
 
 App.prototype.run = function(){
 	$.getJSON('/api/order', (function(res){
@@ -22,8 +27,7 @@ App.prototype.render = function(){
 }
 
 App.prototype.renderLeftContainer = function(){
-	if(!this.order.Items) return;
-	if(!this.order.Items.length) return;
+	if(this.isEmptyArray(this.order.Items)) return;
 
 	var self = this;
 	var $ul = $('#item-list');
@@ -54,11 +58,11 @@ App.prototype.renderOrderProps = function(){
 			$(html).appendTo($('.primary-container'));
 		}
 	}
+	this.renderOrderCustomProps();
 }
 
 App.prototype.renderItemProps = function(idx){
-	if(!this.order.Items) return;
-	if(!this.order.Items.length) return;
+	if(this.isEmptyArray(this.order.Items)) return;
 
 	var item = this.order.Items[idx];
 	var $itemContainer = $('.item-container');
@@ -76,8 +80,7 @@ App.prototype.renderItemProps = function(idx){
 
 App.prototype.renderAccountSplit = function(item){	
 	var accSplits = item.AccountingSplits;
-	if(!accSplits) return;
-	if(!accSplits.length) return;
+	if(this.isEmptyArray(accSplits)) return;
 
 	var $itemContainer = $('.item-container');
 	var $table =  $('<div class="acc-split-table"><h4>Accounting splits</h4>'+
@@ -103,6 +106,24 @@ App.prototype.renderAccountSplit = function(item){
 		$tr.appendTo($tbody);				
 		hAdded = true;
 	})
+	
+}
+
+App.prototype.renderOrderCustomProps = function(){
+	var customProps = this.order.customProps;
+	if(this.isEmptyArray(customProps)) return;
+
+	var $container = $('.primary-container');
+	customProps.forEach((function(cProp){
+		var $html = $(this.cpMgr.getHtml(cProp));
+		switch(cProp.type){
+			case 'ddlist' : 
+				$html.addClass('col-md-6');
+				$html.find('span').addClass('pull-left');
+				$html.find('select').addClass('pull-right prim-right');
+		}
+		$html.appendTo($container);
+	}).bind(this));
 	
 }
 
