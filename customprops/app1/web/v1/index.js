@@ -11,6 +11,8 @@ $(document).ready(function(){
 App.prototype.isEmptyArray = function(arr){
 	if(!arr) return true;
 	if(!arr.length) return true;
+
+	return false;
 }
 
 App.prototype.run = function(){
@@ -120,7 +122,22 @@ App.prototype.renderOrderCustomProps = function(){
 			case 'ddlist' : 
 				$html.addClass('col-md-6');
 				$html.find('span').addClass('pull-left');
-				$html.find('select').addClass('pull-right prim-right');
+				var $select = $html.find('select');
+				$select.addClass('pull-right prim-right');
+				$select.val(cProp.value);
+				$select.attr('id', cProp.key);
+				break;
+			case 'bool' : 
+				$html.addClass('col-md-6');
+				cProp.value? $html.find('input').attr('checked', '') : '';
+				$html.find('input').attr('id', cProp.key);
+				break;
+			case 'text' :
+				$html.addClass('col-md-6');
+				$html.find('span').addClass('pull-left');
+				$html.find('input').addClass('pull-right prim-right');
+				$html.find('input').attr('id', cProp.key);
+				break;
 		}
 		$html.appendTo($container);
 	}).bind(this));

@@ -133,6 +133,13 @@ ApiController.prototype.handleGetOrderRequest = function(req, res){
 			value : 1,
 			type : 'bool',
 			allValues : [0, 1]
+		},
+		{
+			key : 'order_comments',
+			label : 'Comments',
+			value : 'Send to marketing',
+			type : 'text',
+			allValues : []
 		}
 	];
 	res.json(defaultOrder);
