@@ -16,7 +16,8 @@ App.prototype.isEmptyArray = function(arr){
 }
 
 App.prototype.run = function(){
-	$.getJSON('/api/order', (function(res){
+	var url = '/api/order' + window.location.search;
+	$.getJSON(url, (function(res){
 		console.log(res);
 		this.order = res;
 		this.render();
@@ -77,6 +78,7 @@ App.prototype.renderItemProps = function(idx){
 			$(html).appendTo($itemContainer);
 		}
 	}
+	this.renderItemCustomProps(item);
 	this.renderAccountSplit(item);
 }
 
@@ -144,3 +146,27 @@ App.prototype.renderOrderCustomProps = function(){
 	
 }
 
+App.prototype.renderItemCustomProps = function(item){
+	var cProps = item.customProps;
+	if(this.isEmptyArray(cProps)) return;
+
+	var $itemContainer = $('.item-container');
+	cProps.forEach((function(cp){
+		var $html = $(this.cpMgr.getHtml(cp));
+		$html.addClass('col-md-6');
+		switch(cp.type){
+			case 'singleoptionlist' : 
+				// $html.find('span').addClass('pull-left');
+				// var $optCont = $html.find('.opt-container');
+				// $optCont.addClass('pull-right prim-right');
+				// $optCont.val(cProp.value);
+				// $optCont.attr('id', cProp.key);
+				break;
+			case 'multivaluelist' : 
+				break;
+			case 'date' : 
+				break;
+		}
+		$html.appendTo($itemContainer);
+	}).bind(this));
+}
