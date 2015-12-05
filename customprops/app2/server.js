@@ -7,6 +7,8 @@ Object.keys(cpSchema).forEach(function(key){
 	arr.push(i);
 	i++
 });
+arr.push(i);
+arr = cpMgr.shuffleArray(arr);
 
 var cProps = [];
 
