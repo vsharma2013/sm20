@@ -6,9 +6,9 @@ var custPropsSchema = {
 		    allValues : ['OC-1', 'OC-2', 'OC-3']
 		},
 		db : {
-			type : 'enum',
-			size : null,
-			allValues : ['OC-1', 'OC-2', 'OC-3']
+			type : 'varchar',
+			size : '(10)',
+			allValues : null
 		}
 	},
 	order_priority :{
@@ -42,9 +42,9 @@ var custPropsSchema = {
 		    allValues : ['daily', 'weekly', 'monthly']
     	},
     	db : {
-    		type : 'enum',
-    		size : null,
-    		allValues : ['daily', 'weekly', 'monthly']
+    		type : 'varchar',
+    		size : '(10)',
+    		allValues : null
     	}
     },
     order_expiry : {
@@ -60,7 +60,5 @@ var custPropsSchema = {
     	}
     }
 }
-
-
 
 module.exports = custPropsSchema;
