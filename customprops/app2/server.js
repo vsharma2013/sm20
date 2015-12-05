@@ -1,21 +1,3 @@
-var cpMgr = require('./customPropsManager');
-var cpSchema = require('./custPropsSchema');
+//require('./orderCollectionCreator');
 
-var arr = [];
-var i = 0;
-Object.keys(cpSchema).forEach(function(key){
-	arr.push(i);
-	i++
-});
-arr.push(i);
-arr = cpMgr.shuffleArray(arr);
-
-var cProps = [];
-
-for(var i = 0 ; i < 1000 ; i++){
-	var cp = cpMgr.getRandomCustomProperties(cpMgr.getRandomItemFromArray(arr));
-	if(cp)
-		cProps.push(cp);
-}
-
-console.log(JSON.stringify(cProps));
+require('./orderCsvCreator');

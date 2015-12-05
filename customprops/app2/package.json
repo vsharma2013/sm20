@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs": "0.0.2",
     "mongodb": "^2.0.49",
     "underscore": "^1.8.3"
   }
