@@ -17,8 +17,11 @@ var HundredK = 100000;
 var OneMillion = HundredK * 10 ;
 var total = 0;
 var j = 1;
+var dtmStart = null;
 
 function add100KOrders(){
+	if(!dtmStart) dtmStart = Date.now();
+		
 	var orders = [];
 	for(var i = 0 ; i < HundredK ; i++){
 		var o = JSON.parse(sOrder);
@@ -43,7 +46,7 @@ function add100KOrders(){
 				return;
 			}
 			total += HundredK;
-			console.log('Added orders successfully count = ' + total);
+			console.log('Added orders successfully count = ' + total + '    t = ' + ((Date.now() - dtmStart)/1000));
 			db.close();
 			if(total < OneMillion)
 				add100KOrders();
