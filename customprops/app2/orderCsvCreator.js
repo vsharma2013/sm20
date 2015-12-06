@@ -1,12 +1,14 @@
 var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/orderdb';
 var cpSchema = require('./custPropsSchema');
-var DO = require('./defaultOrders');
+var itemSchema = require('./itemPropsSchema');
+var orderSchema = require('./orderPropsSchema');
 var fs = require('fs');
 
-var primKeys = Object.keys(DO.order);
+var orderKeys = Object.keys(orderSchema);
+var itemKeys = Object.keys(itemSchema);
 var custKeys = Object.keys(cpSchema);
-var allKeys = primKeys.concat(custKeys);
+var allKeys = orderKeys.concat(itemKeys).concat(custKeys);
 
 var csvs = [];
 
@@ -26,23 +28,33 @@ function createOrdersCsv(cbOnDone){
 	    	else{
 	    		console.log('Read documents successfully count = ' + orders.length);
 	    		for(var i = 0; i < orders.length; i++){
-	    			var vals = [];
-	    			primKeys.forEach(function(pk){
-	    				var v = (typeof(orders[i][pk]) !== 'object') ? orders[i][pk] : '';
-	    				vals.push(v)
-	    			});
-	    			if(orders[i].customProps){
-	    				custKeys.forEach(function(ck){
-	    					var v = orders[i].customProps[ck] ? orders[i].customProps[ck] : '';
-	    					vals.push(v);
+	    			var order = orders[i];
+	    			var oVals = [];
+	    			orderKeys.forEach(function(ok){
+	    				oVals.push(order[ok]);
+	    			});	    			
+	    			for(var j = 0; j < order.Items.length; j++){
+	    				var iVals = [];
+	    				var item = order.Items[j];
+	    				itemKeys.forEach(function(ik){
+	    					var iok = ik.replace('item_', '');
+	    					iVals.push(item[iok]);
 	    				});
+	    				if(order.customProps){
+	    					custKeys.forEach(function(ck){
+	    						var v = order.customProps[ck] ? order.customProps[ck] : '';
+		    					iVals.push(v);
+		    				});
+	    				}
+	    				else{
+	    					custKeys.forEach(function(ck){
+	    						iVals.push('');
+		    				});
+	    				}
+	    				var vals = oVals.concat(iVals);
+	    				//console.log(allKeys.length, vals.length);
+	    				csvs.push(vals.join(','));
 	    			}
-	    			else{
-	    				custKeys.forEach(function(ck){
-	    					vals.push('');
-	    				});
-	    			}
-	    			csvs.push(vals.join(','));
 	    		}
 	    	}                
 	        fs.writeFile('./orders.csv', csvs.join('\n'), function(err, res){

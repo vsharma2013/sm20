@@ -88,17 +88,7 @@ var orderPropsSchema = {
 			size : '(50)',
 			allValues : null
 		}
-	},
-	Items : {
-		ui : {
-
-		},
-		db : {
-			type : 'int',
-			size : '(1)',
-			allValues : null
-		}
-	},
+	}
 }
 
 module.exports = orderPropsSchema;
