@@ -14,7 +14,7 @@ arr.push(i);
 arr = cpMgr.shuffleArray(arr);
 var sOrder = JSON.stringify(DO.order);
 var HundredK = 100000;
-var TenMillion = HundredK * 10 * 10;
+var OneMillion = HundredK * 10 ;
 var total = 0;
 var j = 1;
 
@@ -45,7 +45,7 @@ function add100KOrders(){
 			total += HundredK;
 			console.log('Added orders successfully count = ' + total);
 			db.close();
-			if(total < HundredK)
+			if(total < OneMillion)
 				add100KOrders();
 		});
 	});

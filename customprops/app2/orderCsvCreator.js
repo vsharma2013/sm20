@@ -10,23 +10,34 @@ var itemKeys = Object.keys(itemSchema);
 var custKeys = Object.keys(cpSchema);
 var allKeys = orderKeys.concat(itemKeys).concat(custKeys);
 
-var csvs = [];
+var total = 0;
+var HunderdK = 100000;
+var OneMillion = HunderdK * 10;
+var start = 1;
+var end = HunderdK;
 
-csvs.push(allKeys.join(','));
+var dtmStart = null;
+
+//csvs.push(allKeys.join(','));
 
 function createOrdersCsv(cbOnDone){
+	if(!dtmStart)
+		dtmStart = Date.now();
+
 	mongodb.connect(mongoConnString, function (err, db) {
 	    var query = { 
 	    	Id : {
-	    		$gte : 1,
-	    		$lte : 100000
+	    		$gte : start,
+	    		$lte : end
 	    	} 
 	    };
 	    var res = db.collection('orders2').find(query).toArray(function (err, orders) {
+	    	var csvs = [];
 	    	db.close();
-	    	if(err) console.log(err);
+	    	if(err) 
+	    		console.log(err);
 	    	else{
-	    		console.log('Read documents successfully count = ' + orders.length);
+	    		total += orders.length;
 	    		for(var i = 0; i < orders.length; i++){
 	    			var order = orders[i];
 	    			var oVals = [];
@@ -57,9 +68,16 @@ function createOrdersCsv(cbOnDone){
 	    			}
 	    		}
 	    	}                
-	        fs.writeFile('./orders.csv', csvs.join('\n'), function(err, res){
+	        fs.appendFile('./orders.csv', csvs.join('\n'), function(err, res){
 	        	if(err) console.log(err);
-	        	cbOnDone(true);
+	        	console.log('Added csv records successfully count = ' + total + '    t = ' + ((Date.now() - dtmStart)/1000));
+	        	if(total < OneMillion){
+	        		start = end + 1;
+	        		end += HunderdK;
+	        		createOrdersCsv(cbOnDone);
+	        	}
+	        	else
+	        		cbOnDone(true);
 	        });
 	    });
 	});
