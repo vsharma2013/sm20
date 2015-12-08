@@ -47,7 +47,7 @@ function createOrdersSql(cbOnDone){
 	sql = sqlTableStart+ sqlCols.join(',') + sqlTableEnd;
 
 	//console.log(sql);
-	fs.writeFile('./orders.sql', sql, function(err, res){});
+	fs.writeFile('./orders/orders.sql', sql, function(err, res){});
 }
 
 module.exports = createOrdersSql;

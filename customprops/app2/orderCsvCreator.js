@@ -1,5 +1,6 @@
 var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/orderdb';
+//mongoConnString = 'mongodb://192.168.1.36:27017/orderdb';
 var cpSchema = require('./custPropsSchema');
 var itemSchema = require('./itemPropsSchema');
 var orderSchema = require('./orderPropsSchema');
@@ -12,7 +13,7 @@ var allKeys = orderKeys.concat(itemKeys).concat(custKeys);
 
 var total = 0;
 var HunderdK = 100000;
-var OneMillion = HunderdK * 10;
+var OneMillion = HunderdK * 2;
 var start = 1;
 var end = HunderdK;
 
@@ -68,7 +69,7 @@ function createOrdersCsv(cbOnDone){
 	    			}
 	    		}
 	    	}                
-	        fs.appendFile('./orders.csv', csvs.join('\n'), function(err, res){
+	        fs.appendFile('./orders/orders.csv', csvs.join('\n'), function(err, res){
 	        	if(err) console.log(err);
 	        	console.log('Added csv records successfully count = ' + total + '    t = ' + ((Date.now() - dtmStart)/1000));
 	        	if(total < OneMillion){

@@ -1,5 +1,6 @@
 var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/orderdb';
+//mongoConnString = 'mongodb://192.168.1.36:27017/orderdb';
 var cpMgr = require('./customPropsManager');
 var cpSchema = require('./custPropsSchema');
 var DO = require('./defaultOrders');
@@ -16,7 +17,7 @@ var sOrder = JSON.stringify(DO.order);
 var HundredK = 100000;
 var OneMillion = HundredK * 10 ;
 var total = 0;
-var j = 1;
+var j = HundredK + 1;
 var dtmStart = null;
 
 function add100KOrders(){
