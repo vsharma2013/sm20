@@ -1,5 +1,6 @@
 var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/orderdb';
+var ObjectID = require('mongodb').ObjectID;
 var DO = require('./DefaultOrders');
 
 function DbManager(){
@@ -87,4 +88,16 @@ DbManager.prototype.addUISchemaToCustomProps = function(order){
 			item.customProps = cps;
 		}
 	}).bind(this));
+}
+
+DbManager.prototype.saveOrderDocument = function(order){
+	var doc = order.order;
+	order._id = ObjectID(order._id);
+	mongodb.connect(mongoConnString, function(err, db){
+		db.collection('orders').save(order, function(err, res){
+			if(err)
+				console.log(err);
+			db.close();
+		});
+	});
 }
