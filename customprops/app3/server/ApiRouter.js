@@ -26,8 +26,13 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 }
 
 ApiController.prototype.handleSaveOrderRequest = function(req, res){
-	dbMgr.saveOrderDocument(req.body);
-	res.json({success: true, message: 'data saved successfully'});
+	dbMgr.saveOrderDocument(req.body, function(err, result){
+		if(err)
+			res.json({success : false, err : err});
+		else{
+			res.json({success: true, message: 'Order saved successfully'});
+		}
+	});	
 }
 
 

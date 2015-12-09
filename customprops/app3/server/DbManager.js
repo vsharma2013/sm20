@@ -90,13 +90,14 @@ DbManager.prototype.addUISchemaToCustomProps = function(order){
 	}).bind(this));
 }
 
-DbManager.prototype.saveOrderDocument = function(order){
-	var doc = order.order;
+DbManager.prototype.saveOrderDocument = function(order, cbOnDone){
 	order._id = ObjectID(order._id);
 	mongodb.connect(mongoConnString, function(err, db){
 		db.collection('orders').save(order, function(err, res){
 			if(err)
-				console.log(err);
+				cbOnDone(err, null);
+			else
+				cbOnDone(null, true);
 			db.close();
 		});
 	});
