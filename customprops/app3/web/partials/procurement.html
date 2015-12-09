@@ -1,0 +1,82 @@
+
+<div class="row">
+    <div class='col-md-8' style='padding-left:30px;'>
+      <h5>{{vm.requisition.name}} - {{vm.requisition.number}}</h5>
+    </div>    
+    <div class="btn-group col-md-2">
+        <label class="btn btn-primary" ng-model="vm.radioModel" uib-btn-radio="'Quick'">Quick</label>
+        <label class="btn btn-primary" ng-model="vm.radioModel" uib-btn-radio="'Detailed'">Detailed</label>
+    </div>
+    <div class="btn-group col-md-2" uib-dropdown>
+      <button id="split-button" type="button" class="btn btn-danger">Action</button>
+      <button type="button" class="btn btn-danger" uib-dropdown-toggle>
+        <span class="caret"></span>
+        <span class="sr-only">Split button!</span>
+      </button>
+      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+        <li role="menuitem"><a href="#">Send for Approval</a></li>
+        <li role="menuitem"><a href="#">Manage Approvals</a></li>
+        <li role="menuitem"><a href="#">Delete</a></li>
+        <li role="menuitem"><a href="#">Export To PDF</a></li>
+      </ul>
+    </div>
+</div>
+<div class="divider" style="margin-top:15px;"></div>
+<uib-tabset>
+    <uib-tab heading="Setup"> 
+      <div class='row' style="margin-top:20px;">
+        <div class="col-md-4">
+          <label>Requisition Name</label>
+          <input type="text" ng-model="vm.requisition.name" class="form-control">
+        </div>
+        <div class="col-md-4">
+          <label>Requisition Number</label>
+          <label class="form-control">{{vm.requisition.number}}</label>
+        </div>       
+      </div>
+      <div class='row'>
+        <div class="col-md-4">
+          <label>Requester's Name</label>
+          <label class="form-control">{{vm.requisition.requester}}</label>
+        </div>
+        <div class="col-md-4">
+          <label>Create on Behalf of (OBO)</label>
+          <input type="text" ng-model="vm.requisition.onbehalfof" class="form-control">
+        </div>       
+      </div>
+      <div class='row'>
+        <div class="col-md-4">
+          <label>Currency</label>
+          <label class="form-control">{{vm.requisition.currency}}</label>
+        </div>
+      </div>
+      <div>Location Details</div>
+
+    </uib-tab>
+     <uib-tab heading="Item">        
+      <div class='row' style="margin-top:20px;margin-left: 20px;">    
+        <div class='table-cell'>Item Total:</div>
+        <div class='table-cell'>50:00</div>
+        <div class='table-cell'>USD</div>
+        <div class='table-cell'>+</div>
+        <div class='table-cell'>Taxes and Charges</div>
+        <div class='table-cell'>50:00</div>
+        <div class='table-cell'>USD</div>
+        <div class='table-cell'>=</div>
+        <div class='table-cell'>Total Value:</div>
+        <div class='table-cell'>50:00</div>
+        <div class='table-cell'>USD</div>
+      </div>
+    </uib-tab>
+     <uib-tab heading="Item Details">    
+      <div class='row' style="margin-top:20px;margin-left: 20px;">    
+        <div class="btn-group">
+          <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Partner'" uncheckable>Partner</label>
+          <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Shipping'" uncheckable>Shipping</label>
+          <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Others'" uncheckable>Others</label>
+          <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Accounting'" uncheckable>Accounting</label>
+          <label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Contract'" uncheckable>Contract</label>
+        </div>
+      </div>
+    </uib-tab>
+</uib-tabset>
