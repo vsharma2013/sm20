@@ -1,7 +1,7 @@
 var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/orderdb';
 var ObjectID = require('mongodb').ObjectID;
-var DO = require('./DefaultOrders');
+var reqUtils = require('./RequisiitionUtils');
 
 function DbManager(){
 	var self = this;
@@ -30,65 +30,65 @@ DbManager.prototype.getOrderById = function(orderId, addUIschema, cbOnDone){
     });
 }
 
-DbManager.prototype.addDefaultOrders = function(){
-	var arrDocs = [DO.order, DO.customPropsOrder, DO.customPropsOrder2];
-	mongodb.connect(mongoConnString, function(err, db){
-		if(err){
-			console.log('Error in connecting to mongodb');
-			return;
-		}
+// DbManager.prototype.addDefaultOrders = function(){
+// 	var arrDocs = [DO.order, DO.customPropsOrder, DO.customPropsOrder2];
+// 	mongodb.connect(mongoConnString, function(err, db){
+// 		if(err){
+// 			console.log('Error in connecting to mongodb');
+// 			return;
+// 		}
 
-		db.collection('orders').insertMany(arrDocs, {safe:true}, function(err, result){
-			if(err){
-				console.log('Error in adding default orders');
-				return;
-			}
-			console.log('Added default orders successfully');
-			db.close();
-		});
-	});
-}
+// 		db.collection('orders').insertMany(arrDocs, {safe:true}, function(err, result){
+// 			if(err){
+// 				console.log('Error in adding default orders');
+// 				return;
+// 			}
+// 			console.log('Added default orders successfully');
+// 			db.close();
+// 		});
+// 	});
+// }
 
-DbManager.prototype.addCustomPropsUISchema = function(){
-	mongodb.connect(mongoConnString, function(err, db){
-		if(err){
-			console.log('Error in connecting to mongodb');
-			return;
-		}
-		db.collection('customPropsUISchema').insert(DO.customPropsUISchema, {safe:true}, function(err, result){
-			if(err){
-				console.log('Error in adding customPropsUISchema');
-				return;
-			}
-			console.log('Added customPropsUISchema successfully');
-		});
-	});
-}
+// DbManager.prototype.addCustomPropsUISchema = function(){
+// 	mongodb.connect(mongoConnString, function(err, db){
+// 		if(err){
+// 			console.log('Error in connecting to mongodb');
+// 			return;
+// 		}
+// 		db.collection('customPropsUISchema').insert(DO.customPropsUISchema, {safe:true}, function(err, result){
+// 			if(err){
+// 				console.log('Error in adding customPropsUISchema');
+// 				return;
+// 			}
+// 			console.log('Added customPropsUISchema successfully');
+// 		});
+// 	});
+// }
 
-DbManager.prototype.addUISchemaToCustomProps = function(order){
-	var cps = [];
-	if(order.customProps){
-		for(var key in order.customProps){
-			var cp = this.customPropsUISchema[key];
-			cp.key = key;
-			cp.value = order.customProps[key];
-			cps.push(cp);
-		}
-		order.customProps = cps;
-	}
-	order.Items.forEach((function(item){
-		var cps = [];
-		if(item.customProps){
-			for(var key in item.customProps){
-				var cp = this.customPropsUISchema[key];
-				cp.key = key;
-				cp.value = item.customProps[key];
-				cps.push(cp);
-			}
-			item.customProps = cps;
-		}
-	}).bind(this));
-}
+// DbManager.prototype.addUISchemaToCustomProps = function(order){
+// 	var cps = [];
+// 	if(order.customProps){
+// 		for(var key in order.customProps){
+// 			var cp = this.customPropsUISchema[key];
+// 			cp.key = key;
+// 			cp.value = order.customProps[key];
+// 			cps.push(cp);
+// 		}
+// 		order.customProps = cps;
+// 	}
+// 	order.Items.forEach((function(item){
+// 		var cps = [];
+// 		if(item.customProps){
+// 			for(var key in item.customProps){
+// 				var cp = this.customPropsUISchema[key];
+// 				cp.key = key;
+// 				cp.value = item.customProps[key];
+// 				cps.push(cp);
+// 			}
+// 			item.customProps = cps;
+// 		}
+// 	}).bind(this));
+// }
 
 DbManager.prototype.saveOrderDocument = function(order, cbOnDone){
 	order._id = ObjectID(order._id);
