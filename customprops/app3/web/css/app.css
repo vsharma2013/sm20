@@ -1,0 +1,16 @@
+html, body {
+}
+
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+label {
+    font-weight: 500;
+}
+.table-cell{
+	display: table-cell;
+	padding-right: 5px;
+}
