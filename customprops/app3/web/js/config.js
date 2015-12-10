@@ -6,5 +6,5 @@ angular.module("myApp").
 	}).
 	constant("ENV", {
 		"name": "localhost",
-		"apiEndPoint": "http://localhost:8000/api"
+		"apiEndPoint": "http://localhost:1111/api/"
 	})

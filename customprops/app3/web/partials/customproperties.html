@@ -1,0 +1,14 @@
+<div ng-repeat='customp in customProps'>
+	<!-- <div class='row'> -->
+	  <div class="col-md-4">
+	    <label>{{customp.label}}</label>
+	    <input ng-if="isType(customp, 'input')" type="text" ng-model="customp.val" class="form-control">
+	    <label ng-if="isType(customp, 'label')" class="form-control">{{vm.requisition.val}}</label>
+	    <input ng-if="isType(customp, 'typeahead')" type="text" ng-model="vm.requisition.val" uib-typeahead="state for state in vm.requisition.allVals" class="form-control">
+	  </div>
+	  <div class="col-md-4">
+	    <label>Requisition Number</label>
+	    <label class="form-control">{{vm.requisition.val}}</label>
+	  </div>       
+	<!-- </div> -->
+</div>
