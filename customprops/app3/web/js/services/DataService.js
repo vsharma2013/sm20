@@ -1,13 +1,12 @@
 'use strict';
 
 angular.module('myApp').
-    factory('DataService', ['$http',  '$q', DataService]);
+    factory('DataService', ['$http', DataService]);
 
-function DataService($http,  $q) {
+function DataService($http) {
 
     var dataService = {
-        getRequisition: getRequisition,
-        saveRequisition: saveRequisition
+        getRequisition: getRequisition
     };    
 
     return dataService;
@@ -22,6 +21,10 @@ function DataService($http,  $q) {
         // }).error(function(error) {
         //    return error;
         // });
-         return $q.when({});
+        return  $http.get('js/services/dummy.json').success(function(response) {
+            return response;
+        }).error(function(error) {
+           return error;
+        });
     }
 }
