@@ -1,5 +1,6 @@
 var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/orderdb';
+var ObjectID = require('mongodb').ObjectID;
 var DO = require('./DefaultOrders');
 
 function DbManager(){
@@ -7,6 +8,10 @@ function DbManager(){
 	mongodb.connect(mongoConnString, function(err, db){
 		db.collection('customPropsUISchema').find({}).toArray(function(err, docs){
 			self.customPropsUISchema = docs[0];
+		});
+		db.collection('orders').count(function(err, res){
+			if(!res)
+				self.addDefaultOrders();
 		});
 	});
 }
@@ -20,7 +25,7 @@ DbManager.prototype.getOrderById = function(orderId, addUIschema, cbOnDone){
 	mongodb.connect(mongoConnString, function (err, db) {
         var dbJson = { "Id": orderId };
         var res = db.collection('orders').findOne(dbJson, function (err, result) {
-        	if(orderId > 2 && addUIschema){
+        	if(orderId > 1 && addUIschema){
         		self.addUISchemaToCustomProps(result);
         	}
             cbOnDone(result);
@@ -30,7 +35,7 @@ DbManager.prototype.getOrderById = function(orderId, addUIschema, cbOnDone){
 }
 
 DbManager.prototype.addDefaultOrders = function(){
-	var arrDocs = [DO.order, DO.customPropsOrder, DO.customPropsOrder2];
+	var arrDocs = [DO.order, DO.customPropsOrder];
 	mongodb.connect(mongoConnString, function(err, db){
 		if(err){
 			console.log('Error in connecting to mongodb');
@@ -87,4 +92,37 @@ DbManager.prototype.addUISchemaToCustomProps = function(order){
 			item.customProps = cps;
 		}
 	}).bind(this));
+}
+
+DbManager.prototype.removeUISchemaFromCustomProps = function(order){
+	if(order.customProps && order.customProps.length > 0){
+		var cps = {}
+		order.customProps.forEach(function(cp){
+			cps[cp.key] = cp.value;
+		});
+		order.customProps = cps;
+	}
+	order.Items.forEach((function(item){
+		var cps = {};
+		if(item.customProps && item.customProps.length > 0){
+			item.customProps.forEach(function(cp){
+				cps[cp.key] = cp.val;
+			});
+			item.customProps = cps;
+		}
+	}).bind(this));
+}
+
+DbManager.prototype.saveOrderDocument = function(order, cbOnDone){
+	this.removeUISchemaFromCustomProps(order);
+	order._id = ObjectID(order._id);
+	mongodb.connect(mongoConnString, function(err, db){
+		db.collection('orders').save(order, function(err, res){
+			if(err)
+				cbOnDone(err, null);
+			else
+				cbOnDone(null, true);
+			db.close();
+		});
+	});
 }
