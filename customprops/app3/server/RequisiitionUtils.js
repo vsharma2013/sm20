@@ -167,11 +167,11 @@ function getRequisition(reqOptions){
     req[sk] = getRandomItemFromArray(defaulVals[sk]);
   });
   var custSetup = reqOptions.client === 'ABM' ? SetUp_custom_ABM : SetUp_custom_CAMC;
-  req.customProps = [];
+  req.customProps = {};
   custSetup.forEach(function(sk){
-    req.customProps.push(custPropsSchema[sk]);
+    req.customProps[sk] = custPropsSchema[sk].val;
   });
-  req.items = [];
+  req.Items = [];
   for(var i = 0 ; i < reqOptions.itemCount; i++){
     var item = {};
     
@@ -193,7 +193,7 @@ function getRequisition(reqOptions){
     addItemDetailsCustomProps(item, 'others', custOthers);
     addItemDetailsCustomProps(item, 'accounting', custAccounting);
 
-    req.items.push(item);
+    req.Items.push(item);
   }
   return req;
 }
@@ -206,16 +206,15 @@ function addItemDetails(item, detailKey, detailValueKeys){
 }
 
 function addItemDetailsCustomProps(item, detailKey, detailCustomValueKeys){
-  item[detailKey]['customProps'] = [];
+  item[detailKey]['customProps'] = {};
   detailCustomValueKeys.forEach(function(k){
-    item[detailKey]['customProps'].push(custPropsSchema[k]);
+    item[detailKey]['customProps'][k] = custPropsSchema[k].val;
   });
 }
 
-console.log(JSON.stringify(getRequisition(getDefaultRequisitionOptions())));
 
 module.exports = {
-  primasrPropsDefaultValues : defaulVals,
+  primaryPropsDefaultValues : defaulVals,
   custPropsSchema : custPropsSchema,
   getDefaultRequisitionOptions : getDefaultRequisitionOptions,
   getRequisition : getRequisition

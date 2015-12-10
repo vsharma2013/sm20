@@ -1,22 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var dbMgr = require('./DBManager');
-//dbMgr.addDefaultOrders();
 
 function ApiController(){
 
 }
 
-ApiController.prototype.handleGetOrderRequest = function(req, res){
-	var id = parseInt(req.query.o);
-	dbMgr.getOrderById(id, true, function(doc){
+ApiController.prototype.handleGetRequisitionRequest = function(req, res){
+	var id = parseInt(req.query.r);
+	dbMgr.getRequisitionById(id, true, function(doc){
         res.json(doc);
 	});	
 }
 
-ApiController.prototype.handleGetRawOrderRequest = function(req, res){
+ApiController.prototype.handleGetRawRequisitionRequest = function(req, res){
 	var id = parseInt(req.query.o);
-	dbMgr.getOrderById(id, false, function(doc){
+	dbMgr.getRequisitionById(id, false, function(doc){
         res.json(doc);
 	});	
 }
@@ -25,20 +24,20 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 	res.json(dbMgr.customPropsUISchema);
 }
 
-ApiController.prototype.handleSaveOrderRequest = function(req, res){
-	dbMgr.saveOrderDocument(req.body, function(err, result){
+ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
+	dbMgr.saveRequisitionDocument(req.body, function(err, result){
 		if(err)
 			res.json({success : false, err : err});
 		else{
-			res.json({success: true, message: 'Order saved successfully'});
+			res.json({success: true, message: 'Requisition saved successfully'});
 		}
 	});	
 }
 
 
 var apiController = new ApiController();
-router.get('/order', apiController.handleGetOrderRequest.bind(apiController));
-router.get('/orderraw', apiController.handleGetRawOrderRequest.bind(apiController));
+router.get('/req', apiController.handleGetRequisitionRequest.bind(apiController));
+router.get('/reqraw', apiController.handleGetRawRequisitionRequest.bind(apiController));
 router.get('/cpuischema', apiController.handleCustomPropsUISchemaRequest.bind(apiController));
-router.post('/order/save', apiController.handleSaveOrderRequest.bind(apiController));
+router.post('/req/save', apiController.handleSaveRequisitionRequest.bind(apiController));
 module.exports = router;
