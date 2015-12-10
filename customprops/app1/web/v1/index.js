@@ -27,6 +27,7 @@ App.prototype.run = function(){
 App.prototype.render = function(){
 	this.renderLeftContainer();
 	this.renderRightContainer();
+	this.addEventHandlers();
 }
 
 App.prototype.renderLeftContainer = function(){
@@ -169,4 +170,34 @@ App.prototype.renderItemCustomProps = function(item){
 		}
 		$html.appendTo($itemContainer);
 	}).bind(this));
+}
+
+App.prototype.addEventHandlers = function(){
+	$('#saveOrder').on('click', this.saveOrder.bind(this));
+}
+
+App.prototype.saveOrder = function(){
+	this.order.Name = 'Direct - ' + new Date().toLocaleTimeString();
+	if(this.order.customProps && this.order.customProps.length ===3){
+		this.order.customProps[0].value = $('#order_category').val();
+		this.order.customProps[1].value = $('#order_priority').prop('checked') ? 1 : 0;
+		this.order.customProps[2].value = $('#order_comments').val();
+	}
+	var options = {
+		url : '/api/order/save',
+		type : 'POST',
+		contentType : 'application/json',
+		data : JSON.stringify(this.order),
+		success : function(res){			
+			if(res.success)
+				alert('Order saved successfully');
+			else
+				alert('Failed to save data');
+		},
+		error : function(a,b,c){
+			console.error('error in saving data');
+			alert('Network error while saving data');
+		}
+	}
+	$.ajax(options);
 }

@@ -24,8 +24,21 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 	res.json(dbMgr.customPropsUISchema);
 }
 
+ApiController.prototype.handleSaveOrderRequest = function(req, res){
+	dbMgr.saveOrderDocument(req.body, function(err, result){
+		if(err)
+			res.json({success : false, err : err});
+		else{
+			res.json({success: true, message: 'Order saved successfully'});
+		}
+	});	
+}
+
+
+
 var apiController = new ApiController();
 router.get('/order', apiController.handleGetOrderRequest.bind(apiController));
 router.get('/orderraw', apiController.handleGetRawOrderRequest.bind(apiController));
 router.get('/cpuischema', apiController.handleCustomPropsUISchemaRequest.bind(apiController));
+router.post('/order/save', apiController.handleSaveOrderRequest.bind(apiController));
 module.exports = router;

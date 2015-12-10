@@ -1,6 +1,6 @@
 var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/orderdb';
-//mongoConnString = 'mongodb://192.168.1.36:27017/orderdb';
+mongoConnString = 'mongodb://192.168.1.36:27017/orderdb';
 var cpSchema = require('./custPropsSchema');
 var itemSchema = require('./itemPropsSchema');
 var orderSchema = require('./orderPropsSchema');
