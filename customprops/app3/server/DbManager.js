@@ -60,29 +60,36 @@ DbManager.prototype.addCustomPropsUISchema = function(db){
 	});
 }
 
-DbManager.prototype.addUISchemaToCustomProps = function(order){
+DbManager.prototype.addUISchemaToCustomProps = function(requisition){
 	var cps = [];
-	if(order.customProps){
-		for(var key in order.customProps){
+	if(requisition.customProps){
+		for(var key in requisition.customProps){
 			var cp = this.customPropsUISchema[key];
 			cp.key = key;
-			cp.value = order.customProps[key];
+			cp.val = requisition.customProps[key];
 			cps.push(cp);
 		}
-		order.customProps = cps;
+		requisition.customProps = cps;
 	}
-	order.Items.forEach((function(item){
-		var cps = [];
-		if(item.customProps){
-			for(var key in item.customProps){
-				var cp = this.customPropsUISchema[key];
-				cp.key = key;
-				cp.value = item.customProps[key];
-				cps.push(cp);
-			}
-			item.customProps = cps;
-		}
+	requisition.Items.forEach((function(item){
+		this.addUISchemaToItemDetailCustomProps(item, 'shipping');
+		this.addUISchemaToItemDetailCustomProps(item, 'others');
+		this.addUISchemaToItemDetailCustomProps(item, 'accounting');
 	}).bind(this));
+}
+
+DbManager.prototype.addUISchemaToItemDetailCustomProps = function(item, itemDetailKey){
+	var cProps = item[itemDetailKey].customProps;
+	if(!cProps) return;
+
+	var cps = [];
+	for(var key in cProps){
+		var cp = this.customPropsUISchema[key];
+		cp.key = key;
+		cp.val = item[itemDetailKey].customProps[key];
+		cps.push(cp);
+	}
+	item[itemDetailKey].customProps = cps;
 }
 
 DbManager.prototype.cacheUISchema = function(db){
