@@ -2,7 +2,7 @@
 
 angular.module('myApp', [
     'ui.router'
-    ,'ngAnimate'
+    //,'ngAnimate'
     ,'ui.bootstrap'   
 ]).
     config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -12,20 +12,18 @@ angular.module('myApp', [
         $stateProvider
             .state('home', {
                 url: "/",
-                templateUrl: "partials/main.html",
-                controller: 'homeController',
-                controllerAs: 'vm'
+                templateUrl: "partials/main.html"   
             })
             .state('home.procurement', {
                 url: "/procurement",
                 templateUrl: "partials/procurement.html",
                 controller: 'procurementController',
-                controllerAs: 'vm'
-                // resolve: {
-                //     requisition: ['DataService', function (DataService) {
-                //         return DataService.getRequisition(0);
-                //     }]
-                // }
+                controllerAs: 'vm',
+                resolve: {
+                    requisition: ['DataService', function (DataService) {
+                        return DataService.getRequisition()
+                    }]
+                }
             })
             // .state('home.mongo', {
             //     url: "/mongo",
