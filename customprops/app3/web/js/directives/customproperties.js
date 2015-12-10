@@ -1,17 +1,26 @@
 'use strict';
 
 angular.module('myApp').    
-    directive('customproperties', [customproperties])
+    directive('customProperties', [customProperties])
 
-function customproperties() {
+function customProperties() {
     return {
         restrict: 'E',
         scope: {
-          customProps: '=customProps'
+          customProps: '=customprops'
         },
         templateUrl: 'partials/customproperties.html',
         controller: function ($scope, $element) {
-            
+            $scope.isType = function(model, type){                
+                if(model.allowEdit === 0 && type == 'label'){
+                    return true;
+                }else if(model.allVals && model.allVals.length > 0 && model.allowEdit === 1 && type == 'typeahead'){
+                    return true;
+                }else if((!model.allVals || model.allVals.length === 0) && model.allowEdit === 1 && type == 'input'){
+                    return true;
+                }
+                return false;
+            }
         }
     };   
 }

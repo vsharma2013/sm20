@@ -32,13 +32,13 @@
           </div>
           <div class="col-md-4">
             <label>Requisition Number</label>
-            <label class="form-control">{{vm.requisition.RequisitionNumber}}</label>
+            <div>{{vm.requisition.RequisitionNumber}}</div>
           </div>       
         </div>
         <div class='row'>
           <div class="col-md-4">
             <label>Requester's Name</label>
-            <label class="form-control">{{vm.requisition.RequestorName}}</label>
+            <div>{{vm.requisition.RequestorName}}</div>
           </div>
           <div class="col-md-4">
             <label>Create on Behalf of (OBO)</label>
@@ -48,7 +48,7 @@
         <div class='row'>
           <div class="col-md-4">
             <label>Currency</label>
-            <label class="form-control">{{vm.requisition.Currency}}</label>
+            <div>{{vm.requisition.Currency}}</div>
           </div>
         </div>
       </div>
@@ -63,31 +63,34 @@
         <div class='row'>
           <div class="col-md-4">
             <label>Ship to</label>
-            <input type="text" ng-model="vm.requisition.onbehalfof" class="form-control">            
+            <input type="text" ng-model="vm.requisition.Shiptoname" class="form-control">            
           </div>
           <div class="col-md-4">
             <label>Ship to Address</label>
-            <label class="form-control">{{vm.requisition.requester}}</label>
+            <div>{{vm.requisition.Shiptoaddress}}</div>
           </div>       
         </div>
         <div class='row'>
           <div class="col-md-4">
             <label>Bill to</label>
-            <input type="text" ng-model="vm.requisition.onbehalfof" class="form-control">            
+            <input type="text" ng-model="vm.requisition.Billtoname" class="form-control">            
           </div>
           <div class="col-md-4">
             <label>Bill to Address</label>
-            <label class="form-control">{{vm.requisition.requester}}</label>
+            <div>{{vm.requisition.Billtoaddress}}</div>
           </div>  
-          <div class="col-md-4">
+          <div class="col-md-4" ng-if='vm.requisition.EmailFax'>
             <label>Email Id/ Fax Number</label>
-            <label class="form-control">{{vm.requisition.requester}}</label>
+            <div>{{vm.requisition.EmailFax}}</div>
           </div>      
         </div>
       </div>
       <hr>
       <div class='row' style="margin-top:20px; margin-left: 20px;">
         <div class='row'><b>Custom Properties</b></div>
+        <div class='row' style='margin-top:10px;'>
+          <custom-properties customprops='vm.requisition.customProps'></custom-properties>
+        </div>
       </div>
     </uib-tab>
      <uib-tab heading="Item">        
