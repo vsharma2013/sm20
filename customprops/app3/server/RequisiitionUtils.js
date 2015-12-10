@@ -187,11 +187,11 @@ function getRequisition(reqOptions){
 
     var custShipping = reqOptions.client ==='ABM' ? ItemDetails_shipping_custom_ABM: ItemDetails_shipping_custom_CAMC;
     var custOthers = reqOptions.client ==='ABM' ? ItemDetails_others_custom_ABM: ItemDetails_others_custom_CAMC;
-    var custAcc = reqOptions.client ==='ABM' ? ItemDetails_accounting_custom_ABM: ItemDetails_accounting_custom_CAMC;
+    var custAccounting = reqOptions.client ==='ABM' ? ItemDetails_accounting_custom_ABM: ItemDetails_accounting_custom_CAMC;
 
     addItemDetailsCustomProps(item, 'shipping', custShipping);
     addItemDetailsCustomProps(item, 'others', custOthers);
-    addItemDetailsCustomProps(item, 'accounting', custAcc);
+    addItemDetailsCustomProps(item, 'accounting', custAccounting);
 
     req.items.push(item);
   }
