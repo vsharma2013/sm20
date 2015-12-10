@@ -176,52 +176,40 @@ function getRequisition(reqOptions){
     var item = {};
     
     Item.forEach(function(k){
-      console.log(k);
       item[k] = getRandomItemFromArray(defaulVals[k]);
     });
 
-    item.partner = {};
-    ItemDetails_partner.forEach(function(k){
-      item.partner[k] = getRandomItemFromArray(defaulVals[k]);
-    });
+    addItemDetails(item, 'partner', ItemDetails_partner);
+    addItemDetails(item, 'shipping', ItemDetails_shipping);
+    addItemDetails(item, 'others', ItemDetails_others);
+    addItemDetails(item, 'accounting', ItemDetails_accounting);
+    addItemDetails(item, 'contract', ItemDetails_contract);
 
-    item.shipping = {};
-    ItemDetails_shipping.forEach(function(k){
-      item.shipping[k] = getRandomItemFromArray(defaulVals[k]);
-    });
-    item.shipping.customProps = [];
-    custShipping = reqOptions.client ==='ABM' ? ItemDetails_shipping_custom_ABM: ItemDetails_shipping_custom_CAMC;
-    custShipping.forEach(function(k){
-      item.shipping.customProps.push(custPropsSchema[k]);
-    });
+    var custShipping = reqOptions.client ==='ABM' ? ItemDetails_shipping_custom_ABM: ItemDetails_shipping_custom_CAMC;
+    var custOthers = reqOptions.client ==='ABM' ? ItemDetails_others_custom_ABM: ItemDetails_others_custom_CAMC;
+    var custAcc = reqOptions.client ==='ABM' ? ItemDetails_accounting_custom_ABM: ItemDetails_accounting_custom_CAMC;
 
-    item.others = {};
-    ItemDetails_others.forEach(function(k){
-      item.others[k] = getRandomItemFromArray(defaulVals[k]);
-    });
-    item.others.customProps = [];
-    custOthers = reqOptions.client ==='ABM' ? ItemDetails_others_custom_ABM: ItemDetails_others_custom_CAMC;
-    custOthers.forEach(function(k){
-      item.others.customProps.push(custPropsSchema[k]);
-    });
+    addItemDetailsCustomProps(item, 'shipping', custShipping);
+    addItemDetailsCustomProps(item, 'others', custOthers);
+    addItemDetailsCustomProps(item, 'accounting', custAcc);
 
-    item.accounting = {};
-    ItemDetails_accounting.forEach(function(k){
-      item.accounting[k] = getRandomItemFromArray(defaulVals[k]);
-    });
-    item.accounting.customProps = [];
-    custAcc = reqOptions.client ==='ABM' ? ItemDetails_accounting_custom_ABM: ItemDetails_accounting_custom_CAMC;
-    custAcc.forEach(function(k){
-      item.accounting.customProps.push(custPropsSchema[k]);
-    });
-
-    item.contract = {};
-    ItemDetails_contract.forEach(function(k){
-      item.contract[k] = getRandomItemFromArray(defaulVals[k]);
-    });
     req.items.push(item);
   }
   return req;
+}
+
+function addItemDetails(item, detailKey, detailValueKeys){
+  item[detailKey] = {};
+  detailValueKeys.forEach(function(k){
+    item[detailKey][k] = getRandomItemFromArray(defaulVals[k]);
+  });
+}
+
+function addItemDetailsCustomProps(item, detailKey, detailCustomValueKeys){
+  item[detailKey]['customProps'] = [];
+  detailCustomValueKeys.forEach(function(k){
+    item[detailKey]['customProps'].push(custPropsSchema[k]);
+  });
 }
 
 console.log(JSON.stringify(getRequisition(getDefaultRequisitionOptions())));
