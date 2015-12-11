@@ -43,9 +43,11 @@ ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
 
 ApiController.prototype.handleSubmitRequisitionRequest = function(req, res){
 	var ruleFlow = new RuleFlow();
-	ruleFlow.run(function(result){
-		console.log(result.results);
-		res.json({success: true, message : 'Submitted successfully'});
+	ruleFlow.run(req.body, function(result){
+		if(result.success)
+			res.json({success : true, message : result.results.join('\n')});
+		else
+			res.json({success : false, message : 'Error in executing submit rules'});
 	});
 }
 
