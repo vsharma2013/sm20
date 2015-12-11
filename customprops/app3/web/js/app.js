@@ -3,6 +3,7 @@
 angular.module('myApp', [
     'ui.router'
     //,'ngAnimate'
+    ,'ui.grid'
     ,'ui.bootstrap'   
 ]).
     config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
@@ -14,49 +15,18 @@ angular.module('myApp', [
                 url: "/",
                 templateUrl: "partials/home.html"   
             })
-            .state('home.procurement', {
-                url: "/procurement",
-                templateUrl: "partials/procurement.html",
-                controller: 'procurementController',
+            .state('home.requisition', {
+                url: "/requisition/:reqid",
+                templateUrl: "partials/requisition.html",
+                controller: 'requisitionController',
                 controllerAs: 'vm',
                 resolve: {
-                    requisition: ['requisionService', function (requisionService) {
-                        return requisionService.getRequisition(1)
+                    requisition: ['requisionService', '$stateParams', function (requisionService, $stateParams) {
+                        var reqid = 1;
+                        if($stateParams.reqid)
+                            reqid = $stateParams.reqid;
+                        return requisionService.getRequisition(reqid)
                     }]
                 }
             })
-            // .state('home.mongo', {
-            //     url: "/mongo",
-            //     templateUrl: "partials/reactgrid.html",
-            //     controller: 'dbController',
-            //     controllerAs: 'vm',
-            //     resolve: {
-            //         tableData: ['DataService', function (DataService) {
-            //             return DataService.getAllRequisitions();
-            //         }]
-            //     }
-            // })
-            // .state('home.sql', {
-            //      url: "/sql",
-            //     templateUrl: "partials/reactgrid.html",
-            //     controller: 'dbController',
-            //     controllerAs: 'vm',
-            //     resolve: {
-            //         tableData: ['DataService', function (DataService) {
-            //             return DataService.getAllRequisitions();
-            //         }]
-            //     }
-            // })
-            // .state('home.elastic', {
-            //      url: "/elastic",
-            //     templateUrl: "partials/reactgrid.html",
-            //     controller: 'dbController',
-            //     controllerAs: 'vm',
-            //     resolve: {
-            //         tableData: ['DataService', function (DataService) {
-            //             return DataService.getAllRequisitions();
-            //         }]
-            //     }
-            // })
-
     }]);

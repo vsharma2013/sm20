@@ -6,7 +6,8 @@ angular.module('myApp').
 function requisionService($http, ENV) {
 
     var dataService = {
-        getRequisition: getRequisition
+        getRequisition: getRequisition,
+        saveRequisition: saveRequisition
     };    
 
     return dataService;
@@ -16,15 +17,17 @@ function requisionService($http, ENV) {
             params:{
                 r:reqid
             } 
-        };
-        // return $http.post(ENV.apiEndPoint, JSON.stringify(postData)).success(function(response) {
-        //    return response;
-        // }).error(function(error) {
-        //    return error;
-        // });
-
+        };       
         return  $http.get(ENV.apiEndPoint+'req', params).success(function(response) {
             return response;
+        }).error(function(error) {
+           return error;
+        });
+    }
+
+    function saveRequisition(req){
+        return $http.post(ENV.apiEndPoint+'req/save', JSON.stringify(req)).success(function(response) {
+           return response;
         }).error(function(error) {
            return error;
         });

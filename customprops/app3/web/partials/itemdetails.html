@@ -1,0 +1,26 @@
+<div class='row' style="margin: 20px;">    
+	<div class="btn-group">
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Partner'">Partner</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Shipping'">Shipping</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Others'">Others</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Accounting'">Accounting</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Contract'">Contract</label>
+	</div>
+</div>
+<div class='row' style="margin:20px;">  
+	<div uib-collapse="!(radioModel == 'Partner')">
+		Partner
+	</div>
+	<div uib-collapse="!(radioModel == 'Shipping')">
+		Shipping
+	</div>
+	<div uib-collapse="!(radioModel == 'Others')">
+		Others
+	</div>
+	<div uib-collapse="!(radioModel == 'Accounting')">
+		Accounting
+	</div>
+	<div uib-collapse="!(radioModel == 'Contract')">
+		Contract
+	</div>
+</div>

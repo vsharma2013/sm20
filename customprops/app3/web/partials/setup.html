@@ -1,0 +1,68 @@
+<div class='row' style="margin: 20px;">
+  <div class='row'>
+    <div class="col-md-6">
+      <label>Requisition Name</label>
+      <input type="text" ng-model="requisition.RequisitionName" class="form-control">
+    </div>
+    <div class="col-md-6">
+      <label>Requisition Number</label>
+      <div>{{requisition.RequisitionNumber}}</div>
+    </div>       
+  </div>
+  <div class='row'>
+    <div class="col-md-6">
+      <label>Requester's Name</label>
+      <div>{{requisition.RequestorName}}</div>
+    </div>
+    <div class="col-md-6">
+      <label>Create on Behalf of (OBO)</label>
+      <input type="text" ng-model="requisition.OBO_Name" class="form-control">
+    </div>       
+  </div>
+  <div class='row'>
+    <div class="col-md-6">
+      <label>Currency</label>
+      <div>{{requisition.Currency}}</div>
+    </div>
+  </div>
+</div>
+<hr />
+<div class='row' style="margin:20px;"> 
+  <div class='row'><b>Location Details</b></div>
+  <div class='row col-md-12' style='margin-top:10px;'>Ship to</div>
+  <div class='row col-md-12'>
+    <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="1">Specify at Header</label>
+    <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="2">Different for Each Line Item</label>  
+  </div>  
+  <div class='row'>
+    <div class="col-md-6">
+      <label>Ship to</label>
+      <input type="text" ng-model="requisition.Shiptoname" class="form-control">            
+    </div>
+    <div class="col-md-6">
+      <label>Ship to Address</label>
+      <div>{{requisition.Shiptoaddress}}</div>
+    </div>       
+  </div>
+  <div class='row'>
+    <div class="col-md-4">
+      <label>Bill to</label>
+      <input type="text" ng-model="requisition.Billtoname" class="form-control">            
+    </div>
+    <div class="col-md-4">
+      <label>Bill to Address</label>
+      <div>{{requisition.Billtoaddress}}</div>
+    </div>  
+    <div class="col-md-4">
+      <label>Email Id/ Fax Number</label>
+      <div>{{requisition.EmailFax}}</div>
+    </div>      
+  </div>
+</div>
+<hr />
+<div class='row' style="margin: 20px;">
+  <div class='row'><b>Custom Properties</b></div>
+  <div class='row' style='margin-top:10px;'>
+    <custom-properties customprops='requisition.customProps'></custom-properties>
+  </div>
+</div>

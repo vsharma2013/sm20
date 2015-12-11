@@ -1,0 +1,36 @@
+
+<div class="row">
+  <div class='col-md-7' style='padding-left:30px;text-align: center;'>
+    <h5>{{vm.requisition.RequisitionName}} - {{vm.requisition.RequisitionNumber}}</h5>
+  </div>    
+  <div class="btn-group col-md-2">
+    <label class="btn btn-primary myradio" ng-model="vm.viewtype" uib-btn-radio="'Quick'">Quick</label>
+    <label class="btn btn-primary myradio" ng-model="vm.viewtype" uib-btn-radio="'Detailed'">Detailed</label>
+  </div>
+  <button type="button" class="col-md-1 btn btn-warning" ng-click="vm.save()">Save</button>
+  <div class="btn-group col-md-2" uib-dropdown>
+    <button id="split-button" type="button" class="btn btn-danger">{{vm.status}}</button>
+    <button type="button" class="btn btn-danger" uib-dropdown-toggle>
+      <span class="caret"></span>
+      <span class="sr-only">Split button!</span>
+    </button>
+    <ul class="uib-dropdown-menu mydd" role="menu" aria-labelledby="split-button">
+      <li role="menuitem"><a>Send for Approval</a></li>
+      <li role="menuitem"><a>Manage Approvals</a></li>
+      <li role="menuitem"><a>Delete</a></li>
+      <li role="menuitem"><a>Export To PDF</a></li>
+    </ul>
+  </div>
+</div>
+<div class="divider" style="margin-top:15px;"></div>
+<uib-tabset>
+  <uib-tab heading="Setup"> 
+    <setup-directive requisition='vm.requisition'></setup-directive>
+  </uib-tab>
+  <uib-tab heading="Item({{vm.requisition.Items.length}})">        
+    <item-directive requisition='vm.requisition'></item-directive>
+  </uib-tab>
+  <uib-tab heading="Item Details({{vm.requisition.Items.length}})">    
+    <itemdetails-directive requisition='vm.requisition'></itemdetails-directive>
+  </uib-tab>
+</uib-tabset>
