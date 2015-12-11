@@ -38,6 +38,12 @@ var ItemDetails_accounting_custom_CAMC =  ['Requestername', 'Corporationname',
                                            'Departmentname', 'Accountnumbername', 
                                            'Subaccountnumbername', 'ProjectActivitycodename'];
 
+function getArrayWithPrefix(prefix, count){
+  var arr = [];
+  for(var i = 1; i <= count; i++)
+    arr.push(prefix + '-' + i);
+  return arr;
+}
 
 var defaulVals = {
   RequisitionName : ['Req Name 1', 'Req Name 2', 'Req Name 3', 'Req Name 4', 'Req Name 5', 'Req Name 6', 'Req Name 7'],
@@ -54,7 +60,7 @@ var defaulVals = {
   Billtoaddress : ['ATB-11', 'ATB-22', 'ATB-33', 'ATB-44', 'ATB-55', 'ATB-66', 'ATB-77'],
   Currency : ['USD', 'GBP', 'EUR'],
   Linenumber : [101, 102, 103, 104, 105, 106, 107],
-  Itemnumber : [201, 202, 203, 204, 205, 206, 207],
+  Itemnumber : getArrayWithPrefix('Item', 5),
   Item : ['Item-1', 'Item-2', 'Item-3', 'Item-4', 'Item-5', 'Item-6', 'Item-7'],
   Partneritemnumber : ['Pat-Item-1', 'Pat-Item-2', 'Pat-Item-3', 'Pat-Item-4', 'Pat-Item-5', 'Pat-Item-6', 'Pat-Item-7'],
   Quantity : [10, 20, 30, 40, 50, 60, 70],
@@ -82,12 +88,6 @@ var defaulVals = {
 
 var sCPSchema = '{"type" : "", "label" : "", "val": "", "allowEdit" : 0, "defaultVal" : "", "allVals" : []}';
 var arrInt1to5 = [1,2,3,4,5];
-function getArrayWithPrefix(prefix, count){
-  var arr = [];
-  for(var i = 1; i <= count; i++)
-    arr.push(prefix + '-' + i);
-  return arr;
-}
 
 function getCustomProperty (type, label, val, defaultVal, allowEdit, allVals) {
   var cp = JSON.parse(sCPSchema);

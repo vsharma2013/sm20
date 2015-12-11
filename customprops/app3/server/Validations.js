@@ -9,7 +9,7 @@ function hasInt(i){
 		parseInt(i);
 		return true;
 	}
-	catch(){
+	catch(e){
 		return false;
 	}
 }
@@ -19,7 +19,7 @@ function hasFloat(f){
 		parseFloat(f);
 		return true;
 	}
-	catch(){
+	catch(e){
 		return false;
 	}
 }
@@ -29,7 +29,7 @@ function hasDate(d){
 		Date.parse(d);
 		return true;
 	}
-	catch(){
+	catch(e){
 		return false;
 	}
 }
@@ -74,9 +74,9 @@ var validations_requisition = {
 	},
 	Workorder : {
 		validate : function(req){
-			if(!requisition.customProps) return true;
-			if(!requisition.customProps.ERPOrderType) return true;
-			if(!requisition.customProps.ERPOrderType.val) return true;
+			if(!req.customProps) return true;
+			if(!req.customProps.ERPOrderType) return true;
+			if(!req.customProps.ERPOrderType.val) return true;
 
 			return req.customProps.hasOwnProperty('Workorder') && hasString(req.customProps.Workorder) && req.customProps.Workorder.length <= 500;
 		},
@@ -236,7 +236,7 @@ var validations_accounting = {
 		err : 'Accounting quantity should be a positive floating point value.'
 	},
 	Amount : {
-		validate : function(){
+		validate : function(accounting){
 			if(!accounting.Amount) return true;
 			return hasFloat(accounting.Amount);
 		},
@@ -250,14 +250,14 @@ var validations_contract = {
 			if(!contract.Contractnumber) return true;
 			return hasString(contract.Contractnumber) && contract.Contractnumber.length <= 400;
 		},
-		err : 'Contract number should be a string value with max 400 characters'.
+		err : 'Contract number should be a string value with max 400 characters'
 	},
 	Contractname : {
 		validate : function(contract){
 			if(!contract.Contractname) return true;
 			return hasString(contract.Contractname) && contract.Contractname.length <= 400;
 		},
-		err : 'Contract name should be a string value with max 400 characters'.
+		err : 'Contract name should be a string value with max 400 characters'
 	},
 	Contractvalue : {
 		validate : function(contract){
@@ -280,11 +280,11 @@ function validateRequisition(requisition){
 
 	for(var i = 0; i < requisition.Items.length; i++){
 		var item = requisition.Items[i]; items.push(item);
-		if(item.partner)    partners.push(partner);
-		if(item.shipping)   shippings.push(shipping);
-		if(item.others)     others.push(others);
-		if(item.accounting) accountings.push(accounting);
-		if(item.contract)   contracts.push(contract);
+		if(item.partner)    partners.push(item.partner);
+		if(item.shipping)   shippings.push(item.shipping);
+		if(item.others)     others.push(item.others);
+		if(item.accounting) accountings.push(item.accounting);
+		if(item.contract)   contracts.push(item.contract);
 	}
 
 	var vals = [];
@@ -298,7 +298,7 @@ function validateRequisition(requisition){
 
 	return {
 		success : validationErrors.length > 0 ? false : true,
-		message : validationErrors.join('\n');
+		message : validationErrors.join('\n')
 	}
 }
 
@@ -307,7 +307,8 @@ function runValidation(validationObjects, validations){
 
 	var validationErrors = [];
 	validationObjects.forEach(function(vObj){
-		for(var v in validations){
+		for(var vk in validations){
+			var v = validations[vk];
 			if(!v.validate(vObj))
 				validationErrors.push(v.err);
 		}
