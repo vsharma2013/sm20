@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var dbMgr = require('./DBManager');
+var validations = require('./Validations');
 
 function ApiController(){
 
@@ -25,13 +26,18 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 }
 
 ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
-	dbMgr.saveRequisitionDocument(req.body, function(err, result){
-		if(err)
-			res.json({success : false, err : err});
-		else{
-			res.json({success: true, message: 'Requisition saved successfully'});
-		}
-	});	
+	var result = validations.validateRequisition(req.body);
+	if(result.success){
+		dbMgr.saveRequisitionDocument(req.body, function(err, rs){
+			if(err)
+				res.json({success : false, err : err});
+			else{
+				res.json({success: true, message: 'Requisition saved successfully'});
+			}
+		});	
+	}
+	else
+		res.json(result);	
 }
 
 

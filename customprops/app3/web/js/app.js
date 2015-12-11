@@ -12,7 +12,7 @@ angular.module('myApp', [
         $stateProvider
             .state('home', {
                 url: "/",
-                templateUrl: "partials/main.html"   
+                templateUrl: "partials/home.html"   
             })
             .state('home.procurement', {
                 url: "/procurement",
@@ -20,8 +20,8 @@ angular.module('myApp', [
                 controller: 'procurementController',
                 controllerAs: 'vm',
                 resolve: {
-                    requisition: ['DataService', function (DataService) {
-                        return DataService.getRequisition()
+                    requisition: ['requisionService', function (requisionService) {
+                        return requisionService.getRequisition(1)
                     }]
                 }
             })

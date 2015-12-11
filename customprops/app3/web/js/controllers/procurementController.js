@@ -5,7 +5,7 @@ angular.module('myApp').
 
 function procurementController($state, requisition) {
     var vm = this;
-   	vm.requisition = requisition.data[0];
+   	vm.requisition = requisition.data;
    	vm.viewtype = 'Detailed';
       vm.status = 'Send for Approval';
       vm.stspec = 1;
