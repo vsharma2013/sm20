@@ -191,9 +191,9 @@ var validations_others = {
 	Procurementoption : {
 		validate : function(others){
 			if(!others.customProps) return false;
-			return others.customProps.hasOwnProperty('Procurementoption') && hasInt(others.customProps.Procurementoption);
+			return others.customProps.hasOwnProperty('Procurementoption') && hasString(others.customProps.Procurementoption);
 		},
-		err : 'Others procurement option should be a non-empty integer value.'
+		err : 'Others procurement option should be a non-empty string value.'
 	},
 	Capitalized : {
 		validate : function(others){
@@ -216,9 +216,9 @@ var validations_others = {
 	Inventorytype : {
 		validate : function(others){
 			if(!others.customProps) return false;
-			return others.customProps.hasOwnProperty('Inventorytype') && hasInt(others.customProps.Inventorytype);
+			return others.customProps.hasOwnProperty('Inventorytype') && hasString(others.customProps.Inventorytype);
 		},
-		err : 'Others inventory type option should be a non-empty integer value.'
+		err : 'Others inventory type option should be a non-empty string value.'
 	}
 };
 
