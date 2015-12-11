@@ -270,11 +270,11 @@ function validateRequisition(requisition){
 
 	for(var i = 0; i < requisition.Items.length; i++){
 		var item = requisition.Items[i]; items.push(item);
-		if(item.partner) partners.push(partner);
-		if(item.shipping) shippings.push(shipping);
-		if(item.others) others.push(others);
+		if(item.partner)    partners.push(partner);
+		if(item.shipping)   shippings.push(shipping);
+		if(item.others)     others.push(others);
 		if(item.accounting) accountings.push(accounting);
-		if(item.contract) contracts.push(contract);
+		if(item.contract)   contracts.push(contract);
 	}
 	var vals = [];
 	vals = runValidation(requisitions, validations_requisition);   validationErrors = validationErrors.concat(vals);
