@@ -71,6 +71,16 @@ var validations_requisition = {
 			return req.customProps.hasOwnProperty('Markasurgent') && hasInt(req.customProps.Markasurgent);
 		},
 		err : 'Mark as urgent is a mandatory boolean field.'
+	},
+	Workorder : {
+		validate : function(req){
+			if(!requisition.customProps) return true;
+			if(!requisition.customProps.ERPOrderType) return true;
+			if(!requisition.customProps.ERPOrderType.val) return true;
+
+			return req.customProps.hasOwnProperty('Workorder') && hasString(req.customProps.Workorder) && req.customProps.Workorder.length <= 500;
+		},
+		err : 'Requsition work order field should a non-empty string value with max 500 characters.'
 	}
 };
 
@@ -276,7 +286,7 @@ function validateRequisition(requisition){
 		if(item.accounting) accountings.push(accounting);
 		if(item.contract)   contracts.push(contract);
 	}
-	
+
 	var vals = [];
 	vals = runValidation(requisitions, validations_requisition);   validationErrors = validationErrors.concat(vals);
 	vals = runValidation(items, validations_item);                 validationErrors = validationErrors.concat(vals);
