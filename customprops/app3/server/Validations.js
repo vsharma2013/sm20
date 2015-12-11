@@ -277,12 +277,12 @@ function validateRequisition(requisition){
 		if(item.contract) contracts.push(contract);
 	}
 	var vals = [];
-	vals = runValidation(requisitions, validations_requisition); validationErrors = validationErrors.concat(vals);
-	vals = runValidation(partners, validations_partner); validationErrors = validationErrors.concat(vals);
-	vals = runValidation(shippings, validations_shipping); validationErrors = validationErrors.concat(vals);
-	vals = runValidation(others, validations_others); validationErrors = validationErrors.concat(vals);
-	vals = runValidation(accountings, validations_accounting); validationErrors = validationErrors.concat(vals);
-	vals = runValidation(contracts, validations_accounting); validationErrors = validationErrors.concat(vals);
+	vals = runValidation(requisitions, validations_requisition);   validationErrors = validationErrors.concat(vals);
+	vals = runValidation(partners, validations_partner);           validationErrors = validationErrors.concat(vals);
+	vals = runValidation(shippings, validations_shipping);         validationErrors = validationErrors.concat(vals);
+	vals = runValidation(others, validations_others);              validationErrors = validationErrors.concat(vals);
+	vals = runValidation(accountings, validations_accounting);     validationErrors = validationErrors.concat(vals);
+	vals = runValidation(contracts, validations_accounting);       validationErrors = validationErrors.concat(vals);
 
 	return {
 		success : validationErrors.length > 0 ? false : true,
