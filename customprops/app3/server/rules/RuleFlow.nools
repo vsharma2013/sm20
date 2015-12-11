@@ -1,0 +1,8 @@
+rule checkRule1{
+	when {
+		req : Requisition ruleDef.checkRule1(req);
+	}
+	then {
+		ruleAct.runActionRule1(req);
+	}
+}
