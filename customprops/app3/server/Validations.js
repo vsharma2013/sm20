@@ -276,8 +276,10 @@ function validateRequisition(requisition){
 		if(item.accounting) accountings.push(accounting);
 		if(item.contract)   contracts.push(contract);
 	}
+	
 	var vals = [];
 	vals = runValidation(requisitions, validations_requisition);   validationErrors = validationErrors.concat(vals);
+	vals = runValidation(items, validations_item);                 validationErrors = validationErrors.concat(vals);
 	vals = runValidation(partners, validations_partner);           validationErrors = validationErrors.concat(vals);
 	vals = runValidation(shippings, validations_shipping);         validationErrors = validationErrors.concat(vals);
 	vals = runValidation(others, validations_others);              validationErrors = validationErrors.concat(vals);
