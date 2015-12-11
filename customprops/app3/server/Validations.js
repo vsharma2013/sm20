@@ -303,4 +303,6 @@ function runValidation(validationObjects, validations){
 	return validationErrors;
 }
 
-module.exports = validateRequisition;
+module.exports = {
+	validateRequisition : validateRequisition
+};
