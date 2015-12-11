@@ -27,16 +27,17 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 
 ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
 	var result = validations.validateRequisition(req.body);
-	res.json(result);
-	return;
-	
-	dbMgr.saveRequisitionDocument(req.body, function(err, result){
-		if(err)
-			res.json({success : false, err : err});
-		else{
-			res.json({success: true, message: 'Requisition saved successfully'});
-		}
-	});	
+	if(result.success){
+		dbMgr.saveRequisitionDocument(req.body, function(err, rs){
+			if(err)
+				res.json({success : false, err : err});
+			else{
+				res.json({success: true, message: 'Requisition saved successfully'});
+			}
+		});	
+	}
+	else
+		res.json(result);	
 }
 
 
