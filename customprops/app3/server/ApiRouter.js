@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var dbMgr = require('./DBManager');
 var validations = require('./Validations');
+var RuleFlow = require('./rules/RuleFlow');
 
 function ApiController(){
 
@@ -40,10 +41,21 @@ ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
 		res.json(result);	
 }
 
+ApiController.prototype.handleSubmitRequisitionRequest = function(req, res){
+	var ruleFlow = new RuleFlow();
+	ruleFlow.run(req.body, function(result){
+		if(result.success)
+			res.json({success : true, message : result.results.join('\n')});
+		else
+			res.json({success : false, message : 'Error in executing submit rules'});
+	});
+}
+
 
 var apiController = new ApiController();
 router.get('/req', apiController.handleGetRequisitionRequest.bind(apiController));
 router.get('/reqraw', apiController.handleGetRawRequisitionRequest.bind(apiController));
 router.get('/cpuischema', apiController.handleCustomPropsUISchemaRequest.bind(apiController));
 router.post('/req/save', apiController.handleSaveRequisitionRequest.bind(apiController));
+router.post('/req/submit', apiController.handleSubmitRequisitionRequest.bind(apiController));
 module.exports = router;
