@@ -7,7 +7,6 @@
     <label class="btn btn-primary myradio" ng-model="vm.viewtype" uib-btn-radio="'Quick'">Quick</label>
     <label class="btn btn-primary myradio" ng-model="vm.viewtype" uib-btn-radio="'Detailed'">Detailed</label>
   </div>
-  <button type="button" class="col-md-1 btn btn-warning" ng-click="vm.save()">Save</button>
   <div class="btn-group col-md-2" uib-dropdown>
     <button id="split-button" type="button" class="btn btn-danger">{{vm.status}}</button>
     <button type="button" class="btn btn-danger" uib-dropdown-toggle>
@@ -21,6 +20,7 @@
       <li role="menuitem"><a>Export To PDF</a></li>
     </ul>
   </div>
+  <button type="button" class="col-md-1 btn btn-warning" ng-click="vm.save()">Save</button>  
 </div>
 <div class="divider" style="margin-top:15px;"></div>
 <uib-tabset>
@@ -31,6 +31,6 @@
     <item-directive requisition='vm.requisition'></item-directive>
   </uib-tab>
   <uib-tab heading="Item Details({{vm.requisition.Items.length}})">    
-    <itemdetails-directive requisition='vm.requisition'></itemdetails-directive>
+    <itemdetails-directive item='vm.requisition.Items[0]'></itemdetails-directive>
   </uib-tab>
 </uib-tabset>

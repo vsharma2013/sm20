@@ -1,4 +1,4 @@
-<div class='row' style="margin: 20px;">
+<div class='row'>
   <div class='row'>
     <div class="col-md-6">
       <label>Requisition Name</label>
@@ -27,13 +27,14 @@
   </div>
 </div>
 <hr />
-<div class='row' style="margin:20px;"> 
+<div class='row'> 
   <div class='row'><b>Location Details</b></div>
-  <div class='row col-md-12' style='margin-top:10px;'>Ship to</div>
-  <div class='row col-md-12'>
-    <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="1">Specify at Header</label>
-    <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="2">Different for Each Line Item</label>  
-  </div>  
+  <div class='row col-md-12'>Ship to
+    <div class='col-md-12'>
+      <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="1">Specify at Header</label>
+      <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="2">Different for Each Line Item</label>  
+    </div>  
+  </div>
   <div class='row'>
     <div class="col-md-6">
       <label>Ship to</label>
@@ -60,9 +61,9 @@
   </div>
 </div>
 <hr />
-<div class='row' style="margin: 20px;">
+<div class='row'>
   <div class='row'><b>Custom Properties</b></div>
-  <div class='row' style='margin-top:10px;'>
+  <div class='row'>
     <custom-properties customprops='requisition.customProps'></custom-properties>
   </div>
 </div>

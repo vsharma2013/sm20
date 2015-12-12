@@ -7,7 +7,7 @@ function itemdetailsDirective() {
     return {
         restrict: 'E',
         scope: {
-          requisition: '=requisition'
+          item: '=item'
         },
         templateUrl: 'partials/itemdetails.html',
         controller: function ($scope, $element) {

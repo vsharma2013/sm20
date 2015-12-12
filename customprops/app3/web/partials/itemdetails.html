@@ -1,4 +1,4 @@
-<div class='row' style="margin: 20px;">    
+<div class='row'>    
 	<div class="btn-group">
 		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Partner'">Partner</label>
 		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Shipping'">Shipping</label>
@@ -7,20 +7,73 @@
 		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Contract'">Contract</label>
 	</div>
 </div>
-<div class='row' style="margin:20px;">  
+<div class='row'>  
 	<div uib-collapse="!(radioModel == 'Partner')">
-		Partner
+		<div class='row'>
+			<div class="col-md-4">
+				<label>Partner Name</label>
+				<input type="text" ng-model="item.partner.Partnername" class="form-control">
+			</div>
+			<div class="col-md-4">
+				<label>Partner Code</label>
+				<div>{{item.partner.Partnercode}}</div>
+			</div>       
+		</div>
+		<div class='row'>
+			<div class="col-md-4">
+				<label>Manufacturer Name</label>
+				<input type="text" ng-model="item.partner.Manufacturername" class="form-control">
+			</div>
+			<div class="col-md-4">
+				<label>Manufacturer Part Number</label>
+				<input type="text" ng-model="item.partner.Manufacturerpartnumber" class="form-control">
+			</div>       
+		</div>
 	</div>
 	<div uib-collapse="!(radioModel == 'Shipping')">
 		Shipping
 	</div>
 	<div uib-collapse="!(radioModel == 'Others')">
-		Others
+		<div class='row'>
+			<div class="col-md-4">
+				<label>Contract Number</label>
+				<input type="text" ng-model="item.others.Categoryname" class="form-control">
+			</div>  
+		</div>
+		<div class='row'><b>Custom Properties</b></div>
+		<div class='row'>
+			<custom-properties customprops='item.others.customProps'></custom-properties>
+		</div>
 	</div>
 	<div uib-collapse="!(radioModel == 'Accounting')">
 		Accounting
 	</div>
 	<div uib-collapse="!(radioModel == 'Contract')">
-		Contract
+		<div class='row'>
+			<div class="col-md-4">
+				<label>Contract Number</label>
+				<input type="text" ng-model="item.contract.Contractnumber" class="form-control">
+			</div>
+			<div class="col-md-4">
+				<label>Contract Name</label>
+				<div>{{item.contract.Contractname}}</div>
+			</div>       
+		</div>	
+		<div class='row'>
+			<div class="col-md-4">
+				<label>Contract Expiry Date</label>
+				<div>{{item.contract.Contractexpirydate}}</div>
+			</div>
+			<div class="col-md-4">
+				<label>Contract Value</label>
+				<div>{{item.contract.Contractvalue}}</div>
+			</div>       
+		</div>	
+		<div class='row'>
+			<div class="col-md-4">
+				<label>Payment Terms</label>
+				<div>{{item.contract.Paymentterms}}</div>
+			</div>
+		</div>	
 	</div>
 </div>
