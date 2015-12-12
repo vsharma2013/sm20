@@ -1,7 +1,7 @@
 var _ = require('underscore');
 
 function hasString(str){
-	return /([^\s])/.test(str);
+	return typeof(str) === 'string' && /([^\s])/.test(str);
 }
 
 function hasInt(i){
