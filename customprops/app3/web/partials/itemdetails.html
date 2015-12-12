@@ -31,7 +31,20 @@
 		</div>
 	</div>
 	<div uib-collapse="!(radioModel == 'Shipping')">
-		Shipping
+		<div class='row'>
+			<div class="col-md-4">
+				<label>Shipping Name</label>
+				<input type="text" ng-model="item.shipping.Shiptoname" class="form-control">
+			</div>
+			<div class="col-md-4">
+				<label>Shipping Address</label>
+				<div>{{item.shipping.Shiptoaddress}}</div>
+			</div>       
+		</div>
+		<div class='row'><b>Custom Properties</b></div>
+		<div class='row'>
+			<custom-properties customprops='item.shipping.customProps'></custom-properties>
+		</div>
 	</div>
 	<div uib-collapse="!(radioModel == 'Others')">
 		<div class='row'>
@@ -46,7 +59,20 @@
 		</div>
 	</div>
 	<div uib-collapse="!(radioModel == 'Accounting')">
-		Accounting
+		<div style='display:table-cell' ng-repeat='split in item.accounting' ng-style="{ 'width': (100 - 99/item.accounting.length) + '%' }">
+			<div class='row'>
+				<label>Quantity</label>
+				<input type="text" ng-model="split.Quantity" class="form-control">
+			</div>
+			<div class='row'>
+				<label>Amount</label>
+				<input type="text" ng-model="split.Amount" class="form-control">
+			</div>
+			<div class='row'><b>Custom Properties</b></div>
+			<div class='row'>
+				<custom-properties customprops='split.customProps'></custom-properties>
+			</div>
+		</div>
 	</div>
 	<div uib-collapse="!(radioModel == 'Contract')">
 		<div class='row'>
