@@ -13,6 +13,7 @@ function Requisition(r){
 	this.Billtoaddress   	= r.Billtoaddress; 
 	this.Currency	        = r.Currency;
 	this.Items              = r.Items;
+	this.actionObjects      = {};
 }
 
 module.exports = {
