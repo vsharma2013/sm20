@@ -36,7 +36,7 @@ function hasDate(d){
 
 function hasYesNo(v){
 	var values = ['yes', 'no'];
-	return _.containes(values, v.toLoserCase());
+	return _.contains(values, v.toLoserCase());
 }
 
 function getDocumentValue(req){
