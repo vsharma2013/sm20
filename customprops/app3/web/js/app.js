@@ -1,32 +1,30 @@
 'use strict';
 
 angular.module('myApp', [
-    'ui.router'
+    'ngRoute'
     //,'ngAnimate'
     ,'ui.grid'
     ,'ui.bootstrap'   
 ]).
-    config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    config(['$routeProvider', '$httpProvider', '$provide', '$locationProvider', function ($routeProvider, $httpProvider, $provide, $locationProvider) {
 
-        $urlRouterProvider.otherwise("/");
-
-        $stateProvider
-            .state('home', {
-                url: "/",
-                templateUrl: "partials/home.html"   
-            })
-            .state('home.requisition', {
-                url: "/requisition/:reqid",
-                templateUrl: "partials/requisition.html",
-                controller: 'requisitionController',
-                controllerAs: 'vm',
-                resolve: {
-                    requisition: ['requisionService', '$stateParams', function (requisionService, $stateParams) {
-                        var reqid = 1;
-                        if($stateParams.reqid)
-                            reqid = $stateParams.reqid;
-                        return requisionService.getRequisition(reqid)
-                    }]
-                }
-            })
+        $routeProvider.when('/', {
+            templateUrl: "partials/home.html",
+            controller: 'homeController'   
+        })
+        .when('/requisition/:reqid/', {
+            templateUrl: "partials/requisition.html",
+            controller: 'requisitionController',
+            controllerAs: 'vm',
+            resolve: {
+                requisition: ['requisionService', '$route', function (requisionService, $route) {
+                    var reqid = 1;
+                    if($route.current.params.reqid)
+                        reqid = $route.current.params.reqid;
+                    console.log(reqid);
+                    return requisionService.getRequisition(reqid)
+                }]
+            }
+        })
+        .otherwise({redirectTo: '/'})
     }]);

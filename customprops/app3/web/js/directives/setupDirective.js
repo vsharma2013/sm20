@@ -10,8 +10,8 @@ function setupDirective() {
           requisition: '=requisition'
         },
         templateUrl: 'partials/setup.html',
-        controller: function ($scope, $element) {
-            $scope.stspec = 1;
+        link: function (scope, element) {
+            scope.stspec = 1;
         }       
     };   
 }
