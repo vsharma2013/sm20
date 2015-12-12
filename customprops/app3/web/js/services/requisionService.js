@@ -27,6 +27,7 @@ function requisionService($http, ENV) {
 
     function saveRequisition(req){
         return $http.post(ENV.apiEndPoint+'req/save', JSON.stringify(req)).success(function(response) {
+           alert(response.message);
            return response;
         }).error(function(error) {
            return error;
