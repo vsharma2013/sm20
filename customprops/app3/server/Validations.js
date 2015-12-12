@@ -1,74 +1,40 @@
-var _ = require('underscore');
-
-function hasString(str){
-	return /([^\s])/.test(str);
-}
-
-function hasInt(i){
-	try{
-		parseInt(i);
-		return true;
-	}
-	catch(e){
-		return false;
-	}
-}
-
-function hasFloat(f){
-	try{
-		parseFloat(f);
-		return true;
-	}
-	catch(e){
-		return false;
-	}
-}
-
-function hasDate(d){
-	try{
-		Date.parse(d);
-		return true;
-	}
-	catch(e){
-		return false;
-	}
-}
+var utils = require('./Utils');
 
 var validations_requisition = {
 	RequisitionName : {
 		validate : function(req){
-			return req.hasOwnProperty('RequisitionName') && hasString(req.RequisitionName) && req.RequisitionName.length <=200;
+			return req.hasOwnProperty('RequisitionName') && utils.hasString(req.RequisitionName) && req.RequisitionName.length <=200;
 		},
 		err : 'Requsition name cannot be empty and can have max 200 characters.'
 	},
 	RequisitionNumber : {
 		validate : function(req){
-			return req.hasOwnProperty('RequisitionNumber') && hasString(req.RequisitionNumber);
+			return req.hasOwnProperty('RequisitionNumber') && utils.hasString(req.RequisitionNumber);
 		},
 		err : 'Requsition number cannot be empty.'
 	},
 	Shiptoid : {
 		validate : function(req){
-			return req.hasOwnProperty('Shiptoid') && hasInt(req.Shiptoid);
+			return req.hasOwnProperty('Shiptoid') && utils.hasInt(req.Shiptoid);
 		},
 		err : 'Ship to id should be an integer value.'
 	},
 	Billtoid : {
 		validate : function(req){
-			return req.hasOwnProperty('Billtoid') && hasInt(req.Billtoid);
+			return req.hasOwnProperty('Billtoid') && utils.hasInt(req.Billtoid);
 		},
 		err : 'Bill to id should be an integer value.'
 	},
 	Currency : {
 		validate : function(req){
-			return req.hasOwnProperty('Currency') && hasString(req.Currency);
+			return req.hasOwnProperty('Currency') && utils.hasString(req.Currency);
 		},
 		err : 'Currency number cannot be empty.'
 	},
 	Markasurgent : {
 		validate : function(req){
 			if(!req.customProps) return false;
-			return req.customProps.hasOwnProperty('Markasurgent') && hasInt(req.customProps.Markasurgent);
+			return req.customProps.hasOwnProperty('Markasurgent') && utils.hasInt(req.customProps.Markasurgent);
 		},
 		err : 'Mark as urgent is a mandatory boolean field.'
 	},
@@ -78,7 +44,7 @@ var validations_requisition = {
 			if(!req.customProps.ERPOrderType) return true;
 			if(!req.customProps.ERPOrderType.val) return true;
 
-			return req.customProps.hasOwnProperty('Workorder') && hasString(req.customProps.Workorder) && req.customProps.Workorder.length <= 500;
+			return req.customProps.hasOwnProperty('Workorder') && utils.hasString(req.customProps.Workorder) && req.customProps.Workorder.length <= 500;
 		},
 		err : 'Requsition work order field should a non-empty string value with max 500 characters.'
 	}
@@ -87,7 +53,7 @@ var validations_requisition = {
 var validations_item = {
 	Linenumber: {
 		validate : function(item){
-			return item.hasOwnProperty('Linenumber') && hasInt(item.Linenumber);
+			return item.hasOwnProperty('Linenumber') && utils.hasInt(item.Linenumber);
 		},
 		err : 'Line number should be an integer value.'
 	},
@@ -100,7 +66,7 @@ var validations_item = {
 	},
 	Item : {
 		validate : function(item){
-			return item.hasOwnProperty('Item') && hasString(item.Item) && item.Item.length <= 500;
+			return item.hasOwnProperty('Item') && utils.hasString(item.Item) && item.Item.length <= 500;
 		},
 		err : 'Item should be a non-empty string value with max 500 characters.'
 	},
@@ -113,37 +79,37 @@ var validations_item = {
 	},
 	Quantity : {
 		validate : function(item){
-			return item.hasOwnProperty('Quantity') && hasFloat(item.Quantity) && item.Quantity > 0;
+			return item.hasOwnProperty('Quantity') && utils.hasFloat(item.Quantity) && item.Quantity > 0;
 		},
 		err : 'Quantity should be a non-negative floating point value.'
 	},
 	UOM : {
 		validate : function(item){
-			return item.hasOwnProperty('UOM') && hasString(item.UOM);
+			return item.hasOwnProperty('UOM') && utils.hasString(item.UOM);
 		},
 		err : 'Item UOM should be a non-empty string value.'
 	},
 	Unitprice : {
 		validate : function(item){
-			return item.hasOwnProperty('Unitprice') && hasFloat(item.Unitprice) && item.Unitprice > 0;
+			return item.hasOwnProperty('Unitprice') && utils.hasFloat(item.Unitprice) && item.Unitprice > 0;
 		},
 		err : 'Item unit price should be a non-zero poistive floating point value.'
 	},
 	Total : {
 		validate : function(item){
-			return item.hasOwnProperty('Total') && hasFloat(item.Total) && item.Total > 0;
+			return item.hasOwnProperty('Total') && utils.hasFloat(item.Total) && item.Total > 0;
 		},
 		err : 'Item total should be a non-zero poistive floating point value.'
 	},
 	Requesteddate : {
 		validate : function(item){
-			return item.hasOwnProperty('Requesteddate') && hasDate(item.Requesteddate);
+			return item.hasOwnProperty('Requesteddate') && utils.hasDate(item.Requesteddate);
 		},
 		err : 'Item request date is a mandatory date type field.'
 	},
 	Needbydate : {
 		validate : function(item){
-			return item.hasOwnProperty('Needbydate') && hasDate(item.Needbydate) && Date.parse(item.Needbydate) > Date.now();
+			return item.hasOwnProperty('Needbydate') && utils.hasDate(item.Needbydate) && Date.parse(item.Needbydate) > Date.now();
 		},
 		err : 'Item need by date is a mandatory date type field. It should be greater current date' 
 	}
@@ -152,13 +118,13 @@ var validations_item = {
 var validations_partner = {
 	Partnername : {
 		validate : function(partner){
-			return partner.hasOwnProperty('Partnername') && hasString(partner.Partnername);
+			return partner.hasOwnProperty('Partnername') && utils.hasString(partner.Partnername);
 		},
 		err : 'Partner name should be a non-empty string value.'
 	},
 	Partnercode : {
 		validate : function(partner){
-			return partner.hasOwnProperty('Partnercode') && hasString(partner.Partnercode);
+			return partner.hasOwnProperty('Partnercode') && utils.hasString(partner.Partnercode);
 		},
 		err : 'Partner code should be a non-empty string value.'
 	}
@@ -167,13 +133,13 @@ var validations_partner = {
 var validations_shipping = {
 	Shiptoname : {
 		validate : function(shipping){
-			return shipping.hasOwnProperty('Shiptoname') && hasString(shipping.Shiptoname);
+			return shipping.hasOwnProperty('Shiptoname') && utils.hasString(shipping.Shiptoname);
 		},
 		err : 'Ship to name should be a non-empty string value.'
 	},
 	Shiptoaddress : {
 		validate : function(shipping){
-			return shipping.hasOwnProperty('Shiptoaddress') && hasString(shipping.Shiptoaddress);
+			return shipping.hasOwnProperty('Shiptoaddress') && utils.hasString(shipping.Shiptoaddress);
 		},
 		err : 'Ship to address should be a non-empty string value.'
 	},
@@ -191,32 +157,30 @@ var validations_others = {
 	Procurementoption : {
 		validate : function(others){
 			if(!others.customProps) return false;
-			return others.customProps.hasOwnProperty('Procurementoption') && hasString(others.customProps.Procurementoption);
+			return others.customProps.hasOwnProperty('Procurementoption') && utils.hasString(others.customProps.Procurementoption);
 		},
 		err : 'Others procurement option should be a non-empty string value.'
 	},
 	Capitalized : {
 		validate : function(others){
 			if(!others.customProps) return false;
-			var values = ['yes', 'no'];
-			return others.customProps.hasOwnProperty('Capitalized') && hasString(others.customProps.Capitalized)
-			       && _.contains(values, other.customProps.Capitalized.toLowerCase());
+			return others.customProps.hasOwnProperty('Capitalized') && utils.hasString(others.customProps.Capitalized)
+			       && utils.hasYesNo(other.customProps.Capitalized);
 		},
 		err : 'Others capitalized field should only have only Yes/No values.'
 	},
 	Billable : {
 		validate : function(others){
 			if(!others.customProps) return false;
-			var values = ['yes', 'no'];
-			return others.customProps.hasOwnProperty('Billable') && hasString(others.customProps.Billable)
-			       && _.contains(values, other.customProps.Billable.toLowerCase());
+			return others.customProps.hasOwnProperty('Billable') && utils.hasString(others.customProps.Billable)
+			       && utils.hasYesNo(other.customProps.Billable);
 		},
 		err : 'Others Billable field should only have only Yes/No values.'
 	},
 	Inventorytype : {
 		validate : function(others){
 			if(!others.customProps) return false;
-			return others.customProps.hasOwnProperty('Inventorytype') && hasString(others.customProps.Inventorytype);
+			return others.customProps.hasOwnProperty('Inventorytype') && utils.hasString(others.customProps.Inventorytype);
 		},
 		err : 'Others inventory type option should be a non-empty string value.'
 	}
@@ -225,20 +189,20 @@ var validations_others = {
 var validations_accounting = {
 	Type : {
 		validate : function(accounting){
-			return accounting.hasOwnProperty('Type') && hasInt(accounting.Type);
+			return accounting.hasOwnProperty('Type') && utils.hasInt(accounting.Type);
 		},
 		err : 'Accounting type should be a non-empty integer value.'
 	},
 	Quantity : {
 		validate : function(accounting){
-			return accounting.hasOwnProperty('Quantity') && hasFloat(accounting.Quantity) && accounting.Quantity > 0;
+			return accounting.hasOwnProperty('Quantity') && utils.hasFloat(accounting.Quantity) && accounting.Quantity > 0;
 		},
 		err : 'Accounting quantity should be a positive floating point value.'
 	},
 	Amount : {
 		validate : function(accounting){
 			if(!accounting.Amount) return true;
-			return hasFloat(accounting.Amount);
+			return utils.hasFloat(accounting.Amount);
 		},
 		err : 'Accounting amount should be a floating point value'
 	}
@@ -248,21 +212,21 @@ var validations_contract = {
 	Contractnumber : {
 		validate : function(contract){
 			if(!contract.Contractnumber) return true;
-			return hasString(contract.Contractnumber) && contract.Contractnumber.length <= 400;
+			return utils.hasString(contract.Contractnumber) && contract.Contractnumber.length <= 400;
 		},
 		err : 'Contract number should be a string value with max 400 characters'
 	},
 	Contractname : {
 		validate : function(contract){
 			if(!contract.Contractname) return true;
-			return hasString(contract.Contractname) && contract.Contractname.length <= 400;
+			return utils.hasString(contract.Contractname) && contract.Contractname.length <= 400;
 		},
 		err : 'Contract name should be a string value with max 400 characters'
 	},
 	Contractvalue : {
 		validate : function(contract){
 			if(!contract.Contractvalue) return true;
-			return hasFloat(contract.Contractvalue) && contract.Contractvalue > 0;
+			return utils.hasFloat(contract.Contractvalue) && contract.Contractvalue > 0;
 		},
 		err : 'Contract value should be a positive floating point value'
 	}

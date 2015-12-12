@@ -1,3 +1,5 @@
+var utils = require('./../Utils');
+
 function RuleDefinitions(){
 }
 
@@ -8,8 +10,8 @@ RuleDefinitions.prototype.checkItemContractNumberAndExpiryDate = function(req){
 		var item = req.Items[i];
 		var bValid = item.contract && 
 					 item.contract.Contractnumber &&
-		             hasString(item.contract.Contractnumber) && 
-		             hasDate(item.contract.Contractexpirydate) &&
+		             utils.hasString(item.contract.Contractnumber) && 
+		             utils.hasDate(item.contract.Contractexpirydate) &&
 		             Date.parse(item.contract.Contractexpirydate) < Date.now();
 		if(bValid){
 			req.actionObjects['check_item_contract_number_and_expiry_date'] = { index : i + 1, name : item.Item };
@@ -20,36 +22,11 @@ RuleDefinitions.prototype.checkItemContractNumberAndExpiryDate = function(req){
 }
 
 RuleDefinitions.prototype.checkDocumentForAutoApproval = function(req){
-	return getDocumentValue(req) <= 500 ? true : false;
+	return utils.getDocumentValue(req) <= 500 ? true : false;
 }
 
 RuleDefinitions.prototype.checkSendRequisitionToAllManagers = function(req){
-	return getDocumentValue(req) > 500 ? true : false;;
-}
-
-function getDocumentValue(req){
-	var val = 0;
-	req.Items.forEach(function(item){
-		val += (item.Quantity * item.Unitprice);
-		val += item.Taxes ? item.Taxes : 0;
-		val += item.Shippingcharges ? item.Shippingcharges : 0;
-		val += item.Othercharges ? item.Othercharges : 0;
-	});
-	return val;
-}
-
-function hasString(str){
-	return /([^\s])/.test(str);
-}
-
-function hasDate(d){
-	try{
-		Date.parse(d);
-		return true;
-	}
-	catch(e){
-		return false;
-	}
+	return utils.getDocumentValue(req) > 500 ? true : false;;
 }
 
 module.exports = RuleDefinitions;
