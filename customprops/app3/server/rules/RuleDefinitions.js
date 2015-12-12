@@ -1,5 +1,4 @@
-function RuleDefinitions(cache){
-	this.cache = cache;
+function RuleDefinitions(){
 }
 
 RuleDefinitions.prototype.checkItemContractNumberAndExpiryDate = function(req){
@@ -7,11 +6,13 @@ RuleDefinitions.prototype.checkItemContractNumberAndExpiryDate = function(req){
 
 	for(var i = 0 ; i < req.Items.length; i++){
 		var item = req.Items[i];
-		var bValid = item.contract && item.contract.Contractnumber &&
-		             hasString(item.contract.Contractnumber) && hasDate(item.contract.Contractexpirydate) &&
+		var bValid = item.contract && 
+					 item.contract.Contractnumber &&
+		             hasString(item.contract.Contractnumber) && 
+		             hasDate(item.contract.Contractexpirydate) &&
 		             Date.parse(item.contract.Contractexpirydate) < Date.now();
 		if(bValid){
-			this.cache.actionObjects['check_item_contract_number_and_expiry_date'] = { index : i + 1, name : item.Item };
+			req.actionObjects['check_item_contract_number_and_expiry_date'] = { index : i + 1, name : item.Item };
 			return true;             
 		}
 	}
