@@ -6,7 +6,7 @@ RuleActions.prototype.returnErrorForItemContractNumberAndExpiryDate = function(r
 	var data = req.actionObjects['check_item_contract_number_and_expiry_date'];
 	if(!data) return;
 
-	var r = 'Line item # ' + data.index + ' \"' + data.name + '\"cannot be submitted as contract for the same has expired';
+	var r = 'Line item # ' + data.index + ' \"' + data.name + '\" cannot be submitted as contract for the same has expired';
 	this.results.push(r);	
 }
 
