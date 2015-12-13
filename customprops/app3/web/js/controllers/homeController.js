@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('myApp').
-	controller('homeController', ['$state', homeController]);
+	controller('homeController', [homeController]);
 
-function homeController($state) {
+function homeController() {
     var vm = this;
 }

@@ -74,7 +74,7 @@ DbManager.prototype.addUISchemaToCustomProps = function(requisition){
 	requisition.Items.forEach((function(item){
 		this.addUISchemaToItemDetailCustomProps(item, 'shipping');
 		this.addUISchemaToItemDetailCustomProps(item, 'others');
-		this.addUISchemaToItemDetailCustomProps(item, 'accounting');
+		this.addUISchemaToItemDetailCustomPropsAccounting(item);
 	}).bind(this));
 }
 
@@ -90,6 +90,20 @@ DbManager.prototype.addUISchemaToItemDetailCustomProps = function(item, itemDeta
 		cps.push(cp);
 	}
 	item[itemDetailKey].customProps = cps;
+}
+
+DbManager.prototype.addUISchemaToItemDetailCustomPropsAccounting = function(item){
+	if(!item.accounting) return;
+  	if(!Array.isArray(item.accounting)) return;
+  	item.accounting.forEach((function(acc){
+  		var obj = {
+  			acc : {
+  				customProps : acc.customProps
+  			}
+  		};
+  		this.addUISchemaToItemDetailCustomProps(obj, 'acc');
+  		acc.customProps = obj.acc.customProps;
+  	}).bind(this));
 }
 
 DbManager.prototype.cacheUISchema = function(db){

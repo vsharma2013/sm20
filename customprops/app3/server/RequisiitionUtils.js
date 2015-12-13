@@ -76,7 +76,7 @@ var defaulVals = {
   Manufacturerpartnumber : ['MF11', 'MF22', 'MF33', 'MF44', 'MF55'],  
   Categoryid : [181, 182, 183, 184, 185, 186, 187], 
   Categoryname : ['Cat-01', 'Cat-02', 'Cat-03', 'Cat-04', 'Cat-05', 'Cat-06', 'Cat-07'],  
-  Type : [171, 172, 173, 174, 175],  
+  Type : ['#', '%'],  
   Quantity : [2,3,5,7,8],  
   Amount : [20, 30, 35,45.5, 65.5],  
   Contractnumber : ['CNO-9001', 'CNO-9002', 'CNO-9003', 'CNO-9004', 'CNO-9005'], 
@@ -163,16 +163,16 @@ function getRequisition(reqOptions){
     addItemDetails(item, 'partner', ItemDetails_partner);
     addItemDetails(item, 'shipping', ItemDetails_shipping);
     addItemDetails(item, 'others', ItemDetails_others);
-    addItemDetails(item, 'accounting', ItemDetails_accounting);
     addItemDetails(item, 'contract', ItemDetails_contract);
+    addItemDetailsAccounting(item);
 
     var custShipping = reqOptions.client ==='ABM' ? ItemDetails_shipping_custom_ABM: ItemDetails_shipping_custom_CAMC;
     var custOthers = reqOptions.client ==='ABM' ? ItemDetails_others_custom_ABM: ItemDetails_others_custom_CAMC;
-    var custAccounting = reqOptions.client ==='ABM' ? ItemDetails_accounting_custom_ABM: ItemDetails_accounting_custom_CAMC;
+    
 
     addItemDetailsCustomProps(item, 'shipping', custShipping);
     addItemDetailsCustomProps(item, 'others', custOthers);
-    addItemDetailsCustomProps(item, 'accounting', custAccounting);
+    addItemDetailsCustomPropsAccounting(item, reqOptions);
 
     req.Items.push(item);
   }
@@ -193,6 +193,27 @@ function addItemDetailsCustomProps(item, detailKey, detailCustomValueKeys){
   });
 }
 
+function addItemDetailsAccounting(item){
+  var splitCnt = item.Linenumber % 100;
+  var accSplits = [];
+  for(var i = 0 ; i < splitCnt ; i++){
+    var obj = {};
+    addItemDetails(obj, 'accSplit', ItemDetails_accounting);
+    accSplits.push(obj.accSplit);
+  }  
+  item.accounting = accSplits;
+}
+
+function addItemDetailsCustomPropsAccounting(item, reqOptions){
+  if(!item.accounting) return;
+  if(!Array.isArray(item.accounting)) return;
+  var custAccounting = reqOptions.client ==='ABM' ? ItemDetails_accounting_custom_ABM: ItemDetails_accounting_custom_CAMC;
+  item.accounting.forEach(function(acc){
+    var obj = {accounting : {}};
+    addItemDetailsCustomProps(obj, 'accounting', custAccounting)
+    acc.customProps = obj.accounting.customProps;
+  });
+}
 
 module.exports = {
   primaryPropsDefaultValues : defaulVals,

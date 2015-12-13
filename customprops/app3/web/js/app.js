@@ -1,62 +1,30 @@
 'use strict';
 
 angular.module('myApp', [
-    'ui.router'
+    'ngRoute'
     //,'ngAnimate'
+    ,'ui.grid'
     ,'ui.bootstrap'   
 ]).
-    config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+    config(['$routeProvider', '$httpProvider', '$provide', '$locationProvider', function ($routeProvider, $httpProvider, $provide, $locationProvider) {
 
-        $urlRouterProvider.otherwise("/");
-
-        $stateProvider
-            .state('home', {
-                url: "/",
-                templateUrl: "partials/home.html"   
-            })
-            .state('home.procurement', {
-                url: "/procurement",
-                templateUrl: "partials/procurement.html",
-                controller: 'procurementController',
-                controllerAs: 'vm',
-                resolve: {
-                    requisition: ['requisionService', function (requisionService) {
-                        return requisionService.getRequisition(1)
-                    }]
-                }
-            })
-            // .state('home.mongo', {
-            //     url: "/mongo",
-            //     templateUrl: "partials/reactgrid.html",
-            //     controller: 'dbController',
-            //     controllerAs: 'vm',
-            //     resolve: {
-            //         tableData: ['DataService', function (DataService) {
-            //             return DataService.getAllRequisitions();
-            //         }]
-            //     }
-            // })
-            // .state('home.sql', {
-            //      url: "/sql",
-            //     templateUrl: "partials/reactgrid.html",
-            //     controller: 'dbController',
-            //     controllerAs: 'vm',
-            //     resolve: {
-            //         tableData: ['DataService', function (DataService) {
-            //             return DataService.getAllRequisitions();
-            //         }]
-            //     }
-            // })
-            // .state('home.elastic', {
-            //      url: "/elastic",
-            //     templateUrl: "partials/reactgrid.html",
-            //     controller: 'dbController',
-            //     controllerAs: 'vm',
-            //     resolve: {
-            //         tableData: ['DataService', function (DataService) {
-            //             return DataService.getAllRequisitions();
-            //         }]
-            //     }
-            // })
-
+        $routeProvider.when('/', {
+            templateUrl: "partials/home.html",
+            controller: 'homeController'   
+        })
+        .when('/requisition/:reqid/', {
+            templateUrl: "partials/requisition.html",
+            controller: 'requisitionController',
+            controllerAs: 'vm',
+            resolve: {
+                requisition: ['requisionService', '$route', function (requisionService, $route) {
+                    var reqid = 1;
+                    if($route.current.params.reqid)
+                        reqid = $route.current.params.reqid;
+                    console.log(reqid);
+                    return requisionService.getRequisition(reqid)
+                }]
+            }
+        })
+        .otherwise({redirectTo: '/'})
     }]);

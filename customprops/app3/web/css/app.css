@@ -27,3 +27,23 @@ hr{
 	margin-left: 15px;
     width: 164px;
 }
+#split-button{
+    width: 138px;
+}
+.myradio{
+    width: 91px;
+}
+.row{
+    margin: 20px;
+}
+.grid{
+    width: 1200px;
+    height: 250px;
+}
+.well{
+    background-color: rgba(65, 71, 74, 0.46);
+}
+.navbar{
+    background-color: rgba(102, 175, 233, 0.6);
+    margin-bottom: 0px;
+}

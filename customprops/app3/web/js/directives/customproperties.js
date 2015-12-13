@@ -10,16 +10,20 @@ function customProperties() {
           customProps: '=customprops'
         },
         templateUrl: 'partials/customproperties.html',
-        controller: function ($scope, $element) {
-            $scope.isType = function(model, type){                
-                if(model.allowEdit === 0 && type == 'label'){
-                    return true;
-                }else if(model.allVals && model.allVals.length > 0 && model.allowEdit === 1 && type == 'typeahead'){
-                    return true;
-                }else if((!model.allVals || model.allVals.length === 0) && model.allowEdit === 1 && type == 'input'){
-                    return true;
-                }
-                return false;
+        link: function (scope, element) {
+            
+            scope.getInputType = function (model){
+                var notEditable = !model.allowEdit || model.allowEdit == '0'                
+                if(!notEditable && model.type == 'bool')
+                    return 'checkbox';
+                else if(!notEditable && model.type == 'string')
+                    return 'txtbx';
+                else if(!notEditable && model.type == 'autosuggest')
+                    return 'autosuggest';
+                else if(!notEditable && model.type == 'ddlist')
+                    return 'ddlist';
+                else
+                    return 'label';
             }
         }
     };   
