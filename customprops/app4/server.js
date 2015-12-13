@@ -75,18 +75,18 @@ var randomVals = {
 
 
 var req_abm_ui = {};
-var req_abm_mongo = {};
+var req_abm_db = {};
 
 for (var pk in settings_abm.setup.primary){
 	var pv = settings_abm.setup.primary[pk].ui;
 	if(randomVals.abm[pk]) 
 		pv.val = randomVals.abm[pk];
 	req_abm_ui[pk] = pv;
-	req_abm_mongo[pk] = pv.val;
+	req_abm_db[pk] = pv.val;
 }
 
 req_abm_ui.customProps = [];
-req_abm_mongo.customProps = {};
+req_abm_db.customProps = {};
 
 for (var ck in settings_abm.setup.custom){
 	var cv = settings_abm.setup.custom[ck].ui;
@@ -94,7 +94,7 @@ for (var ck in settings_abm.setup.custom){
 		cv.val = randomVals.abm[ck];
 	cv.key = ck;
 	req_abm_ui.customProps.push(cv);
-	req_abm_mongo.customProps[ck] = cv.val;
+	req_abm_db.customProps[ck] = cv.val;
 }
 
-console.log(JSON.stringify([req_abm_mongo, req_abm_ui]));
+console.log(JSON.stringify([req_abm_db, req_abm_ui]));
