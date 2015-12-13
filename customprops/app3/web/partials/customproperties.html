@@ -1,10 +1,21 @@
 <div ng-repeat='customp in customProps'>
 	<!-- <div class='row'> -->
-	<div class="col-md-6">
+	<div class="col-md-6" ng-switch="getInputType(customp)">
 		<label>{{customp.label}}</label>
-		<input ng-if="isType(customp, 'input')" type="text" ng-model="customp.val" class="form-control">
-		<div ng-if="isType(customp, 'label')" class="form-control">{{customp.val}}</div>
-		<input ng-if="isType(customp, 'typeahead')" type="text" ng-model="customp.val" uib-typeahead="state for state in customp.allVals" class="form-control">
+		<div ng-switch-when="txtbx">
+			<input type="text" ng-model="customp.val" class="form-control">
+		</div>
+		<div ng-switch-when="autosuggest">
+			<input type="text" ng-model="customp.val" uib-typeahead="state for state in customp.allVals" class="form-control">
+		</div>
+		<div ng-switch-when="checkbox">
+			<input type="checkbox" ng-model="customp.val" ng-true-value="0" ng-true-value="1" uib-typeahead="state for state in customp.allVals">
+		</div>
+		<div ng-switch-when="ddlist">
+			<select name="mySelect" ng-options="state for state in customp.allVals track by $index" ng-model="customp.val" class="form-control"></select>
+      	</div>
+		<div ng-switch-default class="form-control">{{customp.val}}</div>
+		
 	</div>
 	  <!-- <div class="col-md-4">
 	    <label>Requisition Number</label>

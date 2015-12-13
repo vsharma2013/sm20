@@ -13,15 +13,22 @@ function requisitionController(requisition, requisionService) {
 			console.log(result)
 		});
 	}
-	vm.gridOptions = {};
+	vm.gridOptions = {
+        enableSorting: false,
+        enableRowSelection:true,
+        enableCellSelection: true
+    };
+    _.map(vm.requisition.Items,function(item){
+        item.Total = item.Quantity * item.Unitprice;
+    });
     vm.gridOptions.columnDefs = [
         { name:'Linenumber', displayName:'Line No', enableColumnMenu: false },
         { name:'Itemnumber', displayName:'Item No', enableColumnMenu: false },
         { name:'Partneritemnumber', displayName:'Partner Item No', enableColumnMenu: false },
         { name:'Item', displayName:'Item', enableColumnMenu: false },
-        { name:'Quantity', displayName:'Quantity', enableColumnMenu: false },
+        { name:'Quantity', displayName:'Quantity', enableColumnMenu: false, enableCellEdit: true, enableCellEditOnFocus:true },
         { name:'UOM', displayName:'UOM', enableColumnMenu: false },
-        { name:'Unitprice', displayName:'Unit Price (USD)', enableColumnMenu: false },
+        { name:'Unitprice', displayName:'Unit Price (USD)', enableColumnMenu: false, enableCellEdit: true, enableCellEditOnFocus:true},
         { name:'Total', displayName:'Total (USD)', enableColumnMenu: false }
     ];
     vm.gridOptions.data = vm.requisition.Items;
