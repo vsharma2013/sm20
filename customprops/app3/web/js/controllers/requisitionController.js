@@ -15,10 +15,9 @@ function requisitionController(requisition, requisionService) {
 	}
 	vm.gridOptions = {
         enableSorting: false,
-        enableRowSelection:true,
         enableCellSelection: true
     };
-    _.map(vm.requisition.Items,function(item){
+    vm.requisition.Items.map(function(item){
         item.Total = item.Quantity * item.Unitprice;
     });
     vm.gridOptions.columnDefs = [
