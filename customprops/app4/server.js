@@ -67,10 +67,9 @@ var settings_abm = {
 	}
 };
 
-var defalVals = {
+var randomVals = {
 	abm : {
-		req_name : getRandomItemFromArray(getArrayWithPrefix('Req Name ', 5)),
-		erp_order_type : null
+		req_name : getRandomItemFromArray(getArrayWithPrefix('Req Name ', 5))
 	}
 }
 
@@ -80,7 +79,8 @@ var req_abm_mongo = {};
 
 for (var pk in settings_abm.setup.primary){
 	var pv = settings_abm.setup.primary[pk].ui;
-	pv.val = defalVals.abm[pk];
+	if(randomVals.abm[pk]) 
+		pv.val = randomVals.abm[pk];
 	req_abm_ui[pk] = pv;
 	req_abm_mongo[pk] = pv.val;
 }
@@ -90,7 +90,8 @@ req_abm_mongo.customProps = {};
 
 for (var ck in settings_abm.setup.custom){
 	var cv = settings_abm.setup.custom[ck].ui;
-	cv.val = defalVals.abm[ck];
+	if(randomVals.abm[ck]) 
+		cv.val = randomVals.abm[ck];
 	cv.key = ck;
 	req_abm_ui.customProps.push(cv);
 	req_abm_mongo.customProps[ck] = cv.val;
