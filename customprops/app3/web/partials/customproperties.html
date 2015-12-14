@@ -12,7 +12,9 @@
 			<input type="checkbox" ng-model="customp.val" ng-true-value="0" ng-true-value="1" uib-typeahead="state for state in customp.allVals">
 		</div>
 		<div ng-switch-when="ddlist">
-			<select name="mySelect" ng-options="state for state in customp.allVals track by $index" ng-model="customp.val" class="form-control"></select>
+			<select name="mySelect" ng-model="customp.val" class="form-control">
+				<option ng-repeat='value in customp.allVals track by $index' value='{{value}}'>{{value}}</option>
+			</select>
       	</div>
 		<div ng-switch-default class="form-control">{{customp.val}}</div>
 		
