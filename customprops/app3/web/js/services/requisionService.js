@@ -33,8 +33,17 @@ function requisionService($http, ENV) {
     }
 
     function saveRequisition(req){
-        return $http.post(ENV.apiEndPoint+'req/save', JSON.stringify(req)).success(function(response) {
-           alert(response.message);
+        return $http.post(ENV.apiEndPoint+'req/save', angular.toJson(req)).success(function(response) {
+           alert(response.data.message);
+           return response;
+        }).error(function(error) {
+           return error;
+        });
+    }
+
+    function submitRequisition(req){
+        return $http.post(ENV.apiEndPoint+'req/submit', angular.toJson(req)).success(function(response) {
+           alert(response.data.message);
            return response;
         }).error(function(error) {
            return error;
