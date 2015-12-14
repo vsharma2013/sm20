@@ -249,10 +249,60 @@ var settings_abm = {
 	},
 	split : {
 		primary : {
-
+			item_accounting_type : {
+				ui : getUIPropSchema('int', 'Type', '', 1, []),
+				db : {}
+			},
+			item_accounting_quantity : {
+				ui : getUIPropSchema('float', 'Quantity', '', 1, []),
+				db : {}
+			},
+			item_accounting_amount : {
+				ui : getUIPropSchema('float', 'Amount', '', 0, []),
+				db : {}
+			},
 		},
 		custom : {
-			
+			item_accounting_requestor_name : {
+				ui : getUIPropSchema('string', 'Requestor Name', '', 0, []),
+				db : {}
+			},
+			item_accounting_segment_name : {
+				ui : getUIPropSchema('string', 'Segment Name', '', 1, []),
+				db : {}
+			},
+			item_accounting_division_name : {
+				ui : getUIPropSchema('string', 'Division Name', '', 1, []),
+				db : {}
+			},
+			item_accounting_super_region_name : {
+				ui : getUIPropSchema('string', 'Super Region Name', '', 1, []),
+				db : {}
+			},
+			item_accounting_region_name : {
+				ui : getUIPropSchema('string', 'Region Name', '', 1, []),
+				db : {}
+			},
+			item_accounting_super_branch_name : {
+				ui : getUIPropSchema('string', 'Super Branch Name', '', 1, []),
+				db : {}
+			},
+			item_accounting_branch_name : {
+				ui : getUIPropSchema('string', 'Branch Name', '', 1, []),
+				db : {}
+			},
+			item_accounting_dist_ssid_name : {
+				ui : getUIPropSchema('string', 'District SSID', '', 1, []),
+				db : {}
+			},
+			item_accounting_job_name : {
+				ui : getUIPropSchema('string', 'Job Name', '', 1, []),
+				db : {}
+			},
+			item_accounting_gl_account_name : {
+				ui : getUIPropSchema('string', 'GLAccount Name', '', 1, []),
+				db : {}
+			},
 		}
 	}
 };
@@ -297,6 +347,7 @@ for (var i = 0; i < 5 ; i++){
 		item_ui[pk] = pv;
 		item_db[pk] = pv.val;		
 	}
+	
 	item_db.customProps = {};
 	item_ui.customProps = [];
 	for (var ck in settings_abm.item.custom){
@@ -306,6 +357,35 @@ for (var i = 0; i < 5 ; i++){
 		item_ui.customProps.push(cv);
 		item_db.customProps[ck] = cv.val;
 	}
+	
+	item_db.accounting = [];
+	item_ui.accounting = [];
+
+	for(var j = 0 ; j < 3; j++){
+		var acc_ui = {};
+		var acc_db = {};
+		for (var pk in settings_abm.split.primary){
+			var pv = settings_abm.split.primary[pk].ui;
+			pv.val = randomVals.abm[pk] ? randomVals.abm[pk] : null;		
+			acc_ui[pk] = pv;
+			acc_db[pk] = pv.val;		
+		}
+
+		acc_ui.customProps = [];
+		acc_db.customProps = {};
+
+		for (var ck in settings_abm.split.custom){
+			var cv = settings_abm.split.custom[ck].ui;
+			cv.val = randomVals.abm[ck] ? randomVals.abm[ck] : null;
+			cv.key = ck;
+			acc_ui.customProps.push(cv);
+			acc_db.customProps[ck] = cv.val;
+		}
+
+		item_db.accounting.push(acc_db);
+		item_ui.accounting.push(acc_ui);
+	}
+
 	req_abm_db.items.push(item_db);
 	req_abm_ui.items.push(item_ui);
 }
