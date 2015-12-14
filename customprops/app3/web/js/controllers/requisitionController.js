@@ -12,7 +12,12 @@ function requisitionController(requisition, requisionService) {
 		requisionService.saveRequisition(vm.requisition).then(function(result){
 			console.log(result)
 		});
-	}
+	};
+    vm.submit  = function(){
+        requisionService.submitRequisition(vm.requisition).then(function(result){
+            console.log(result)
+        });
+    };
 	vm.gridOptions = {
         enableSorting: false,
         enableCellSelection: true
