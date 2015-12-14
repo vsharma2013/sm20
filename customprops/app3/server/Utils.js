@@ -34,6 +34,11 @@ function hasDate(d){
 	}
 }
 
+function hasAccountingType(v){
+	var values = ['#', '%'];
+	return _.contains(values, v);	
+}
+
 function hasYesNo(v){
 	var values = ['yes', 'no'];
 	return _.contains(values, v.toLowerCase());
@@ -61,5 +66,6 @@ module.exports = {
 	hasDate : hasDate,
 	hasArray : hasArray,
 	hasYesNo : hasYesNo,
+	hasAccountingType : hasAccountingType,
 	getDocumentValue : getDocumentValue
 }
