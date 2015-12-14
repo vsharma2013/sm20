@@ -1,4 +1,5 @@
 var utils = require('./Utils');
+var client = null;
 
 var validations_requisition = {
 	RequisitionName : {
@@ -163,6 +164,7 @@ var validations_others = {
 	},
 	Capitalized : {
 		validate : function(others){
+			if(client === 'CAMC') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Capitalized') && utils.hasString(others.customProps.Capitalized)
 			       && utils.hasYesNo(other.customProps.Capitalized);
@@ -171,6 +173,7 @@ var validations_others = {
 	},
 	Billable : {
 		validate : function(others){
+			if(client === 'CAMC') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Billable') && utils.hasString(others.customProps.Billable)
 			       && utils.hasYesNo(other.customProps.Billable);
@@ -241,6 +244,7 @@ function validateRequisition(requisition){
 	var accountings = [];
 	var contracts = [];
 	var validationErrors = [];
+	client = requisition.customProps.length > 2 ? 'ABM' : 'CAMC';
 
 	for(var i = 0; i < requisition.Items.length; i++){
 		var item = requisition.Items[i]; items.push(item);

@@ -30,7 +30,7 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
 	var requisition = req.body;
 	reqDecorator.removeUISchemaFromCutomProps(requisition);
-	console.log(JSON.stringify(requisition));
+	//console.log(JSON.stringify(requisition));
 	var result = validations.validateRequisition(requisition);
 	if(result.success){
 		dbMgr.saveRequisitionDocument(req.body, function(err, rs){
