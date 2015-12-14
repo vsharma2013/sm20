@@ -167,7 +167,7 @@ var validations_others = {
 			if(client === 'CAMC') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Capitalized') && utils.hasString(others.customProps.Capitalized)
-			       && utils.hasYesNo(other.customProps.Capitalized);
+			       && utils.hasYesNo(others.customProps.Capitalized);
 		},
 		err : 'Others capitalized field should only have only Yes/No values.'
 	},
@@ -176,12 +176,13 @@ var validations_others = {
 			if(client === 'CAMC') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Billable') && utils.hasString(others.customProps.Billable)
-			       && utils.hasYesNo(other.customProps.Billable);
+			       && utils.hasYesNo(others.customProps.Billable);
 		},
 		err : 'Others Billable field should only have only Yes/No values.'
 	},
 	Inventorytype : {
 		validate : function(others){
+			console.log(client);
 			if(client === 'ABM') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Inventorytype') && utils.hasString(others.customProps.Inventorytype);
@@ -245,7 +246,7 @@ function validateRequisition(requisition){
 	var accountings = [];
 	var contracts = [];
 	var validationErrors = [];
-	client = requisition.customProps.length > 2 ? 'ABM' : 'CAMC';
+	client = Object.keys(requisition.customProps).length > 2 ? 'ABM' : 'CAMC';
 
 	for(var i = 0; i < requisition.Items.length; i++){
 		var item = requisition.Items[i]; items.push(item);

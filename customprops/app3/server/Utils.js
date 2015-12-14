@@ -36,7 +36,7 @@ function hasDate(d){
 
 function hasYesNo(v){
 	var values = ['yes', 'no'];
-	return _.contains(values, v.toLoserCase());
+	return _.contains(values, v.toLowerCase());
 }
 
 function getDocumentValue(req){
@@ -60,5 +60,6 @@ module.exports = {
 	hasString : hasString,
 	hasDate : hasDate,
 	hasArray : hasArray,
+	hasYesNo : hasYesNo,
 	getDocumentValue : getDocumentValue
 }
