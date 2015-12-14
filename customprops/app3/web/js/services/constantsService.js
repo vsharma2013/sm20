@@ -20,6 +20,7 @@ function contantsService($http, ENV) {
 
     function loadCustomProps(){
         return  $http.get(ENV.apiEndPoint+'cpuischema').success(function(response) {
+            console.log('customp', response);
             customp = response;
             return response;
         }).error(function(error) {

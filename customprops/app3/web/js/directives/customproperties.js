@@ -1,18 +1,19 @@
 'use strict';
 
 angular.module('myApp').    
-    directive('customProperties', [customProperties])
+    directive('customProperties', ['contantsService', customProperties])
 
-function customProperties() {
+function customProperties(contantsService) {
     return {
         restrict: 'E',
         scope: {
-          customProps: '=customprops'
+          customProps: '=customprops',
         },
         templateUrl: 'partials/customproperties.html',
         link: function (scope, element) {
-            
-            scope.getInputType = function (model){
+            scope.cpobject = contantsService.getCustomProps();
+            scope.getInputType = function (key){
+                var model = scope.cpobject[key];
                 var notEditable = !model.allowEdit || model.allowEdit == '0'                
                 if(!notEditable && model.type == 'bool')
                     return 'checkbox';

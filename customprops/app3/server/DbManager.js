@@ -27,7 +27,7 @@ DbManager.prototype.getRequisitionById = function(reqId, addUIschema, cbOnDone){
 	mongodb.connect(mongoConnString, function (err, db) {
         var dbJson = { "Id": reqId };
         var res = db.collection(reqCollection).findOne(dbJson, function (err, result) {
-        	self.addUISchemaToCustomProps(result);
+        	// self.addUISchemaToCustomProps(result);
             cbOnDone(result);
             db.close();
         });

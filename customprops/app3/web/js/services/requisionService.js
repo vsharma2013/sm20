@@ -19,7 +19,7 @@ function requisionService($http, ENV) {
             } 
         };       
         return  $http.get(ENV.apiEndPoint+'req', params).success(function(response) {
-            console.log(response);
+            console.log('getobj', response);
             return response;
         }).error(function(error) {
            return error;
@@ -33,8 +33,8 @@ function requisionService($http, ENV) {
     }
 
     function saveRequisition(req){
-        return $http.post(ENV.apiEndPoint+'req/save', JSON.stringify(req)).success(function(response) {
-           alert(response.message);
+        return $http.post(ENV.apiEndPoint+'req/save', angular.toJson(req)).success(function(response) {
+           console.log('saveobj', req);
            return response;
         }).error(function(error) {
            return error;

@@ -21,9 +21,11 @@ angular.module('myApp', [
                     var reqid = 1;
                     if($route.current.params.reqid)
                         reqid = $route.current.params.reqid;
-                    console.log(reqid);
                     return requisionService.getRequisition(reqid)
                 }]
+                ,customProps: ['contantsService', function (contantsService) {
+                    return contantsService.loadCustomProps();
+                }],
             }
         })
         .otherwise({redirectTo: '/'})
