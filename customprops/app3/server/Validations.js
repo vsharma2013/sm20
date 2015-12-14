@@ -1,4 +1,5 @@
 var utils = require('./Utils');
+var client = null;
 
 var validations_requisition = {
 	RequisitionName : {
@@ -163,22 +164,25 @@ var validations_others = {
 	},
 	Capitalized : {
 		validate : function(others){
+			if(client === 'CAMC') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Capitalized') && utils.hasString(others.customProps.Capitalized)
-			       && utils.hasYesNo(other.customProps.Capitalized);
+			       && utils.hasYesNo(others.customProps.Capitalized);
 		},
 		err : 'Others capitalized field should only have only Yes/No values.'
 	},
 	Billable : {
 		validate : function(others){
+			if(client === 'CAMC') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Billable') && utils.hasString(others.customProps.Billable)
-			       && utils.hasYesNo(other.customProps.Billable);
+			       && utils.hasYesNo(others.customProps.Billable);
 		},
 		err : 'Others Billable field should only have only Yes/No values.'
 	},
 	Inventorytype : {
 		validate : function(others){
+			if(client === 'ABM') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Inventorytype') && utils.hasString(others.customProps.Inventorytype);
 		},
@@ -189,7 +193,7 @@ var validations_others = {
 var validations_accounting = {
 	Type : {
 		validate : function(accounting){
-			return accounting.hasOwnProperty('Type') && utils.hasInt(accounting.Type);
+			return accounting.hasOwnProperty('Type') && utils.hasAccountingType(accounting.Type);
 		},
 		err : 'Accounting type should be a non-empty integer value.'
 	},
@@ -241,13 +245,18 @@ function validateRequisition(requisition){
 	var accountings = [];
 	var contracts = [];
 	var validationErrors = [];
+	client = Object.keys(requisition.customProps).length > 2 ? 'ABM' : 'CAMC';
 
 	for(var i = 0; i < requisition.Items.length; i++){
 		var item = requisition.Items[i]; items.push(item);
 		if(item.partner)    partners.push(item.partner);
 		if(item.shipping)   shippings.push(item.shipping);
 		if(item.others)     others.push(item.others);
-		if(item.accounting) accountings.push(item.accounting);
+		if(utils.hasArray(item.accounting)){
+			item.accounting.forEach(function(acc){
+				accountings.push(acc);
+			});
+		} 
 		if(item.contract)   contracts.push(item.contract);
 	}
 
@@ -258,7 +267,7 @@ function validateRequisition(requisition){
 	vals = runValidation(shippings, validations_shipping);         validationErrors = validationErrors.concat(vals);
 	vals = runValidation(others, validations_others);              validationErrors = validationErrors.concat(vals);
 	vals = runValidation(accountings, validations_accounting);     validationErrors = validationErrors.concat(vals);
-	vals = runValidation(contracts, validations_accounting);       validationErrors = validationErrors.concat(vals);
+	vals = runValidation(contracts, validations_contract);         validationErrors = validationErrors.concat(vals);
 
 	return {
 		success : validationErrors.length > 0 ? false : true,

@@ -47,7 +47,7 @@ function getArrayWithPrefix(prefix, count){
 
 var defaulVals = {
   RequisitionName : ['Req Name 1', 'Req Name 2', 'Req Name 3', 'Req Name 4', 'Req Name 5', 'Req Name 6', 'Req Name 7'],
-  RequisitionNumber : [10001, 10002, 10003, 10004, 10005, 10006, 10007],
+  RequisitionNumber : getArrayWithPrefix('REQ0001', 5),
   RequesterId : [11, 22, 33, 44, 55, 66],
   RequestorName : ['User1', 'User2', 'User3', 'User4', 'User5', 'User6', 'User7'],
   OBO_Id : [11, 22, 33, 44, 55, 66],

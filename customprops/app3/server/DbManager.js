@@ -2,6 +2,7 @@ var mongodb = require('mongodb').MongoClient;
 var mongoConnString = 'mongodb://localhost:27017/requisitiondb';
 var ObjectID = require('mongodb').ObjectID;
 var reqUtils = require('./RequisiitionUtils');
+var reqDecorator = require('./RequisitionDecorator');
 var reqCollection = 'requisitions';
 var schemaCollection = 'reqCustomProps';
 
@@ -27,7 +28,7 @@ DbManager.prototype.getRequisitionById = function(reqId, addUIschema, cbOnDone){
 	mongodb.connect(mongoConnString, function (err, db) {
         var dbJson = { "Id": reqId };
         var res = db.collection(reqCollection).findOne(dbJson, function (err, result) {
-        	self.addUISchemaToCustomProps(result);
+        	reqDecorator.addUISchemaToCustomProps(result, self.customPropsUISchema);
             cbOnDone(result);
             db.close();
         });
@@ -60,51 +61,6 @@ DbManager.prototype.addCustomPropsUISchema = function(db){
 	});
 }
 
-DbManager.prototype.addUISchemaToCustomProps = function(requisition){
-	var cps = [];
-	if(requisition.customProps){
-		for(var key in requisition.customProps){
-			var cp = this.customPropsUISchema[key];
-			cp.key = key;
-			cp.val = requisition.customProps[key];
-			cps.push(cp);
-		}
-		requisition.customProps = cps;
-	}
-	requisition.Items.forEach((function(item){
-		this.addUISchemaToItemDetailCustomProps(item, 'shipping');
-		this.addUISchemaToItemDetailCustomProps(item, 'others');
-		this.addUISchemaToItemDetailCustomPropsAccounting(item);
-	}).bind(this));
-}
-
-DbManager.prototype.addUISchemaToItemDetailCustomProps = function(item, itemDetailKey){
-	var cProps = item[itemDetailKey].customProps;
-	if(!cProps) return;
-
-	var cps = [];
-	for(var key in cProps){
-		var cp = this.customPropsUISchema[key];
-		cp.key = key;
-		cp.val = item[itemDetailKey].customProps[key];
-		cps.push(cp);
-	}
-	item[itemDetailKey].customProps = cps;
-}
-
-DbManager.prototype.addUISchemaToItemDetailCustomPropsAccounting = function(item){
-	if(!item.accounting) return;
-  	if(!Array.isArray(item.accounting)) return;
-  	item.accounting.forEach((function(acc){
-  		var obj = {
-  			acc : {
-  				customProps : acc.customProps
-  			}
-  		};
-  		this.addUISchemaToItemDetailCustomProps(obj, 'acc');
-  		acc.customProps = obj.acc.customProps;
-  	}).bind(this));
-}
 
 DbManager.prototype.cacheUISchema = function(db){
 	var self = this;
