@@ -3,6 +3,7 @@ var router = express.Router();
 var dbMgr = require('./DBManager');
 var validations = require('./Validations');
 var RuleFlow = require('./rules/RuleFlow');
+var reqDecorator = require('./RequisitionDecorator');
 
 function ApiController(){
 
@@ -27,7 +28,10 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 }
 
 ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
-	var result = validations.validateRequisition(req.body);
+	var requisition = req.body;
+	reqDecorator.removeUISchemaFromCutomProps(requisition);
+	//console.log(JSON.stringify(requisition));
+	var result = validations.validateRequisition(requisition);
 	if(result.success){
 		dbMgr.saveRequisitionDocument(req.body, function(err, rs){
 			if(err)
@@ -42,13 +46,20 @@ ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
 }
 
 ApiController.prototype.handleSubmitRequisitionRequest = function(req, res){
-	var ruleFlow = new RuleFlow();
-	ruleFlow.run(req.body, function(result){
-		if(result.success)
-			res.json({success : true, message : result.results.join('\n')});
-		else
-			res.json({success : false, message : 'Error in executing submit rules'});
-	});
+	var requisition = req.body;
+	reqDecorator.removeUISchemaFromCutomProps(requisition);
+	var vResults = validations.validateRequisition(requisition);
+	if(vResults.success){
+		var ruleFlow = new RuleFlow();
+		ruleFlow.run(requisition, function(result){
+			if(result.success)
+				res.json({success : true, message : result.results.join('\n')});
+			else
+				res.json({success : false, message : 'Error in executing submit rules'});
+		});
+	}
+	else
+		res.json(vResults);
 }
 
 

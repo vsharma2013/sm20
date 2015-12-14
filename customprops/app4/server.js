@@ -398,80 +398,84 @@ var randomVals = {
 }
 
 
-var req_abm_ui = {};
-var req_abm_db = {};
+function getRequsitionFromSetting(settings, randomValues){
+	var req_abm_ui = {};
+	var req_abm_db = {};
 
-for (var pk in settings_abm.setup.primary){
-	var pv = settings_abm.setup.primary[pk].ui;
-	pv.val = randomVals.abm[pk] ? randomVals.abm[pk] : null;		
-	req_abm_ui[pk] = pv;
-	req_abm_db[pk] = pv.val;
-}
-
-req_abm_ui.customProps = [];
-req_abm_db.customProps = {};
-
-for (var ck in settings_abm.setup.custom){
-	var cv = settings_abm.setup.custom[ck].ui;
-	cv.val = randomVals.abm[ck] ? randomVals.abm[ck] : null;
-	cv.key = ck;
-	req_abm_ui.customProps.push(cv);
-	req_abm_db.customProps[ck] = cv.val;
-}
-
-req_abm_db.items = [];
-req_abm_ui.items = [];
-
-for (var i = 0; i < 5 ; i++){
-	var item_ui = {};
-	var item_db = {};
-	for (var pk in settings_abm.item.primary){
-		var pv = settings_abm.item.primary[pk].ui;
-		pv.val = randomVals.abm[pk] ? randomVals.abm[pk] : null;		
-		item_ui[pk] = pv;
-		item_db[pk] = pv.val;		
+	for (var pk in settings.setup.primary){
+		var pv = settings.setup.primary[pk].ui;
+		pv.val = randomValues[pk] !== null ? randomValues[pk] : null;		
+		req_abm_ui[pk] = pv;
+		req_abm_db[pk] = pv.val;
 	}
-	
-	item_db.customProps = {};
-	item_ui.customProps = [];
-	for (var ck in settings_abm.item.custom){
-		var cv = settings_abm.item.custom[ck].ui;
-		cv.val = randomVals.abm[ck] ? randomVals.abm[ck] : null;
+
+	req_abm_ui.customProps = [];
+	req_abm_db.customProps = {};
+
+	for (var ck in settings.setup.custom){
+		var cv = settings.setup.custom[ck].ui;
+		cv.val = randomValues[ck] !== null ? randomValues[ck] : null;
 		cv.key = ck;
-		item_ui.customProps.push(cv);
-		item_db.customProps[ck] = cv.val;
+		req_abm_ui.customProps.push(cv);
+		req_abm_db.customProps[ck] = cv.val;
 	}
-	
-	item_db.accounting = [];
-	item_ui.accounting = [];
 
-	for(var j = 0 ; j < 3; j++){
-		var acc_ui = {};
-		var acc_db = {};
-		for (var pk in settings_abm.split.primary){
-			var pv = settings_abm.split.primary[pk].ui;
-			pv.val = randomVals.abm[pk] ? randomVals.abm[pk] : null;		
-			acc_ui[pk] = pv;
-			acc_db[pk] = pv.val;		
+	req_abm_db.items = [];
+	req_abm_ui.items = [];
+
+	for (var i = 0; i < 5 ; i++){
+		var item_ui = {};
+		var item_db = {};
+		for (var pk in settings.item.primary){
+			var pv = settings.item.primary[pk].ui;
+			pv.val = randomValues[pk] !== null  ? randomValues[pk] : null;		
+			item_ui[pk] = pv;
+			item_db[pk] = pv.val;		
 		}
-
-		acc_ui.customProps = [];
-		acc_db.customProps = {};
-
-		for (var ck in settings_abm.split.custom){
-			var cv = settings_abm.split.custom[ck].ui;
-			cv.val = randomVals.abm[ck] ? randomVals.abm[ck] : null;
+		
+		item_db.customProps = {};
+		item_ui.customProps = [];
+		for (var ck in settings.item.custom){
+			var cv = settings.item.custom[ck].ui;
+			cv.val = randomValues[ck] !== null  ? randomValues[ck] : null;
 			cv.key = ck;
-			acc_ui.customProps.push(cv);
-			acc_db.customProps[ck] = cv.val;
+			item_ui.customProps.push(cv);
+			item_db.customProps[ck] = cv.val;
+		}
+		
+		item_db.accounting = [];
+		item_ui.accounting = [];
+
+		for(var j = 0 ; j < 3; j++){
+			var acc_ui = {};
+			var acc_db = {};
+			for (var pk in settings.split.primary){
+				var pv = settings.split.primary[pk].ui;
+				pv.val = randomValues[pk] !== null  ? randomValues[pk] : null;		
+				acc_ui[pk] = pv;
+				acc_db[pk] = pv.val;		
+			}
+
+			acc_ui.customProps = [];
+			acc_db.customProps = {};
+
+			for (var ck in settings.split.custom){
+				var cv = settings.split.custom[ck].ui;
+				cv.val = randomValues[ck] !== null  ? randomValues[ck] : null;
+				cv.key = ck;
+				acc_ui.customProps.push(cv);
+				acc_db.customProps[ck] = cv.val;
+			}
+
+			item_db.accounting.push(acc_db);
+			item_ui.accounting.push(acc_ui);
 		}
 
-		item_db.accounting.push(acc_db);
-		item_ui.accounting.push(acc_ui);
+		req_abm_db.items.push(item_db);
+		req_abm_ui.items.push(item_ui);
 	}
-
-	req_abm_db.items.push(item_db);
-	req_abm_ui.items.push(item_ui);
+	return [req_abm_db, req_abm_ui];
 }
 
-console.log(JSON.stringify([req_abm_db, req_abm_ui]));
+
+console.log(JSON.stringify(getRequsitionFromSetting(settings_abm, randomVals.abm)));

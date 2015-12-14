@@ -10,7 +10,8 @@ function requisitionController(requisition, requisionService) {
 	vm.status = 'Submit';	
 	vm.save	 = function(){
 		requisionService.saveRequisition(vm.requisition).then(function(result){
-			console.log(result)
+			console.log(result);
+            alert(result.data.message);
 		});
 	};
     vm.submit  = function(){
