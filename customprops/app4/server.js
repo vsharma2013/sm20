@@ -22,7 +22,7 @@ var rgnNames = ['ELS-ABES ABM Bldg Solutions ABS', 'EGB-AGS O M Med Projects OMP
 var sprBranchNames = ['ABM Building Solutions, LLC-E35', 'ABM Government Services, LLC-E50', 'DoNotUse-SuperRegion-DoNotUse-SuperBranch'];
 var branchNames = ['Atlanta-80320', 'AGS Hopkinsville-80150', 'DoNotUse-SuperRegion-DoNotUse-Branch'];
 var ssidNames = ['8032-LL012-Atlanta', '8015-CP001-AGS Hopkinsville', 'DoNotUse-District - SSID_OLDInactive-DoNotUse-SuperRegion'];
-var glAccNames = 'AcctReceivableAcct-8032.C0040.130000000', 'Petty Cash-021011.025.0001.00.00.1050000', 'A/R Billed Trade-021011.025.0001.00.00.1110000', 'Short Term N/R-021011.025.0001.00.00.1140001', 'Empl Advances-021011.025.0001.00.00.1160000', 'Employee PR Reimbursement-021011.025.0001.00.00.1160005', 'A/R Qatar-021011.025.0001.00.00.1195902', 'Receivables Interco LNC-021011.025.0001.00.00.1210LNC', 'Inventory-021011.025.0001.00.00.1397237', 'Prepaid Immersion-021011.025.0001.00.00.1510010'];
+var glAccNames = ['AcctReceivableAcct-8032.C0040.130000000', 'Petty Cash-021011.025.0001.00.00.1050000', 'A/R Billed Trade-021011.025.0001.00.00.1110000', 'Short Term N/R-021011.025.0001.00.00.1140001', 'Empl Advances-021011.025.0001.00.00.1160000', 'Employee PR Reimbursement-021011.025.0001.00.00.1160005', 'A/R Qatar-021011.025.0001.00.00.1195902', 'Receivables Interco LNC-021011.025.0001.00.00.1210LNC', 'Inventory-021011.025.0001.00.00.1397237', 'Prepaid Immersion-021011.025.0001.00.00.1510010'];
 
 
 var sCPSchema = '{"type" : "", "label" : "", "defaultVal" : "", "allowEdit" : 0, "allVals" : []}';
@@ -330,17 +330,17 @@ var randomVals = {
 	abm : {
 		req_name : getRandomVal('RQ-1001-0', 5),
 		req_num : getRandomVal('RN-2001-1', 5),
-		req_user_id : getRandomItemFromArray(arrInt1to5)),
+		req_user_id : getRandomItemFromArray(arrInt1to5),
 		req_user_name : getRandomVal('User-0', 5),
-		req_obo_id : getRandomItemFromArray(arrInt1to5)),
+		req_obo_id : getRandomItemFromArray(arrInt1to5),
 		req_obo_name : getRandomVal('User-0', 5),
-		req_ship_to_id : getRandomItemFromArray(arrInt1to5)),
+		req_ship_to_id : getRandomItemFromArray(arrInt1to5),
 		req_ship_to_name : getRandomVal('ST-', 5),
 		req_ship_to_address : getRandomVal('ATS-', 5),
-		req_bill_to_id : getRandomItemFromArray(arrInt1to5)),
+		req_bill_to_id : getRandomItemFromArray(arrInt1to5),
 		req_bill_to_name : getRandomVal('BT-', 5),
 		req_bill_to_address : getRandomVal('ATB-', 5),
-		req_currency : getRandomItemFromArray(['USD', 'EUR', 'GBP', 'INR'])),
+		req_currency : getRandomItemFromArray(['USD', 'EUR', 'GBP', 'INR']),
 
 		mark_as_urgent : 0,
 		district_name : distNames[0],
