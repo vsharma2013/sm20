@@ -403,7 +403,7 @@ var req_abm_db = {};
 
 for (var pk in settings_abm.setup.primary){
 	var pv = settings_abm.setup.primary[pk].ui;
-	pv.val = randomVals.abm[pk] ? randomVals.abm[pk] : null;		
+	pv.val = randomVals.abm[pk] !== null ? randomVals.abm[pk] : null;		
 	req_abm_ui[pk] = pv;
 	req_abm_db[pk] = pv.val;
 }
@@ -413,7 +413,7 @@ req_abm_db.customProps = {};
 
 for (var ck in settings_abm.setup.custom){
 	var cv = settings_abm.setup.custom[ck].ui;
-	cv.val = randomVals.abm[ck] ? randomVals.abm[ck] : null;
+	cv.val = randomVals.abm[ck] !== null ? randomVals.abm[ck] : null;
 	cv.key = ck;
 	req_abm_ui.customProps.push(cv);
 	req_abm_db.customProps[ck] = cv.val;
@@ -427,7 +427,7 @@ for (var i = 0; i < 5 ; i++){
 	var item_db = {};
 	for (var pk in settings_abm.item.primary){
 		var pv = settings_abm.item.primary[pk].ui;
-		pv.val = randomVals.abm[pk] ? randomVals.abm[pk] : null;		
+		pv.val = randomVals.abm[pk] !== null  ? randomVals.abm[pk] : null;		
 		item_ui[pk] = pv;
 		item_db[pk] = pv.val;		
 	}
@@ -436,7 +436,7 @@ for (var i = 0; i < 5 ; i++){
 	item_ui.customProps = [];
 	for (var ck in settings_abm.item.custom){
 		var cv = settings_abm.item.custom[ck].ui;
-		cv.val = randomVals.abm[ck] ? randomVals.abm[ck] : null;
+		cv.val = randomVals.abm[ck] !== null  ? randomVals.abm[ck] : null;
 		cv.key = ck;
 		item_ui.customProps.push(cv);
 		item_db.customProps[ck] = cv.val;
@@ -450,7 +450,7 @@ for (var i = 0; i < 5 ; i++){
 		var acc_db = {};
 		for (var pk in settings_abm.split.primary){
 			var pv = settings_abm.split.primary[pk].ui;
-			pv.val = randomVals.abm[pk] ? randomVals.abm[pk] : null;		
+			pv.val = randomVals.abm[pk] !== null  ? randomVals.abm[pk] : null;		
 			acc_ui[pk] = pv;
 			acc_db[pk] = pv.val;		
 		}
@@ -460,7 +460,7 @@ for (var i = 0; i < 5 ; i++){
 
 		for (var ck in settings_abm.split.custom){
 			var cv = settings_abm.split.custom[ck].ui;
-			cv.val = randomVals.abm[ck] ? randomVals.abm[ck] : null;
+			cv.val = randomVals.abm[ck] !== null  ? randomVals.abm[ck] : null;
 			cv.key = ck;
 			acc_ui.customProps.push(cv);
 			acc_db.customProps[ck] = cv.val;
