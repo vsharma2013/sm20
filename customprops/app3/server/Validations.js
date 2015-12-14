@@ -182,6 +182,7 @@ var validations_others = {
 	},
 	Inventorytype : {
 		validate : function(others){
+			if(client === 'ABM') return true;
 			if(!others.customProps) return false;
 			return others.customProps.hasOwnProperty('Inventorytype') && utils.hasString(others.customProps.Inventorytype);
 		},
