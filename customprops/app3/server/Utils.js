@@ -50,11 +50,15 @@ function getDocumentValue(req){
 	return val;
 }
 
+function hasArray (arr){
+	return arr && Array.isArray(arr) && arr.length > 0;
+}
 module.exports = {
 	hasString : hasString,
 	hasInt : hasInt,
 	hasFloat : hasFloat,
 	hasString : hasString,
 	hasDate : hasDate,
+	hasArray : hasArray,
 	getDocumentValue : getDocumentValue
 }

@@ -3,6 +3,7 @@ var router = express.Router();
 var dbMgr = require('./DBManager');
 var validations = require('./Validations');
 var RuleFlow = require('./rules/RuleFlow');
+var reqDecorator = require('./RequisitionDecorator');
 
 function ApiController(){
 
@@ -27,7 +28,10 @@ ApiController.prototype.handleCustomPropsUISchemaRequest = function(req, res){
 }
 
 ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
-	var result = validations.validateRequisition(req.body);
+	var requisition = req.body;
+	reqDecorator.removeUISchemaFromCutomProps(requisition);
+	console.log(JSON.stringify(requisition));
+	var result = validations.validateRequisition(requisition);
 	if(result.success){
 		dbMgr.saveRequisitionDocument(req.body, function(err, rs){
 			if(err)

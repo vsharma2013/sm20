@@ -7,7 +7,7 @@ app.use(express.static('web'));
 app.use('/api', apiRouter);
 
 app.use(function(err, req, res, next) {
-  logger.log(err.stack);
+  console.log(err.stack);
   res.status(500).json({success:false, data:'internal server error'});
 });
 
