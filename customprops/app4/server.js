@@ -398,13 +398,13 @@ var randomVals = {
 }
 
 
-function getRequsitionFromSetting(settings){
+function getRequsitionFromSetting(settings, randomValues){
 	var req_abm_ui = {};
 	var req_abm_db = {};
 
 	for (var pk in settings.setup.primary){
 		var pv = settings.setup.primary[pk].ui;
-		pv.val = randomVals.abm[pk] !== null ? randomVals.abm[pk] : null;		
+		pv.val = randomValues[pk] !== null ? randomValues[pk] : null;		
 		req_abm_ui[pk] = pv;
 		req_abm_db[pk] = pv.val;
 	}
@@ -414,7 +414,7 @@ function getRequsitionFromSetting(settings){
 
 	for (var ck in settings.setup.custom){
 		var cv = settings.setup.custom[ck].ui;
-		cv.val = randomVals.abm[ck] !== null ? randomVals.abm[ck] : null;
+		cv.val = randomValues[ck] !== null ? randomValues[ck] : null;
 		cv.key = ck;
 		req_abm_ui.customProps.push(cv);
 		req_abm_db.customProps[ck] = cv.val;
@@ -428,7 +428,7 @@ function getRequsitionFromSetting(settings){
 		var item_db = {};
 		for (var pk in settings.item.primary){
 			var pv = settings.item.primary[pk].ui;
-			pv.val = randomVals.abm[pk] !== null  ? randomVals.abm[pk] : null;		
+			pv.val = randomValues[pk] !== null  ? randomValues[pk] : null;		
 			item_ui[pk] = pv;
 			item_db[pk] = pv.val;		
 		}
@@ -437,7 +437,7 @@ function getRequsitionFromSetting(settings){
 		item_ui.customProps = [];
 		for (var ck in settings.item.custom){
 			var cv = settings.item.custom[ck].ui;
-			cv.val = randomVals.abm[ck] !== null  ? randomVals.abm[ck] : null;
+			cv.val = randomValues[ck] !== null  ? randomValues[ck] : null;
 			cv.key = ck;
 			item_ui.customProps.push(cv);
 			item_db.customProps[ck] = cv.val;
@@ -451,7 +451,7 @@ function getRequsitionFromSetting(settings){
 			var acc_db = {};
 			for (var pk in settings.split.primary){
 				var pv = settings.split.primary[pk].ui;
-				pv.val = randomVals.abm[pk] !== null  ? randomVals.abm[pk] : null;		
+				pv.val = randomValues[pk] !== null  ? randomValues[pk] : null;		
 				acc_ui[pk] = pv;
 				acc_db[pk] = pv.val;		
 			}
@@ -461,7 +461,7 @@ function getRequsitionFromSetting(settings){
 
 			for (var ck in settings.split.custom){
 				var cv = settings.split.custom[ck].ui;
-				cv.val = randomVals.abm[ck] !== null  ? randomVals.abm[ck] : null;
+				cv.val = randomValues[ck] !== null  ? randomValues[ck] : null;
 				cv.key = ck;
 				acc_ui.customProps.push(cv);
 				acc_db.customProps[ck] = cv.val;
@@ -478,4 +478,4 @@ function getRequsitionFromSetting(settings){
 }
 
 
-console.log(JSON.stringify(getRequsitionFromSetting(settings_abm)));
+console.log(JSON.stringify(getRequsitionFromSetting(settings_abm, randomVals.abm)));
