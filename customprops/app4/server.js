@@ -52,7 +52,7 @@ function getArrayWithPrefix(prefix, count){
 }
 
 function getRandomVal(prefix, count){
-	getRandomItemFromArray(getArrayWithPrefix(prefix, count));
+	return getRandomItemFromArray(getArrayWithPrefix(prefix, count));
 }
 
 var settings_abm = {
