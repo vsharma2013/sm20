@@ -96,7 +96,7 @@ RequisitionDecorator.prototype.removeUISchemaFromItemDetailCustomPropsAccounting
 RequisitionDecorator.prototype.getCustomPropFromKeyVal = function(key, val){
 	//TBD: this is a quick n dirty fix, right way to do it is to remove "val" property
 	//     in customProp Object and change the dummy data generation logic to not use a random
-	//     proerty value from customProp object.
+	//     proerty "val" from customProp object.
 	//     Refer "app4" where this has already been implemented
 	return {
 		key : key,
