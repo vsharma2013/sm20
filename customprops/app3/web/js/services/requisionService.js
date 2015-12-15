@@ -34,6 +34,7 @@ function requisionService($http, ENV) {
     }
 
     function saveRequisition(req){
+        console.log(req);
         return $http.post(ENV.apiEndPoint+'req/save', angular.toJson(req)).success(function(response) {
            return response;
         }).error(function(error) {
@@ -42,6 +43,7 @@ function requisionService($http, ENV) {
     }
 
     function submitRequisition(req){
+        console.log(req);
         return $http.post(ENV.apiEndPoint+'req/submit', angular.toJson(req)).success(function(response) {
            return response;
         }).error(function(error) {

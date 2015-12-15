@@ -13,7 +13,7 @@ RequisitionDecorator.prototype.addUISchemaToCustomProps = function(requisition, 
 	var cps = [];
 	if(requisition.customProps){
 		for(var key in requisition.customProps){
-			var cp = this.customPropsUISchema[key];
+			var cp = JSON.parse(JSON.stringify(this.customPropsUISchema[key]));
 			cp.key = key;
 			cp.val = requisition.customProps[key];
 			cps.push(cp);
@@ -33,7 +33,7 @@ RequisitionDecorator.prototype.addUISchemaToItemDetailCustomProps = function(ite
 
 	var cps = [];
 	for(var key in cProps){
-		var cp = this.customPropsUISchema[key];
+		var cp = JSON.parse(JSON.stringify(this.customPropsUISchema[key]));
 		cp.key = key;
 		cp.val = item[itemDetailKey].customProps[key];
 		cps.push(cp);
