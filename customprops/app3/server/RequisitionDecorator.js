@@ -1,4 +1,5 @@
 var utils = require('./Utils');
+var _ = require ('underscore');
 
 function RequisitionDecorator(){
 
@@ -94,17 +95,8 @@ RequisitionDecorator.prototype.removeUISchemaFromItemDetailCustomPropsAccounting
 }
 
 RequisitionDecorator.prototype.getCustomPropFromKeyVal = function(key, val){
-	//TBD: this is a quick n dirty fix, right way to do it is to remove "val" property
-	//     in customProp Object and change the dummy data generation logic to not use a random
-	//     proerty "val" from customProp object. For sure customProp schema has to be used as reference AND NOT AS VALUE
-	//     Refer "app4" where this has already been implemented
-	return {
-		key : key,
-		val : val,
-		type : this.customPropsUISchema[key].type,
-		label : this.customPropsUISchema[key].label,
-		allowEdit : this.customPropsUISchema[key].allowEdit,
-		defaultVal : this.customPropsUISchema[key].defaultVal,
-		allVals : this.customPropsUISchema[key].allVals
-	}
+	var cp = {key : key};
+	cp = _.extend(cp, this.customPropsUISchema[key]);
+	cp.val = val;
+	return cp;
 }
