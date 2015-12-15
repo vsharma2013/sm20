@@ -16,7 +16,8 @@ function requisitionController(requisition, requisionService) {
 	};
     vm.submit  = function(){
         requisionService.submitRequisition(vm.requisition).then(function(result){
-            console.log(result)
+            console.log(result);
+            alert(result.data.message);
         });
     };
 	vm.gridOptions = {

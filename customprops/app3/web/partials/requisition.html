@@ -9,8 +9,8 @@
       <label class="btn btn-primary myradio" ng-model="vm.viewtype" uib-btn-radio="'Detailed'">Detailed</label>
     </div>
     <div class="btn-group col-md-2" uib-dropdown>
-      <button id="split-button" type="button" class="btn btn-danger">{{vm.status}}</button>
-      <button type="button" class="btn btn-danger" uib-dropdown-toggle ng-click="vm.submit()">
+      <button id="split-button" type="button" class="btn btn-danger" ng-click="vm.submit()">{{vm.status}}</button>
+      <button type="button" class="btn btn-danger" uib-dropdown-toggle>
         <span class="caret"></span>
         <span class="sr-only">Split button!</span>
       </button>
