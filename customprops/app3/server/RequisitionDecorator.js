@@ -13,10 +13,7 @@ RequisitionDecorator.prototype.addUISchemaToCustomProps = function(requisition, 
 	var cps = [];
 	if(requisition.customProps){
 		for(var key in requisition.customProps){
-			var cp = JSON.parse(JSON.stringify(this.customPropsUISchema[key]));
-			cp.key = key;
-			cp.val = requisition.customProps[key];
-			cps.push(cp);
+			cps.push(this.getCustomPropFromKeyVal(key, requisition.customProps[key]));
 		}
 		requisition.customProps = cps;
 	}
@@ -33,10 +30,7 @@ RequisitionDecorator.prototype.addUISchemaToItemDetailCustomProps = function(ite
 
 	var cps = [];
 	for(var key in cProps){
-		var cp = JSON.parse(JSON.stringify(this.customPropsUISchema[key]));
-		cp.key = key;
-		cp.val = item[itemDetailKey].customProps[key];
-		cps.push(cp);
+		cps.push(this.getCustomPropFromKeyVal(key, item[itemDetailKey].customProps[key]));
 	}
 	item[itemDetailKey].customProps = cps;
 }
@@ -97,4 +91,16 @@ RequisitionDecorator.prototype.removeUISchemaFromItemDetailCustomPropsAccounting
 			acc.customProps = cps;
 		}
 	});
+}
+
+RequisitionDecorator.prototype.getCustomPropFromKeyVal = function(key, val){
+	return {
+		key : key,
+		val : val,
+		type : this.customPropsUISchema[key].type,
+		label : this.customPropsUISchema[key].label,
+		allowEdit : this.customPropsUISchema[key].allowEdit,
+		defaultVal : this.customPropsUISchema[key].defaultVal,
+		allVals : this.customPropsUISchema[key].allVals
+	}
 }
