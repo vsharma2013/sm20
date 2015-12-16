@@ -1,5 +1,7 @@
+var settingsSchema = '{"dataType" : "", "uiType": "", "label" : "", "defaultVal": "", "allowEdit" : 0, "isMandatory" : "", "maxLength": "", "numDecimals": "", "autoSuggestURL": "", "allVals" : []}';
+
 function getUIPropSchema(dataType, uiType, label, defaultVal, allowEdit, isMandatory, maxLength, numDecimals, autoSuggestURL, allVals) {
-    var cp = JSON.parse(sCPSchema);
+    var cp = JSON.parse(settingsSchema);
     cp.dataType = dataType;
     cp.uiType = uiType;
     cp.label = label;
@@ -21,12 +23,12 @@ var settings_abm = {
         primary: {
             req_name: {
                 //TODO: name generation has a logic associated to it. Will integrate in actual application.
-                ui: getUIPropSchema('string', 'input', 'Requsition Name', '', true, true, 200, null, null, null),
+                ui: getUIPropSchema('string', 'input', 'Requsition Name', 'ABM req name', true, true, 200, null, null, null),
                 db: {}
             },
             req_number: {
                 //TODO: number generation has a logic associated to it. Will integrate in actual application.
-                ui: getUIPropSchema('string', 'input', 'Requsition Number', 'test', false, true, null, null, null, null),
+                ui: getUIPropSchema('string', 'input', 'Requsition Number', 'ABM test number', false, true, null, null, null, null),
                 db: {}
             },
             requester: {
@@ -663,6 +665,174 @@ var settings_camc = {
     }
 };
 
+function applySchema(reqObj) {
+    //TODO: this setting to be read from db/cache based on tenant.
+    var settings = settings_abm;
+
+    if (reqObj) {
+        for (var key in settings.setup.primary) {
+            if (settings.setup.primary.hasOwnProperty(key)) {
+                if ((reqObj[key] === undefined) || (settings.setup.primary[key].ui.isMandatory && reqObj[key] === null))
+                    reqObj[key] = settings.setup.primary[key].ui.defaultVal
+
+                if (reqObj[key] && settings.setup.primary[key].ui.maxLength && settings.setup.primary[key].ui.maxLength > 0 && reqObj[key].toString().length > settings.setup.primary[key].ui.maxLength)
+                    reqObj[key] = reqObj[key].toString().substring(0, settings.setup.primary[key].ui.maxLength);
+            }
+        }
+
+        if (!reqObj.customProps)
+            reqObj.customProps = {};
+
+        for (var key in settings.setup.custom) {
+            if (settings.setup.custom.hasOwnProperty(key)) {
+                if ((reqObj.customProps[key] === undefined) || (settings.setup.custom[key].ui.isMandatory && reqObj.customProps[key] === null))
+                    reqObj.customProps[key] = settings.setup.custom[key].ui.defaultVal
+
+                if (reqObj.customProps[key] && settings.setup.custom[key].ui.maxLength && settings.setup.custom[key].ui.maxLength > 0 && reqObj.customProps[key].toString().length > settings.setup.custom[key].ui.maxLength)
+                    reqObj.customProps[key] = reqObj.customProps[key].toString().substring(0, settings.setup.custom[key].ui.maxLength);
+            }
+        }
+
+        if (reqObj.Items && reqObj.Items.length > 0) {
+            reqObj.Items.forEach(
+                function (item) {
+                    for (var key in settings.item.primary) {
+                        if (settings.item.primary.hasOwnProperty(key)) {
+                            if ((item[key] === undefined) || (settings.item.primary[key].ui.isMandatory && item[key] === null))
+                                item[key] = settings.item.primary[key].ui.defaultVal
+
+                            if (item[key] && settings.item.primary[key].ui.maxLength && settings.item.primary[key].ui.maxLength > 0 && item[key].toString().length > settings.item.primary[key].ui.maxLength)
+                                item[key] = item[key].toString().substring(0, settings.item.primary[key].ui.maxLength);
+                        }
+                    }
+
+                    if (!item.customProps)
+                        item.customProps = {};
+
+                    for (var key in settings.item.custom) {
+                        if (settings.item.custom.hasOwnProperty(key)) {
+                            if ((item.customProps[key] === undefined) || (settings.item.custom[key].ui.isMandatory && item.customProps[key] === null))
+                                item.customProps[key] = settings.item.custom[key].ui.defaultVal
+
+                            if (item.customProps[key] && settings.item.custom[key].ui.maxLength && settings.item.custom[key].ui.maxLength > 0 && item.customProps[key].toString().length > settings.item.custom[key].ui.maxLength)
+                                item.customProps[key] = item.customProps[key].toString().substring(0, settings.item.custom[key].ui.maxLength);
+                        }
+                    }
+
+                    if (!item.Splits)
+                        item.Splits = [{}];
+
+                    item.Splits.forEach(
+                        function (split) {
+                            for (var key in settings.split.primary) {
+                                if (settings.split.primary.hasOwnProperty(key)) {
+                                    if ((split[key] === undefined) || (settings.split.primary[key].ui.isMandatory && split[key] === null))
+                                        split[key] = settings.split.primary[key].ui.defaultVal
+
+                                    if (split[key] && settings.split.primary[key].ui.maxLength && settings.split.primary[key].ui.maxLength > 0 && split[key].toString().length > settings.split.primary[key].ui.maxLength)
+                                        split[key] = split[key].toString().substring(0, settings.split.primary[key].ui.maxLength);
+                                }
+                            }
+
+                            if (!split.customProps)
+                                split.customProps = {};
+
+                            for (var key in settings.split.custom) {
+                                if (settings.split.custom.hasOwnProperty(key)) {
+                                    if ((split.customProps[key] === undefined) || (settings.split.custom[key].ui.isMandatory && split.customProps[key] === null))
+                                        split.customProps[key] = settings.split.custom[key].ui.defaultVal
+
+                                    if (split.customProps[key] && settings.split.custom[key].ui.maxLength && settings.split.custom[key].ui.maxLength > 0 && split.customProps[key].toString().length > settings.split.custom[key].ui.maxLength)
+                                        split.customProps[key] = split.customProps[key].toString().substring(0, settings.split.custom[key].ui.maxLength);
+                                }
+                            }
+                        }
+                    );
+                }
+            );
+        }
+    }
+
+    return reqObj;
+}
+
+function getSettings() {
+    return settings_abm;
+}
+
+//TODO: this function is temporary, till ui has option to add, delete items etc.
+function getNewRandomRequisition(id) {
+    //TODO: this setting to be read from db/cache based on tenant.
+    var settings = settings_abm;
+
+    var numItems = 2;
+    var numSplits = 3;
+    var req = {};
+
+    req.Id = id;
+    for (var key in settings.setup.primary) {
+        if (settings.setup.primary.hasOwnProperty(key)) {
+            req[key] = settings.setup.primary[key].ui.defaultVal
+        }
+    }
+
+    req.customProps = {};
+    for (var key in settings.setup.custom) {
+        if (settings.setup.custom.hasOwnProperty(key)) {
+            req.customProps[key] = settings.setup.custom[key].ui.defaultVal
+        }
+    }
+
+    req.Items = [];
+    for (var i = 0; i < numItems; i++) {
+        var item = {};
+        for (var key in settings.item.primary) {
+            if (settings.item.primary.hasOwnProperty(key)) {
+                item[key] = settings.item.primary[key].ui.defaultVal
+            }
+        }
+
+        item.unit_price = 34.58 + i * 0.83;
+        item.item_number = 'LaptopNum' + i;
+        item.item_name = 'Lenovo' + i;
+        item.partner_item_number = 'PartN' + i;
+        item.customProps = {};
+        for (var key in settings.item.custom) {
+            if (settings.item.custom.hasOwnProperty(key)) {
+                item.customProps[key] = settings.item.custom[key].ui.defaultVal
+            }
+        }
+
+        item.Splits = [];
+        for (var j = 0; j < numSplits; j++) {
+            var split = {};
+            for (var key in settings.split.primary) {
+                if (settings.split.primary.hasOwnProperty(key)) {
+                    split[key] = settings.split.primary[key].ui.defaultVal
+                }
+            }
+
+            split.customProps = {};
+            for (var key in settings.split.custom) {
+                if (settings.split.custom.hasOwnProperty(key)) {
+                    split.customProps[key] = settings.split.custom[key].ui.defaultVal
+                }
+            }
+
+            item.Splits.push(split);
+        }
+
+        req.Items.push(item);
+    }
+
+    return req;
+}
+
+module.exports = {
+    getNewRandomRequisition: getNewRandomRequisition,
+    applySchema: applySchema,
+    getSettings: getSettings
+}
 
 
 

@@ -1,0 +1,21 @@
+<div class='row'>
+    <custom-properties customprops='{obj: requisition, setting: ui.setupSec1Props}'></custom-properties>
+</div>
+<hr />
+<div class='row'> 
+  <div class='row'><b>Location Details</b></div>
+  <div class='row col-md-12'>Ship to
+    <div class='col-md-12'>
+      <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="1">Specify at Header</label>
+      <label class="radio-inline"><input type="radio" name="optradio" ng-model='stspec' ng-value="2">Different for Each Line Item</label>  
+    </div>  
+  </div>
+    <custom-properties customprops='{obj: requisition, setting: ui.setupSec2Props}'></custom-properties>
+</div>
+<hr />
+<div class='row'>
+  <div class='row'><b>Custom Properties</b></div>
+  <div class='row'>
+    <custom-properties customprops='{obj: requisition.customProps, setting: ui.settings.setup.custom}'></custom-properties>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+rule check_item_contract_number_and_expiry_date {
+	when {
+		req : Requisition ruleDef.checkItemContractNumberAndExpiryDate(req);
+	}
+	then {
+		ruleAct.returnErrorForItemContractNumberAndExpiryDate(req);
+	}
+}
+
+rule check_document_auto_approval {
+	when {
+		req : Requisition ruleDef.checkDocumentForAutoApproval(req);
+	}
+	then {
+		ruleAct.returnStatusForAutoApproval(req);
+	}
+}
+
+rule check_send_requsition_to_all_managers {
+	when {
+		req : Requisition ruleDef.checkSendRequisitionToAllManagers(req);
+	}
+	then {
+		ruleAct.returnStatusForRequsitionSentToAllManagers(req);
+	}
+}

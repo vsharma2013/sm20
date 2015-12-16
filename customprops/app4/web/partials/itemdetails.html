@@ -1,0 +1,47 @@
+<div class='row'> 
+	<div class="btn-group col-md-6">
+		<label ng-repeat='litem in items track by $index' class="btn btn-success" ng-model="itemModel.model" ng-click="selectItem(litem,$index+1)" uib-btn-radio="'Item {{$index+1}}'">Item {{$index+1}}</label>
+	</div>   
+	<div class="col-md-6">
+		<div class='btn-group pull-right'>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Partner'">Partner</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Shipping'">Shipping</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Others'">Others</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Accounting'">Accounting</label>
+		<label class="btn btn-success" ng-model="radioModel" uib-btn-radio="'Contract'">Contract</label>
+		</div>
+	</div>
+</div>
+<div class='row'>  
+	<div uib-collapse="!(radioModel == 'Partner')">
+        <custom-properties customprops='{obj: item, setting: ui.itemSec1Props}'></custom-properties>
+	</div>
+	<div uib-collapse="!(radioModel == 'Shipping')">
+        <custom-properties customprops='{obj: item, setting: ui.itemSec2Props}'></custom-properties>
+	</div>
+	<div uib-collapse="!(radioModel == 'Others')">
+		<div class='row'>
+            <custom-properties customprops='{obj: item, setting: ui.itemSec3Props}'></custom-properties>
+		</div>
+		<div class='row'><b>Custom Properties</b></div>
+		<div class='row'>
+            <custom-properties customprops='{obj: item.customProps, setting: ui.settings.item.custom}'></custom-properties>
+		</div>
+	</div>
+	<div uib-collapse="!(radioModel == 'Accounting')">
+		<uib-tabset justified="true" type="pills">
+			<uib-tab ng-repeat='split in item.Splits track by $index' heading='Split {{$index+1}}'>
+                <custom-properties customprops='{obj: item.Splits[$index], setting: ui.splitSec1Props}'></custom-properties>
+				<div class='row'><b>Custom Properties</b></div>
+				<div class='row'>
+                    <custom-properties customprops='{obj: item.Splits[$index].customProps, setting: ui.settings.split.custom}'></custom-properties>
+				</div>
+			</uib-tab>
+		</uib-tabset>
+	</div>
+	<div uib-collapse="!(radioModel == 'Contract')">
+		<div class='row'>
+            <custom-properties customprops='{obj: item, setting: ui.itemSec4Props}'></custom-properties>
+		</div>
+	</div>
+</div>

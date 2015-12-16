@@ -1,0 +1,49 @@
+html, body {
+}
+
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+label {
+    font-weight: 500;
+}
+.table-cell{
+	display: table-cell;
+	padding-right: 5px;
+}
+hr{ 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+} 
+.mydd{
+	margin-left: 15px;
+    width: 164px;
+}
+#split-button{
+    width: 138px;
+}
+.myradio{
+    width: 91px;
+}
+.row{
+    margin: 20px;
+}
+.grid{
+    width: 1200px;
+    height: 250px;
+}
+.well{
+    background-color: rgba(65, 71, 74, 0.46);
+}
+.navbar{
+    background-color: rgba(102, 175, 233, 0.6);
+    margin-bottom: 0px;
+}
