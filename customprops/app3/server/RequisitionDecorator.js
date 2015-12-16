@@ -17,12 +17,11 @@ RequisitionDecorator.prototype.addUISchemaToCustomProps = function(requisition, 
 	requisition.Items.forEach((function(item){
 		this.convertCustomPropsObjectToArray(item.shipping);
 		this.convertCustomPropsObjectToArray(item.others);
-
-		if(utils.hasArray(item.accounting)){
-			item.accounting.forEach((function(acc){
-		  		this.convertCustomPropsObjectToArray(acc);
-		  	}).bind(this));
-		}		
+		if(!utils.hasArray(item.accounting)) return;
+			
+		item.accounting.forEach((function(acc){
+	  		this.convertCustomPropsObjectToArray(acc);
+	  	}).bind(this));		
 	}).bind(this));
 }
 
@@ -33,12 +32,11 @@ RequisitionDecorator.prototype.removeUISchemaFromCutomProps = function(requisiti
 	requisition.Items.forEach((function(item){
 		this.convertCustomPropsArrayToObject(item.shipping);
 		this.convertCustomPropsArrayToObject(item.others);
-
-		if(utils.hasArray(item.accounting)){
-			item.accounting.forEach((function(acc){
-		  		this.convertCustomPropsArrayToObject(acc);
-		  	}).bind(this));
-		}
+		if(!utils.hasArray(item.accounting)) return;
+			
+		item.accounting.forEach((function(acc){
+	  		this.convertCustomPropsArrayToObject(acc);
+	  	}).bind(this));
 	}).bind(this));
 }
 
