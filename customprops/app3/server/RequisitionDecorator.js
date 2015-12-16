@@ -11,14 +11,14 @@ module.exports = gReqDec;
 
 RequisitionDecorator.prototype.addUISchemaToCustomProps = function(requisition, customPropsUISchema){
 	this.customPropsUISchema = customPropsUISchema;
-	this.decorateRequisitionWithOperation(requisition, this.convertCustomPropsObjectToArray.bind(this));	
+	this.decorate(requisition, this.convertCustomPropsObjectToArray.bind(this));	
 }
 
 RequisitionDecorator.prototype.removeUISchemaFromCutomProps = function(requisition){
-	this.decorateRequisitionWithOperation(requisition, this.convertCustomPropsArrayToObject.bind(this));
+	this.decorate(requisition, this.convertCustomPropsArrayToObject.bind(this));
 }
 
-RequisitionDecorator.prototype.decorateRequisitionWithOperation = function(requisition, decorator){
+RequisitionDecorator.prototype.decorate = function(requisition, decorator){
 	decorator(requisition);	
 	if(!utils.hasArray(requisition.Items)) return;
 
