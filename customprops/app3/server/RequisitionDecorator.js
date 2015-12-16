@@ -13,7 +13,7 @@ RequisitionDecorator.prototype.addUISchemaToCustomProps = function(requisition, 
 	this.customPropsUISchema = customPropsUISchema;
 	this.convertCustomPropsObjectToArray(requisition);
 	if(!utils.hasArray(requisition.Items)) return;
-	
+
 	requisition.Items.forEach((function(item){
 		this.convertCustomPropsObjectToArray(item.shipping);
 		this.convertCustomPropsObjectToArray(item.others);
@@ -43,6 +43,7 @@ RequisitionDecorator.prototype.removeUISchemaFromCutomProps = function(requisiti
 }
 
 RequisitionDecorator.prototype.convertCustomPropsObjectToArray = function(parentItem){
+	if(!parentItem) return;
 	var cProps = parentItem.customProps;
 	if(!cProps) return;
 
