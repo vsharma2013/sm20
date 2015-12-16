@@ -11,31 +11,24 @@ module.exports = gReqDec;
 
 RequisitionDecorator.prototype.addUISchemaToCustomProps = function(requisition, customPropsUISchema){
 	this.customPropsUISchema = customPropsUISchema;
-	this.convertCustomPropsObjectToArray(requisition);
-	if(!utils.hasArray(requisition.Items)) return;
-
-	requisition.Items.forEach((function(item){
-		this.convertCustomPropsObjectToArray(item.shipping);
-		this.convertCustomPropsObjectToArray(item.others);
-		if(!utils.hasArray(item.accounting)) return;
-			
-		item.accounting.forEach((function(acc){
-	  		this.convertCustomPropsObjectToArray(acc);
-	  	}).bind(this));		
-	}).bind(this));
+	this.decorateReusitionWithOperation(requisition, this.convertCustomPropsObjectToArray.bind(this));	
 }
 
 RequisitionDecorator.prototype.removeUISchemaFromCutomProps = function(requisition){
-	this.convertCustomPropsArrayToObject(requisition);	
+	this.decorateReusitionWithOperation(requisition, this.convertCustomPropsArrayToObject.bind(this));
+}
+
+RequisitionDecorator.prototype.decorateReusitionWithOperation = function(requisition, decorator){
+	decorator(requisition);	
 	if(!utils.hasArray(requisition.Items)) return;
 
 	requisition.Items.forEach((function(item){
-		this.convertCustomPropsArrayToObject(item.shipping);
-		this.convertCustomPropsArrayToObject(item.others);
+		decorator(item.shipping);
+		decorator(item.others);
 		if(!utils.hasArray(item.accounting)) return;
 			
 		item.accounting.forEach((function(acc){
-	  		this.convertCustomPropsArrayToObject(acc);
+	  		decorator(acc);
 	  	}).bind(this));
 	}).bind(this));
 }
