@@ -1,5 +1,5 @@
 {
-  "name": "app4",
+  "name": "app1",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^2.1.0"
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "mongodb": "^2.0.49",
+    "nools": "^0.4.1",
+    "underscore": "^1.8.3"
   }
 }
