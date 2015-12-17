@@ -756,8 +756,11 @@ function applySchema(reqObj) {
     return reqObj;
 }
 
-function getSettings() {
-    return settings_abm;
+function getSettings(id) {
+    if(id == '1')
+        return settings_abm;
+    else
+        return settings_camc;
 }
 
 //TODO: this function is temporary, till ui has option to add, delete items etc.

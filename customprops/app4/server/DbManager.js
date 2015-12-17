@@ -23,8 +23,8 @@ var gDBMgr = new DbManager();
 
 module.exports = gDBMgr;
 
-DbManager.prototype.getSettings = function (cbOnDone) {
-    var result = reqUtils.getSettings();
+DbManager.prototype.getSettings = function (id, cbOnDone) {
+    var result = reqUtils.getSettings(id);
     cbOnDone(result);
 }
 
@@ -89,4 +89,10 @@ DbManager.prototype.saveRequisitionDocument = function(requisition, cbOnDone){
 			db.close();
 		});
 	});
+}
+
+DbManager.prototype.saveSettingsDocument = function(settings, cbOnDone){
+	console.log(settings);
+	cbOnDone(null, true);
+			
 }

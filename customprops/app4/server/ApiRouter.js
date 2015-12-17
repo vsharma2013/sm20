@@ -10,7 +10,7 @@ function ApiController(){
 }
 
 ApiController.prototype.handleGetSettingsRequest = function (req, res) {
-    dbMgr.getSettings(function (doc) {
+    dbMgr.getSettings(req.params.id, function (doc) {
         res.json(doc);
     });
 }
@@ -51,6 +51,24 @@ ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
 		res.json(result);	
 }
 
+ApiController.prototype.handleSaveSettingsRequest = function(req, res){
+	var settings = req.body;
+
+	// need to add validation
+	// var result = validations.validateRequisition(requisition);
+	// if(result.success){
+		dbMgr.saveSettingsDocument(settings, function(err, rs){
+			if(err)
+				res.json({success : false, err : err});
+			else{
+				res.json({success: true, message: 'Settings saved successfully'});
+			}
+		});	
+	// }
+	// else
+	// 	res.json(result);	
+}
+
 ApiController.prototype.handleSubmitRequisitionRequest = function(req, res){
 	var requisition = req.body;
 	reqDecorator.removeUISchemaFromCutomProps(requisition);
@@ -71,7 +89,8 @@ ApiController.prototype.handleSubmitRequisitionRequest = function(req, res){
 
 var apiController = new ApiController();
 router.get('/req', apiController.handleGetRequisitionRequest.bind(apiController));
-router.get('/settings', apiController.handleGetSettingsRequest.bind(apiController));
+router.get('/settings/:id', apiController.handleGetSettingsRequest.bind(apiController));
+router.post('/settings/save', apiController.handleSaveSettingsRequest.bind(apiController));
 router.get('/reqraw', apiController.handleGetRawRequisitionRequest.bind(apiController));
 router.get('/cpuischema', apiController.handleCustomPropsUISchemaRequest.bind(apiController));
 router.post('/req/save', apiController.handleSaveRequisitionRequest.bind(apiController));

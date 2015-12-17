@@ -1,0 +1,84 @@
+
+<div class='row'>
+	<button type="button" class="btn btn-warning pull-right leftpadding" ng-click="add()">Add</button>
+	<button type="button" class="btn btn-danger pull-right" ng-click="delete()">Delete</button>
+</div>
+<div class='row'>
+	<table>
+		<tr>
+			<th>
+			</th>
+			<th>
+				Name
+			</th>
+			<th>
+				Label
+			</th>
+			<th>
+				Mandatory
+			</th>
+			<th>
+				Editable
+			</th>
+			<th>
+				Type
+			</th>
+			<th>
+				UI Model
+			</th>
+			<th>
+				Default Value
+			</th>	
+			<th>
+				All Values
+			</th>	
+			<th>
+				Max Length
+			</th>
+			<th>
+				No of Decimals
+			</th>
+			<th>
+				Autosuggest URL
+			</th>		
+		</tr>
+		<tr ng-repeat='(key,val) in confObj'>
+			<td>
+				<input type='checkbox' ng-model="selected[key]"/>
+			</td>
+			<td>
+				{{key}}
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.label}}</div>
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.isMandatory}}</div>
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.allowEdit}}</div>
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.dataType}}</div>
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.uiType}}</div>
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.defaultVal}}</div>
+			</td>	
+			<td>
+				<div contenteditable>{{confObj[key].ui.allVals}}</div>
+			</td>	
+			<td>
+				<div contenteditable>{{confObj[key].ui.maxLength}}</div>
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.numDecimals}}</div>
+			</td>
+			<td>
+				<div contenteditable>{{confObj[key].ui.autoSuggestURL}}</div>
+			</td>		
+		</tr>					
+	</table>
+</div>

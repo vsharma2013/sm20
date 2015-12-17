@@ -25,7 +25,25 @@ angular.module('myApp', [
                     return requisionService.getRequisition(reqid);
                 }],
                 settings: ['requisionService', '$route', function (requisionService, $route) {
-                    return requisionService.getSettings();
+                    var reqid = 1;
+                    if($route.current.params.reqid)
+                        reqid = $route.current.params.reqid;
+
+                    return requisionService.getSettings(reqid);
+                }]
+            }
+        })
+        .when('/configuration/:reqid/', {
+            templateUrl: "partials/configuration.html",
+            controller: 'configurationController',
+            controllerAs: 'vm',
+            resolve: {
+                settings: ['requisionService', '$route', function (requisionService, $route) {
+                    var reqid = 1;
+                    if($route.current.params.reqid)
+                        reqid = $route.current.params.reqid;
+                    
+                    return requisionService.getSettings(reqid);
                 }]
             }
         })

@@ -9,13 +9,14 @@ function requisionService($http, ENV) {
         getRequisition: getRequisition,
         getSettings: getSettings,
         saveRequisition: saveRequisition,
-        submitRequisition: submitRequisition
+        submitRequisition: submitRequisition,
+        saveSettings: saveSettings
     };    
 
     return dataService;
 
-    function getSettings() {
-        return $http.get(ENV.apiEndPoint + 'settings').success(function (response) {
+    function getSettings(reqid) {
+        return $http.get(ENV.apiEndPoint + 'settings/'+reqid).success(function (response) {
             console.log(response);
             return response;
         }).error(function (error) {
@@ -47,6 +48,14 @@ function requisionService($http, ENV) {
 
     function submitRequisition(req){
         return $http.post(ENV.apiEndPoint+'req/submit', angular.toJson(req)).success(function(response) {
+           return response;
+        }).error(function(error) {
+           return error;
+        });
+    }
+
+    function saveSettings(settings){
+        return $http.post(ENV.apiEndPoint+'settings/save', angular.toJson(settings)).success(function(response) {
            return response;
         }).error(function(error) {
            return error;

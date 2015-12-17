@@ -47,3 +47,12 @@ hr{
     background-color: rgba(102, 175, 233, 0.6);
     margin-bottom: 0px;
 }
+td,th{
+    padding: 3px;
+    border: white;
+    border-width: thin;
+    border-style: dotted;
+}
+.leftpadding{
+    margin-left: 20px;
+}
