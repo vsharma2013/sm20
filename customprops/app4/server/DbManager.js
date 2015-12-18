@@ -114,7 +114,19 @@ DbManager.prototype.saveRequisitionDocument = function(requisition, cbOnDone){
 }
 
 DbManager.prototype.saveSettingsDocument = function(settings, cbOnDone){
-	console.log(settings);
-	cbOnDone(null, true);
-			
+	settings._id = ObjectID(settings._id);
+	mongodb.connect(mongoConnString, function(connectErr, db){
+		if(connectErr){
+			cbOnDone(connectErr);			
+		} 
+		else{
+			db.collection(settingsCollection).save(settings, function(dbErr, res){
+				if(dbErr)
+					cbOnDone(dbErr);
+				else
+					cbOnDone(null, true);
+				db.close();
+			});
+		}
+	});
 }

@@ -68,3 +68,6 @@ tr{
     margin-left: -10%;
     overflow: hidden;
 }
+input{
+    width: 100%;
+}
