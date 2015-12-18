@@ -5,6 +5,7 @@ var reqUtils = require('./RequisiitionUtils');
 var reqDecorator = require('./RequisitionDecorator');
 var reqCollection = 'requisitions';
 var schemaCollection = 'reqCustomProps';
+var settingsCollection = 'settings';
 
 function DbManager(){
 	var self = this;
@@ -15,7 +16,11 @@ function DbManager(){
 		db.collection(reqCollection).count(function(err, res){
 			if(!res)
 				self.addDefaultRequisitions(db);
-		});			
+		});	
+		db.collection(settingsCollection).count(function(err, res){
+			if(!res)
+				self.addDefaultSettings(db);
+		});		
 	});
 }
 
@@ -24,8 +29,13 @@ var gDBMgr = new DbManager();
 module.exports = gDBMgr;
 
 DbManager.prototype.getSettings = function (id, cbOnDone) {
-    var result = reqUtils.getSettings(id);
-    cbOnDone(result);
+    mongodb.connect(mongoConnString, function (connectErr, db) {
+	    var query = { "id": id };
+        var res = db.collection(settingsCollection).findOne(query, function (fetchErr, result) {
+            cbOnDone(result);
+            db.close();
+        });
+    });
 }
 
 DbManager.prototype.getRequisitionById = function(reqId, addUIschema, cbOnDone){
@@ -54,6 +64,18 @@ DbManager.prototype.addDefaultRequisitions = function(db){
 			return;
 		}
 		console.log('Added requisitions orders successfully');
+	});
+}
+
+DbManager.prototype.addDefaultSettings = function(db){
+	var docs = new Array();
+	docs.push(reqUtils.getSettings('1'));
+	docs.push(reqUtils.getSettings('2'));
+	db.collection(settingsCollection).insertMany(docs, {safe:true}, function(err, result){
+		if(err)
+			console.log('Error in adding default settings');
+		else
+			console.log('Added settings successfully');
 	});
 }
 

@@ -360,7 +360,8 @@ var settings_abm = {
                 db: {}
             }
         }
-    }
+    },
+    id: '1'
 };
 
 var settings_camc = {
@@ -662,7 +663,8 @@ var settings_camc = {
                 db: {}
             }
         }
-    }
+    },
+    id: '2'
 };
 
 function applySchema(reqObj) {
