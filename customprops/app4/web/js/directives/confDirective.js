@@ -37,6 +37,7 @@ function confDirective($uibModal) {
                 var modalInstance = $uibModal.open({
                   templateUrl: 'partials/modalContent.html',
                   controller: 'modalController',
+                  windowClass: 'center-modal',
                   size: 'sm'
                 });
 
