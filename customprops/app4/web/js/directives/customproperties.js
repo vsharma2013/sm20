@@ -19,7 +19,7 @@ function customProperties() {
 
                 var model = scope.cpobject[key].ui;
                 var notEditable = !model.allowEdit || model.allowEdit == '0'
-                if (!notEditable && model.uiType == 'chkbox')
+                if (model.uiType == 'chkbox')
                     return 'checkbox';
                 else if (!notEditable && model.uiType == 'input')
                     return 'txtbx';
