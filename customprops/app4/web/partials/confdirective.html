@@ -5,7 +5,7 @@
 </div>
 <div class='row'>
 	<table>
-		<tr>
+		<tr style='background-color: darkcyan;'>
 			<th>
 			</th>
 			<th>
@@ -53,16 +53,25 @@
 				<div contenteditable>{{confObj[key].ui.label}}</div>
 			</td>
 			<td>
-				<div contenteditable>{{confObj[key].ui.isMandatory}}</div>
+				<input type='checkbox' ng-model='confObj[key].ui.isMandatory'/>
 			</td>
 			<td>
-				<div contenteditable>{{confObj[key].ui.allowEdit}}</div>
+				<input type='checkbox' ng-model='confObj[key].ui.allowEdit'/>
 			</td>
 			<td>
-				<div contenteditable>{{confObj[key].ui.dataType}}</div>
+				<select ng-model='confObj[key].ui.dataType'>
+					<option value='string'>string</option>
+					<option value='bool'>bool</option>
+					<option value='int'>int</option>
+				</select>
 			</td>
 			<td>
-				<div contenteditable>{{confObj[key].ui.uiType}}</div>
+				<select ng-model='confObj[key].ui.uiType'>
+					<option value='input'>input</option>
+					<option value='autosuggest'>autosuggest</option>
+					<option value='ddlist'>ddlist</option>
+					<option value='chkbox'>chkbox</option>
+				</select>
 			</td>
 			<td>
 				<div contenteditable>{{confObj[key].ui.defaultVal}}</div>

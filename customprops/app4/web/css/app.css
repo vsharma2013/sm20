@@ -56,3 +56,7 @@ td,th{
 .leftpadding{
     margin-left: 20px;
 }
+
+tr{
+    background-color: lightgray;
+}
