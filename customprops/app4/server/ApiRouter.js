@@ -3,7 +3,6 @@ var router = express.Router();
 var dbMgr = require('./DBManager');
 var validations = require('./Validations');
 var RuleFlow = require('./rules/RuleFlow');
-var reqDecorator = require('./RequisitionDecorator');
 
 function ApiController(){
 
