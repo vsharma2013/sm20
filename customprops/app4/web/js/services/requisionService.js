@@ -24,10 +24,11 @@ function requisionService($http, ENV) {
         });
     }
 
-    function getRequisition(reqid) {
+    function getRequisition(reqid, tenantid) {
         var params={
             params:{
-                r:reqid
+                r:reqid,
+                t:tenantid
             } 
         };       
         return  $http.get(ENV.apiEndPoint+'req', params).success(function(response) {

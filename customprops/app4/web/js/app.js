@@ -12,24 +12,27 @@ angular.module('myApp', [
             templateUrl: "partials/home.html",
             controller: 'homeController'   
         })
-        .when('/requisition/:reqid/', {
+        .when('/requisition/:reqid/:tenantid', {
             templateUrl: "partials/requisition.html",
             controller: 'requisitionController',
             controllerAs: 'vm',
             resolve: {
                 requisition: ['requisionService', '$route', function (requisionService, $route) {
                     var reqid = 1;
+		    var tenantid = 1;
                     if($route.current.params.reqid)
                         reqid = $route.current.params.reqid;
+                    if($route.current.params.tenantid)
+                        tenantid = $route.current.params.tenantid;
 
-                    return requisionService.getRequisition(reqid);
+                    return requisionService.getRequisition(reqid, tenantid);
                 }],
                 settings: ['requisionService', '$route', function (requisionService, $route) {
-                    var reqid = 1;
-                    if($route.current.params.reqid)
-                        reqid = $route.current.params.reqid;
+                    var tenantid = 1;
+                    if($route.current.params.tenantid)
+                        tenantid = $route.current.params.tenantid;
 
-                    return requisionService.getSettings(reqid);
+                    return requisionService.getSettings(tenantid);
                 }]
             }
         })

@@ -17,9 +17,12 @@ ApiController.prototype.handleGetSettingsRequest = function (req, res) {
 
 ApiController.prototype.handleGetRequisitionRequest = function(req, res){
 	var id = parseInt(req.query.r);
-	dbMgr.getRequisitionById(id, true, function(doc){
-        res.json(doc);
-	});	
+	var tid = parseInt(req.query.t);
+        dbMgr.getSettings(tid, function (sett) {
+	    dbMgr.getRequisitionById(id, sett, true, function(doc){
+                res.json(doc);
+	    });	
+        });
 }
 
 ApiController.prototype.handleGetRawRequisitionRequest = function(req, res){

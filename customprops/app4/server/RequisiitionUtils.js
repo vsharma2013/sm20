@@ -667,10 +667,7 @@ var settings_camc = {
     id: '2'
 };
 
-function applySchema(reqObj) {
-    //TODO: this setting to be read from db/cache based on tenant.
-    var settings = settings_abm;
-
+function applySchema(reqObj, settings) {
     if (reqObj) {
         for (var key in settings.setup.primary) {
             if (settings.setup.primary.hasOwnProperty(key)) {
@@ -766,10 +763,7 @@ function getSettings(id) {
 }
 
 //TODO: this function is temporary, till ui has option to add, delete items etc.
-function getNewRandomRequisition(id) {
-    //TODO: this setting to be read from db/cache based on tenant.
-    var settings = settings_abm;
-
+function getNewRandomRequisition(id, settings) {
     var numItems = 2;
     var numSplits = 3;
     var req = {};

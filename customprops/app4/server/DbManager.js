@@ -10,13 +10,6 @@ var settingsCollection = 'settings';
 function DbManager(){
 	var self = this;
 	mongodb.connect(mongoConnString, function(err, db){
-		db.collection(schemaCollection).count(function(err, res){
-			res >  0 ? self.cacheUISchema(db) : self.addCustomPropsUISchema(db);
-		})
-		db.collection(reqCollection).count(function(err, res){
-			if(!res)
-				self.addDefaultRequisitions(db);
-		});	
 		db.collection(settingsCollection).count(function(err, res){
 			if(!res)
 				self.addDefaultSettings(db);
@@ -28,9 +21,10 @@ var gDBMgr = new DbManager();
 
 module.exports = gDBMgr;
 
+//TODO: Implement caching here.
 DbManager.prototype.getSettings = function (id, cbOnDone) {
     mongodb.connect(mongoConnString, function (connectErr, db) {
-	    var query = { "id": id };
+	    var query = { "id": id.toString() };
         var res = db.collection(settingsCollection).findOne(query, function (fetchErr, result) {
             cbOnDone(result);
             db.close();
@@ -38,15 +32,15 @@ DbManager.prototype.getSettings = function (id, cbOnDone) {
     });
 }
 
-DbManager.prototype.getRequisitionById = function(reqId, addUIschema, cbOnDone){
+DbManager.prototype.getRequisitionById = function(reqId, sett, addUIschema, cbOnDone){
 	var self = this;
 	mongodb.connect(mongoConnString, function (err, db) {
 	    var dbJson = { "Id": reqId };
         var res = db.collection(reqCollection).findOne(dbJson, function (err, result) {
             if (!result)
-                result = reqUtils.getNewRandomRequisition(reqId);
+                result = reqUtils.getNewRandomRequisition(reqId, sett);
             else
-                result = reqUtils.applySchema(result);
+                result = reqUtils.applySchema(result, sett);
 
             cbOnDone(result);
             db.close();
