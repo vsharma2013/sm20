@@ -7,12 +7,11 @@ function customProperties() {
     return {
         restrict: 'E',
         scope: {
-            customObj: '=customprops'
+            customProps: '=customprops',
+	    cpobject: '=setting'
         },
         templateUrl: 'partials/customproperties.html',
         link: function (scope, element) {
-            scope.customProps = scope.customObj.obj;
-            scope.cpobject = scope.customObj.setting;
             scope.getInputType = function (key) {
                 if (key === 'partner_name')
                     key = 'partner_name';

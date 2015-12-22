@@ -7,13 +7,11 @@ function setupDirective() {
     return {
         restrict: 'E',
         scope: {
-          requisitionset: '=requisitionset'
+          requisition: '=requisition',
+	  ui: '=ui'
         },
         templateUrl: 'partials/setup.html',
         link: function (scope, element) {
-            scope.requisition = scope.requisitionset.req;
-            scope.ui = scope.requisitionset.ui;
-            scope.stspec = 1;
         }       
     };   
 }

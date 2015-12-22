@@ -7,12 +7,11 @@ function itemdetailsDirective() {
     return {
         restrict: 'E',
         scope: {
-          itemsset: '=itemsset'
+          items: '=items',
+          ui: '=ui'
         },
         templateUrl: 'partials/itemdetails.html',
         link: function (scope, element) {
-            scope.items = scope.itemsset.items;
-            scope.ui = scope.itemsset.ui;
             scope.radioModel = 'Accounting';
             scope.itemModel = {model : 'Item 1'};
             scope.item = scope.items[0];

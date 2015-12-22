@@ -26,13 +26,13 @@
   <div class="divider" style="margin-top:15px;"></div>
   <uib-tabset>
     <uib-tab heading="Setup"> 
-      <setup-directive requisitionset='{req: vm.requisition, ui: vm.ui}'></setup-directive>
+      <setup-directive requisition='vm.requisition' ui='vm.ui'></setup-directive>
     </uib-tab>
     <uib-tab heading="Item({{vm.requisition.Items.length}})">        
       <item-directive requisition='vm.requisition' gridoptions='vm.gridOptions'></item-directive>
     </uib-tab>
     <uib-tab heading="Item Details({{vm.requisition.Items.length}})">    
-      <itemdetails-directive itemsset='{items: vm.requisition.Items, ui: vm.ui}'></itemdetails-directive>
+      <itemdetails-directive items='vm.requisition.Items' ui='vm.ui'></itemdetails-directive>
     </uib-tab>
   </uib-tabset>
 </div>
