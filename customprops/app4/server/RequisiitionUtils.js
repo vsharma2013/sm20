@@ -668,6 +668,7 @@ var settings_camc = {
 };
 
 function applySchema(reqObj, settings) {
+//TODO handle num decimals.
     if (reqObj) {
         for (var key in settings.setup.primary) {
             if (settings.setup.primary.hasOwnProperty(key)) {

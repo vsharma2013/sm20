@@ -30,7 +30,7 @@ DbManager.prototype.getSettings = function (id, cbOnDone) {
     });
 }
 
-DbManager.prototype.getRequisitionById = function(reqId, sett, addUIschema, cbOnDone){
+DbManager.prototype.getRequisitionById = function(reqId, tenantId, sett, addUIschema, cbOnDone){
 	var self = this;
 	mongodb.connect(mongoConnString, function (err, db) {
 	    var dbJson = { "Id": reqId };
@@ -40,6 +40,7 @@ DbManager.prototype.getRequisitionById = function(reqId, sett, addUIschema, cbOn
             else
                 result = reqUtils.applySchema(result, sett);
 
+            result.tenantId = tenantId;
             cbOnDone(result);
             db.close();
         });

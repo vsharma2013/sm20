@@ -1,27 +1,57 @@
 var _ = require('underscore');
 
-function hasString(str){
-	return typeof(str) === 'string' && /([^\s])/.test(str);
+function getString(s){
+	try {
+		return {success: true, value: s.toString()};
+	}
+	catch (e) {
+	}
+	
+	return {success: false, value: null};
 }
 
-function hasInt(i){
-	try{
-		parseInt(i);
-		return true;
+function getBoolean(b) {
+	try {
+		if (typeof(b) === 'boolean')
+			return {success: true, value: b};
+		else if (b === 1 || b === '1')
+			return {success: true, value: true};
+		else if (b === 0 || b === '0')
+			return {success: true, value: false};
+		else {
+			var t = JSON.parse(b);
+			if (typeof(t) === 'boolean')
+				return {success: true, value: t};
+		}
 	}
-	catch(e){
-		return false;
+	catch (e) {
 	}
+
+	return {success: false, value: null};
 }
 
-function hasFloat(f){
-	try{
-		parseFloat(f);
-		return true;
+function getInt(i){
+	//TODO: handle leading 0s.
+	try {
+		if(!isNaN(i))
+			return {success: true, value: parseInt(i, 10)};
 	}
-	catch(e){
-		return false;
+	catch(e) {
 	}
+
+	return {success: false, value: null};
+}
+
+function getFloat(f){
+	//TODO: handle leading 0s.
+	try {
+		if(!isNaN(f))
+			return {success: true, value: parseFloat(f, 10)};
+	}
+	catch(e) {
+	}
+
+	return {success: false, value: null};
 }
 
 function hasDate(d){
@@ -32,16 +62,6 @@ function hasDate(d){
 	catch(e){
 		return false;
 	}
-}
-
-function hasAccountingType(v){
-	var values = ['#', '%'];
-	return _.contains(values, v);	
-}
-
-function hasYesNo(v){
-	var values = ['yes', 'no'];
-	return _.contains(values, v.toLowerCase());
 }
 
 function getDocumentValue(req){
@@ -55,17 +75,11 @@ function getDocumentValue(req){
 	return val;
 }
 
-function hasArray (arr){
-	return arr && Array.isArray(arr) && arr.length > 0;
-}
 module.exports = {
-	hasString : hasString,
-	hasInt : hasInt,
-	hasFloat : hasFloat,
-	hasString : hasString,
+	getBoolean: getBoolean,
+	getString : getString,
+	getInt : getInt,
+	getFloat : getFloat,
 	hasDate : hasDate,
-	hasArray : hasArray,
-	hasYesNo : hasYesNo,
-	hasAccountingType : hasAccountingType,
 	getDocumentValue : getDocumentValue
 }
