@@ -24,6 +24,24 @@ ApiController.prototype.handleGetRequisitionRequest = function(req, res){
         });
 }
 
+ApiController.prototype.handleSubmitRequisitionRequest = function(req, res){
+	var requisition = req.body;
+        dbMgr.getSettings(requisition.tenantId, function (sett) {
+		var vResults = validations.validateRequisition(requisition, sett);
+		if(vResults.success) {
+			var ruleFlow = new RuleFlow();
+			ruleFlow.run(requisition, function(result) {
+				if(result.success)
+					res.json({success : true, message : result.results.join('\n')});
+				else
+					res.json({success : false, message : 'Error in executing submit rules'});
+			});
+		}
+		else
+			res.json(vResults);
+	});
+}
+
 ApiController.prototype.handleSaveRequisitionRequest = function(req, res){
 	var requisition = req.body;
         dbMgr.getSettings(requisition.tenantId, function (sett) {
@@ -53,23 +71,6 @@ ApiController.prototype.handleSaveSettingsRequest = function(req, res){
 			res.json({success: true, message: 'Settings saved successfully'});
 		}
 	});	
-}
-
-ApiController.prototype.handleSubmitRequisitionRequest = function(req, res){
-	var requisition = req.body;
-	reqDecorator.removeUISchemaFromCutomProps(requisition);
-	var vResults = validations.validateRequisition(requisition);
-	if(vResults.success){
-		var ruleFlow = new RuleFlow();
-		ruleFlow.run(requisition, function(result){
-			if(result.success)
-				res.json({success : true, message : result.results.join('\n')});
-			else
-				res.json({success : false, message : 'Error in executing submit rules'});
-		});
-	}
-	else
-		res.json(vResults);
 }
 
 

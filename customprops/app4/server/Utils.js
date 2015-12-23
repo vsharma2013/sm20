@@ -67,10 +67,10 @@ function hasDate(d){
 function getDocumentValue(req){
 	var val = 0;
 	req.Items.forEach(function(item){
-		val += (item.Quantity * item.Unitprice);
-		val += item.Taxes ? item.Taxes : 0;
-		val += item.Shippingcharges ? item.Shippingcharges : 0;
-		val += item.Othercharges ? item.Othercharges : 0;
+		val += (item.quantity * item.unit_price);
+		val += item.taxes ? item.taxes : 0;
+		val += item.shipping ? item.shipping : 0;
+		val += item.other_charges ? item.other_charges : 0;
 	});
 	return val;
 }

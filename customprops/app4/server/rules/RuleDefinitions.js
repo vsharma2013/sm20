@@ -8,16 +8,12 @@ RuleDefinitions.prototype.checkItemContractNumberAndExpiryDate = function(req){
 
 	for(var i = 0 ; i < req.Items.length; i++){
 		var item = req.Items[i];
-		var bValid = item.contract && 
-					 item.contract.Contractnumber &&
-		             utils.hasString(item.contract.Contractnumber) && 
-		             utils.hasDate(item.contract.Contractexpirydate) &&
-		             Date.parse(item.contract.Contractexpirydate) < Date.now();
-		if(bValid){
-			req.actionObjects['check_item_contract_number_and_expiry_date'] = { index : i + 1, name : item.Item };
+		if(item.contract_number && item.contract_number.length > 0 && utils.hasDate(item.contract_expiry_date) && Date.parse(item.contract_expiry_date) < Date.now()){
+			req.actionObjects['check_item_contract_number_and_expiry_date'] = { index : i + 1, name : item.item_name };
 			return true;             
 		}
 	}
+
 	return false;
 }
 

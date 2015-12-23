@@ -465,6 +465,11 @@ var settings_camc = {
                 ui: getUIPropSchema('decimal', 'input', 'Quantity', 1, true, true, null, 0, null, null),
                 db: {}
             },
+	    taxes: {
+                //TODO: Think about numerical validations (including custom). At least put default positive etc validations.
+                ui: getUIPropSchema('decimal', 'input', 'Taxes', 0, false, true, null, 0, null, null),
+                db: {}
+	    },
             uom: {
                 //TODO: url is placeholder for now, will integrate in actual application.
                 ui: getUIPropSchema('string', 'autosuggest', 'UOM', 'Each', true, true, null, null, 'https://ListofUOMs', null),

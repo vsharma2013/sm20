@@ -1,17 +1,13 @@
 function Requisition(r){
-	this.RequisitionName 	= r.RequisitionName; 
-	this.RequisitionNumber 	= r.RequisitionNumber; 
-	this.RequesterId 	    = r.RequesterId; 
-	this.RequestorName 	    = r.RequestorName; 
-	this.OBO_Id 	        = r.OBO_Id; 
-	this.OBO_Name 	        = r.OBO_Name; 
-	this.Shiptoid 	        = r.Shiptoid; 
-	this.Shiptoname 	    = r.Shiptoname; 
-	this.Shiptoaddress 	    = r.Shiptoaddress; 
-	this.Billtoid 	        = r.Billtoid; 
-	this.Billtoname 	    = r.Billtoname ;
-	this.Billtoaddress   	= r.Billtoaddress; 
-	this.Currency	        = r.Currency;
+	this.req_name 	= r.req_name; 
+	this.req_number 	= r.req_number; 
+	this.requester 	    = r.requester; 
+	this.obo 	        = r.obo; 
+	this.shipto 	    = r.shipto; 
+	this.shipto_address 	    = r.shipto_address; 
+	this.billto 	    = r.billto;
+	this.billto_address   	= r.billto_address; 
+	this.currency	        = r.currency;
 	this.Items              = r.Items;
 	this.actionObjects      = {};
 }
