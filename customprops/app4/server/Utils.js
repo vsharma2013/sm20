@@ -11,12 +11,15 @@ function getString(s){
 }
 
 function getBoolean(b) {
+	var yes = ['YES', 'yes', 'Yes'];
+	var no = ['NO', 'no', 'No'];
+
 	try {
 		if (typeof(b) === 'boolean')
 			return {success: true, value: b};
-		else if (b === 1 || b === '1')
+		else if (b === 1 || b === '1' || _.contains(yes, b))
 			return {success: true, value: true};
-		else if (b === 0 || b === '0')
+		else if (b === 0 || b === '0' || _.contains(no, b))
 			return {success: true, value: false};
 		else {
 			var t = JSON.parse(b);
