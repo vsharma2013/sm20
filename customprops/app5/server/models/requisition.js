@@ -4,7 +4,8 @@ let model = 'requisition';
 
 var ReqSchema = new mongoose.Schema({
 	bUID: {type:Number, required:true},
-	_id: Schema.Types.ObjectId,
+	Id: {type:Number, required:true},
+	// _id: mongoose.Schema.Types.ObjectId,
   	baseCurrency: {type:String, required:true}
 });	
 

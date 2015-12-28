@@ -5,7 +5,8 @@ import * as requisitionController from './controllers/requisitionController';
 import * as view from './views/jsonresponseview'; 
 
 var controllerMethods = {
-	getRequisition : requisitionController.getRequisition
+	getRequisition : requisitionController.getRequisition,
+	saveRequisition : requisitionController.saveRequisition
 }
 
 function * getHandler(){
