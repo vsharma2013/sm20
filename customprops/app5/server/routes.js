@@ -16,8 +16,9 @@ function * getHandler(){
 
 function * postHandler(){
 	var params = this.params;
+	params.data = this.request.body;
 	// console.log(this.request.body);
-	let data = yield controllerMethods.getRequisition(this.db, params);
+	let data = yield controllerMethods.saveRequisition(this.db, params);
 	view.onSuccess(this, data, 1);
 }
 

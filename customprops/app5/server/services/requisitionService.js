@@ -4,3 +4,9 @@ export function * getRequisition(db, params){
 	let data = yield requisition.getRequisition(db, params);
 	return data;
 }
+
+export function * saveRequisition(db, params){
+	//run rules here
+	let data = yield requisition.saveRequisition(db, params);
+	return data;
+}
