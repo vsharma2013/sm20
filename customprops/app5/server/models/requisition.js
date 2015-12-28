@@ -14,9 +14,9 @@ export function * getRequisition(db, params) {
 	
 	var db2 = db.useDb(config.tenants[params.tenant]);
 	var Requisition = db2.model(model, ReqSchema);
-	let docs = yield Requisition.find({'Id': parseInt(params.req)}).exec();
+	let result = yield Requisition.find({'Id': parseInt(params.req)}).exec();
 	// console.log(docs);
-	return docs;
+	return result;
 
 }
 
@@ -25,8 +25,18 @@ export function * saveRequisition(db, params) {
 	var db2 = db.useDb(config.tenants[params.tenant]);
 	var Requisition = db2.model(model, ReqSchema);
 	var req = new Requisition(params.data);
-	yield [req.validate(), req.save()];
+	let result = yield [req.validate(), req.save()];
+	return result;
 
 }
 
+export function * updateRequisition(db, params) {
+
+	var db2 = db.useDb(config.tenants[params.tenant]);
+	var Requisition = db2.model(model, ReqSchema);
+	var options = { runValidators: true }
+	let result = yield Requisition.update({'Id': parseInt(params.req)}, params.data, options);
+	return result;
+
+}
 	
