@@ -11,7 +11,10 @@ RuleActions.prototype.returnErrorForItemContractNumberAndExpiryDate = function(r
 }
 
 RuleActions.prototype.returnStatusForAutoApproval = function(req){
-	this.results.push('Document value < 500, auto-approved and orders for the same have been created.');
+	if(req.tenantId === 1)
+		this.results.push('Document value < 500, auto-approved and orders for the same have been created.');
+	else if(req.tenantId === 2)
+		this.results.push('Document value < 250, auto-approved and orders for the same have been created.');
 }
 
 RuleActions.prototype.returnStatusForRequsitionSentToAllManagers = function(req){

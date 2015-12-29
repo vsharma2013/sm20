@@ -1,5 +1,6 @@
 function Requisition(r){
-	this.req_name 	= r.req_name; 
+	this.req_name 	= r.req_name;
+	this.tenantId = r.tenantId; 
 	this.req_number 	= r.req_number; 
 	this.requester 	    = r.requester; 
 	this.obo 	        = r.obo; 

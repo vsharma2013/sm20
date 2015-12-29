@@ -18,7 +18,10 @@ RuleDefinitions.prototype.checkItemContractNumberAndExpiryDate = function(req){
 }
 
 RuleDefinitions.prototype.checkDocumentForAutoApproval = function(req){
-	return utils.getDocumentValue(req) <= 500 ? true : false;
+	if (req.tenantId === 1)
+		return  utils.getDocumentValue(req) <= 500 ? true : false;
+	else if (req.tenantId === 2)
+		return  utils.getDocumentValue(req) <= 250 ? true : false;
 }
 
 RuleDefinitions.prototype.checkSendRequisitionToAllManagers = function(req){
