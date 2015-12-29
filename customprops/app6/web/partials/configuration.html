@@ -1,0 +1,18 @@
+<div ng-include src="'partials/home.html'"></div>
+<div class="well">
+  
+  <uib-tabset>
+    <uib-tab heading="Setup"> 
+      <conf-directive confobj='vm.settings.setup.custom'></conf-directive>
+    </uib-tab>
+    <uib-tab heading="Item">        
+      <conf-directive confobj='vm.settings.item.custom'></conf-directive>
+    </uib-tab>
+    <uib-tab heading="Split">    
+      <conf-directive confobj='vm.settings.split.custom'></conf-directive>
+    </uib-tab>
+    <div style="padding-right:20px;">
+      <button type="button" class="btn btn-primary pull-right" ng-click="vm.save()">Save</button>
+    </div>
+  </uib-tabset>
+</div>

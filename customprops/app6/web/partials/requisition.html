@@ -1,0 +1,1082 @@
+<div ng-include src="'partials/home.html'"></div>
+<section class="accountDetailPage requisitionPage">
+  <div class="scrolledContainer">
+    <div class="editableMode">
+      <div ng-include src="'partials/leftwidgets.html'"></div>
+      <div ng-include src="'partials/setup.html'"></div>
+<!--      
+        <div class="col s12 m12">
+          <div class="item-detail-card-panel white">
+            <div class="row marginBottom0">
+              <div class="col s12">
+                <div class="right data-action-btn"> <a href="#!"><i class="add-row icon iconSmall left dropdown-button blue-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Add Item">
+                  <svg>
+                    <use xlink:href="#icon_CirclePlus"></use>
+                  </svg>
+                  </i> </a> <a href="#!"><i class="icon iconSmall left dropdown-button blue-text tooltipped" data-activates='dropdownBO' data-constrainwidth="false" data-position="bottom" data-delay="50" data-tooltip="Bulk Add">
+                  <svg>
+                    <use xlink:href="#icon_BulkAdd"></use>
+                  </svg>
+                  </i> </a> <a href="#!"> <i class="icon iconSmall left dropdown-button blue-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Bulk Edit" data-alignment='right' data-activates='dropdownBOedit' data-constrainwidth="false">
+                  <svg>
+                    <use xlink:href="#icon_BulkEdit"></use>
+                  </svg>
+                  </i> </a> <a href="#!"> <i class="icon iconSmall left blue-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="Upload">
+                  <svg>
+                    <use xlink:href="#icon_Upload"></use>
+                  </svg>
+                  </i> </a> <a href="#!"><i class="icon iconSmall left blue-text tooltipped icon-disabled" data-position="bottom" data-delay="50" data-tooltip="Delete">
+                  <svg>
+                    <use xlink:href="#icon_TrashCan"></use>
+                  </svg>
+                  </i> </a>
+                  <ul id='dropdownBO' class='dropdown-content lookup-bulk-order lookup-popup'>
+                    <li> <span class="center-align fontSize16">BULK ADD </span> </li>
+                    <li>
+                      <div class="input-field col s12 dd-close-off">
+                        <input value="1" id="inputBulkNumber" type="text" class="validate valid">
+                        <label class="active" for="number2">{{$label.add}}</label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="right"> <a href="#!"><i class="icon iconSmall left blue-text">
+                        <svg>
+                          <use xlink:href="#icon_Close"></use>
+                        </svg>
+                        </i></a><a href="javascript:void(0)" class=""><i class="icon iconSmall left blue-text addBulkRow">
+                        <svg>
+                          <use xlink:href="#icon_Check"></use>
+                        </svg>
+                        </i></a> </div>
+                    </li>
+                  </ul>
+                  <ul id='dropdownBOedit' class='dropdown-content lookup-bulk-order-edit lookup-popup'>
+                    <li> <span class="left-align fontSize16">BULK EDIT</span> </li>
+                    <li>
+                      <div class="input-field col s12 dd-close-off marginBtm15">
+                        <input value="1" id="quantity" type="text" class="validate valid">
+                        <label class="active" for="quantity">{{$label.quantity}}</label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="col s12 dd-close-off marginBtm15">
+                        <input type="checkbox" id="testextax" class="filled-in"/>
+                        <label for="testextax">{{$label.exempt}} {{$label.tax}}</label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="input-field col s12 dd-close-off marginBtm15">
+                        <input value="1" id="occ" type="text" class="validate valid">
+                        <label class="active" for="occ">{{$label.other}} {{$label.charges}} ( {{$label.usd}} )</label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="input-field col s12 dd-close-off marginBtm15">
+                        <input value="1" id="sfc" type="text" class="validate valid">
+                        <label class="active" for="sfc">{{$label.shipping}} & {{$label.freight}} ( {{$label.usd}} )</label>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="input-field col s12 marginBtm15"> <i class="icon iconSmall iconFix blue-text">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Calendar"></use>
+                        </svg>
+                        </i>
+                        <input value="07/12/2015" id="date" type="date" class="datepicker">
+                      </div>
+                    </li>
+                    <li>
+                      <div class="right"> <a href="#!" class="btn-flat waves-effect">{{$label_U.cancel}}</a> <a href="#bulk-edit-modal-warning" class="modal-trigger btn-flat waves-effect">{{$label_U.set}} {{$label_U.as}} {{$label_U.default}}</a> </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col s12 gridTableRow highLighter0 tableHeadedWrap">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col>
+                    <col style="width: 25px;">
+                    <col style="width: 250px;">
+                    </colgroup>
+                    <tr>
+                      <td class="width-adjust"></td>
+                      <td><input type="checkbox" class="filled-in" id="filled-in-box" />
+                        <label for="filled-in-box" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust" style="position:relative;"><span class="break-setn">Materials</span><span class="break-setn"> ( 15 )</span> <i class="icon iconSmall right blue-text marginLeft10 _newMaterialSearchRfq">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Search"></use>
+                        </svg>
+                        </i> <i class="icon iconSmall right blue-text marginLeft10 _newMaterialSearchRfq" style="display:none;">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Close"></use>
+                        </svg>
+                        </i>
+                        <div class="input-field newMaterialSearchRfq">
+                          <input type="text" />
+                        </div></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">Quantity <span>*</span> </div>
+                <div class="col s1 center-align">Exempt Tax
+                  <p class="center-align">
+                    <input type="checkbox" class="filled-in" id="test0" />
+                    <label for="test0" class="checkbox-with-empty-label"></label>
+                  </p>
+                </div>
+                <div class="col s2">Other <br />
+                  Charges <span>USD</span></div>
+                <div class="col s2">Shipping & <br />
+                  Freight <span>USD</span></div>
+                <div class="col" s2>Need by Date <br />
+                  <span>
+                  <input value="dd/mm/yyyy" type="text" class="datepicker blue-text custom-input" id="0" />
+                  </span></div>
+              </div>
+            </div>
+            <div class="row white tableBodyWrap scrollbar-outer marginBottom0" id="_tableBodyWrap">
+              <div class="col s12 gridTableRow highLighter1" id="bulkCloneDEV">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="tr2"/>
+                        <label for="tr2" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"> Samsung </br>
+                        0.00 USD <i class="icon iconSmall blue-text dropdown-button right" id="dropdowntr0">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_DownChevron"></use>
+                        </svg>
+                        </i>
+                        
+                        
+                        
+                        </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="number1" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="tr3" />
+                  <label for="tr3" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="number3" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="number4" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="date1" type="text" class="datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 gridTableRow highLighter2" id="id">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="input"/>
+                        <label for="input" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"> Dell </br>
+                        0.00 USD <i class="icon iconSmall blue-text dropdown-button right" data-alignment: 'left' data-activates='dropdowntrs1' data-constrainwidth="false">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_DownChevron"></use>
+                        </svg>
+                        </i>
+</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="number" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="tr31" />
+                  <label for="tr31" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text1" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text2" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text3" type="text" class="datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="col showOnClick s12 gridTableRow highLighter3">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox1"/>
+                        <label for="Checkbox1" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text84" type="text" class="validate">
+                          <label for="Text84" class="active ng-binding">Item Name</label>
+                        </div>
+</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text4" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox2" />
+                  <label for="Checkbox2" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text8" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text9" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text10" type="text" class="right-align datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="showOnClick col s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox3"/>
+                        <label for="Checkbox3" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text85" type="text" class="validate">
+                          <label for="Text85" class="active ng-binding">Item Name</label>
+                        </div></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text17" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox4" />
+                  <label for="Checkbox4" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text18" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text19" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text20" type="text" class="datepicker right-align">
+                  </div>
+                </div>
+              </div>
+              <div class="col showOnClick s12 gridTableRow highLighter3">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall" >
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox5"/>
+                        <label for="Checkbox5" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text86" type="text" class="validate">
+                          <label for="Text86" class="active ng-binding">Item Name</label>
+                        </div>
+                        </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text24" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox6" />
+                  <label for="Checkbox6" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text25" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text26" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text27" type="text" class="datepicker right-align">
+                  </div>
+                </div>
+              </div>
+              <div class="col showOnClick s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox7"/>
+                        <label for="Checkbox7" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text87" type="text" class="validate">
+                          <label for="Text87" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul4' class='dropdown-content looup-data-summary lookup-popup fontNormal'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text28" type="text" class="validate">
+                              <label for="Text28" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text29" type="text" class="validate">
+                              <label for="Text29" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text30" type="text" class="validate blue-text">
+                              <label for="Text30" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text31" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox8" />
+                  <label for="Checkbox8" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text32" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text33" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text34" type="text" class="right-align datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="col showOnClick s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox9"/>
+                        <label for="Checkbox9" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text88" type="text" class="validate">
+                          <label for="Text88" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul5' class='dropdown-content looup-data-summary lookup-popup fontNormal'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text35" type="text" class="validate">
+                              <label for="Text35" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text36" type="text" class="validate">
+                              <label for="Text36" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text37" type="text" class="validate blue-text">
+                              <label for="Text37" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect button-adjust">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text38" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox10" />
+                  <label for="Checkbox10" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text39" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text40" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text41" type="text" class="right-align datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="col showOnClick s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox11"/>
+                        <label for="Checkbox11" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text89" type="text" class="validate">
+                          <label for="Text89" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul6' class='dropdown-content looup-data-summary lookup-popup fontNormal'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text42" type="text" class="validate">
+                              <label for="Text42" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text43" type="text" class="validate">
+                              <label for="Text43" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text44" type="text" class="validate blue-text">
+                              <label for="Text44" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect button-adjust">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text45" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox12" />
+                  <label for="Checkbox12" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text46" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text47" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text48" type="text" class="right-align datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="col showOnClick s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox13"/>
+                        <label for="Checkbox13" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text90" type="text" class="validate">
+                          <label for="Text90" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul7' class='dropdown-content looup-data-summary lookup-popup fontNormal'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text49" type="text" class="validate">
+                              <label for="Text49" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text50" type="text" class="validate">
+                              <label for="Text50" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text51" type="text" class="validate blue-text">
+                              <label for="Text51" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect button-adjust">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text52" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox14" />
+                  <label for="Checkbox14" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text53" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text54" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text55" type="text" class="right-align datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="showOnClick col s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox15"/>
+                        <label for="Checkbox15" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text91" type="text" class="validate">
+                          <label for="Text91" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul8' class='dropdown-content looup-data-summary lookup-popup fontNormal'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text56" type="text" class="validate">
+                              <label for="Text56" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text57" type="text" class="validate">
+                              <label for="Text57" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text58" type="text" class="validate blue-text">
+                              <label for="Text58" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect button-adjust">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text59" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox16" />
+                  <label for="Checkbox16" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text60" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text61" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text62" type="text" class="datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="showOnClick col s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall" >
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox17"/>
+                        <label for="Checkbox17" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text92" type="text" class="validate">
+                          <label for="Text92" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul9' class='dropdown-content looup-data-summary lookup-popup fontNormal'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text63" type="text" class="validate">
+                              <label for="Text63" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text64" type="text" class="validate">
+                              <label for="Text64" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text65" type="text" class="validate blue-text">
+                              <label for="Text65" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect button-adjust">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text66" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox18" />
+                  <label for="Checkbox18" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text67" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text68" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text69" type="text" class="datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="showOnClick col s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall" style="color: red;">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox19"/>
+                        <label for="Checkbox19" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text93" type="text" class="validate">
+                          <label for="Text93" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul10' class='dropdown-content looup-data-summary lookup-popup fontNormal'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text70" type="text" class="validate">
+                              <label for="Text70" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text71" type="text" class="validate">
+                              <label for="Text71" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text72" type="text" class="validate blue-text">
+                              <label for="Text72" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect button-adjust">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text73" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox20" />
+                  <label for="Checkbox20" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text74" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text75" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text76" type="text" class="datepicker">
+                  </div>
+                </div>
+              </div>
+              <div class="showOnClick col s12 gridTableRow highLighter1">
+                <div class="col s3 headerTitle">
+                  <table class="tr-style-none">
+                    <colgroup>
+                    <col style="width:60px;">
+                    <col style="width:25px;">
+                    <col style="width:250px;">
+                    <col style="width:25px;">
+                    </colgroup>
+                    <tr>
+                      <td class="_draghandle"><i class="icon iconSmall">
+                        <svg>
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_Drag"></use>
+                        </svg>
+                        </i></td>
+                      <td><input type="checkbox" class="filled-in itemSelectionChk" id="Checkbox21"/>
+                        <label for="Checkbox21" class="checkbox-with-empty-label"></label></td>
+                      <td class="font-adjust"><div class="input-field">
+                          <input  value="" id="Text94" type="text" class="validate">
+                          <label for="Text94" class="active ng-binding">Item Name</label>
+                        </div>
+                        <ul id='Ul11' class='dropdown-content looup-data-summary lookup-popup fontNormal ng-cloak'>
+                          <li>
+                            <div class="input-field col s12">
+                              <input disabled="" value="8898639987" id="Text77" type="text" class="validate">
+                              <label for="Text77" class="active ng-binding">{{$label.item}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Dell" id="Text78" type="text" class="validate">
+                              <label for="Text78" class="active ng-binding">{{$label.item}}{{$label.name}}</label>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 ">
+                              <input disabled="" value="Item-27426" id="Text79" type="text" class="validate blue-text">
+                              <label for="Text79" class="active ng-binding">{{$label.partner}}{{$label.number}}</label>
+                            </div>
+                          </li>
+                          <li class="divider"></li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Unit Price</span> <span class="right">100.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Quantity</span> <span class="right">10</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Taxes</span> <span class="right">0.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 detail-field-summary"><span class="left grey-text">Total Price (USD)</span> <span class="right">1000.00</span> </div>
+                          </li>
+                          <li>
+                            <div class="input-field col s12 "><a href="#itemDetailsFor" class="modal-trigger right blue-text btn-flat waves-effect">Go TO Details</a> </div>
+                          </li>
+                        </ul></td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1" id="Text80" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s1 center-align marginTop25">
+                  <input type="checkbox" class="filled-in exemptTaxChk" id="Checkbox22" />
+                  <label for="Checkbox22" class="checkbox-with-empty-label"></label>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text81" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="1.00" id="Text82" type="text" class="validate right-align">
+                  </div>
+                </div>
+                <div class="col s2">
+                  <div class="input-field col s12">
+                    <input value="12/03/2016" id="Text83" type="text" class="datepicker">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>-->
+    </div>
+    <div ng-include src="'partials/footeractions.html'"></div>
+  </div>
+</section>

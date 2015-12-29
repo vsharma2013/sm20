@@ -1,0 +1,99 @@
+<div class="secondary-navigation white"> 
+  <a class="waves-effect waves-block waves-light initialDiv">
+    <i class="icon iconSmall tooltipped" data-position="left" data-delay="50" data-tooltip="Additional Information" alt="Additional Information">
+      <svg>
+        <use xlink:href="#icon_AdditionMen"></use>
+      </svg>
+    </i>
+    <span>Additional Information</span>
+  </a>
+  <ul>
+    <li ng-repeat="prop in vm.setupWidgets">
+      <a class="waves-effect waves-block waves-light">
+        <i class="icon iconSmall tooltipped" data-position="left" data-delay="50" data-tooltip="{{vm.settings.setup.primary[prop].ui.uiGroup}}">
+          <svg>
+            <use xlink:href={{vm.settings.setup.primary[prop].ui.icon}}></use>
+          </svg>
+        </i>
+        <span>+ </span> 
+        <span class="_optionalFieldLabel">{{vm.settings.setup.primary[prop].ui.uiGroup}}</span>
+      </a>
+      <i class='reactive icon iconSmall'>
+        <svg>
+          <use xlink:href='#icon_Close'></use>
+        </svg>
+      </i>
+    </li>
+    <li ng-repeat="prop in vm.setupCustomWidgets">
+      <a class="waves-effect waves-block waves-light">
+        <i class="icon iconSmall tooltipped" data-position="left" data-delay="50" data-tooltip="{{vm.settings.setup.custom[prop].ui.uiGroup}}">
+          <svg>
+            <use xlink:href={{vm.settings.setup.custom[prop].ui.icon}}></use>
+          </svg>
+        </i>
+        <span>+ </span> 
+        <span class="_optionalFieldLabel">{{vm.settings.setup.custom[prop].ui.uiGroup}}</span>
+      </a>
+      <i class='reactive icon iconSmall'>
+        <svg>
+          <use xlink:href='#icon_Close'></use>
+        </svg>
+      </i>
+    </li>
+  </ul>
+</div>
+<script type="text/javascript">
+    $($(".secondary-navigation .initialDiv")).click(function () {
+        var secndPanWidth, editableModeWidth, editableMode = $(".editableMode"), secndPan = $(".secondary-navigation"), el = $(this);
+        secndPanWidthActual = secndPan.outerWidth();
+        secndPanWidth = secndPanWidthActual - 70;
+        editableModeWidth = editableMode.outerWidth();
+        if (!el.hasClass('_openNav')) {
+            secndPan.velocity({ translateX: -secndPanWidth }, 100);
+            var wi = 'calc( 100% - ' + secndPanWidthActual + 'px )'
+            editableMode.css('width', wi);
+            el.addClass('_openNav');
+            $('.secondary-navigation .tooltipped').tooltip('remove');
+        } else {
+            secndPan.velocity({ translateX: 0 }, 100);
+            editableMode.css('width', "");
+            el.removeClass('_openNav');
+            $('.secondary-navigation .tooltipped').tooltip();
+        }
+    });
+
+    $(".secondary-navigation ul li").click(function () {
+        var el = $(this), closeBtn, elID, enderEl, optioFild, colseOtside, inputF, inputTetLab, inputLab;
+        if (!el.hasClass('selected')) {
+            el.addClass('selected');
+            closeBtn = el.find('.reactive');
+            elID = "optionalFID" + globalID++;
+            enderEl = $("<div class='input-field col s12 l4 optionalField'></div>"); //2
+            optioFild = $("<div class='optionalFieldHover hilighted'></div>"); //1
+            colseOtside = $("<i class='closingOpt icon iconSmall blue-text'><svg><use xlink:href='#icon_Close'></use></svg></i>"); //0
+            inputF = ("<input id='" + elID + "' type='text' class='validate'>"); //1
+            inputTetLab = el.find('._optionalFieldLabel').text();
+            inputLab = $("<label style='width:75%;' for='" + elID + "' class='addText'>" + inputTetLab + "</label>"); //1
+            optioFild.append(colseOtside);
+            enderEl.append(optioFild);
+            enderEl.append(inputF);
+            enderEl.append(inputLab);
+            $('#o-b-h').append(enderEl);
+            closeActive(colseOtside, enderEl, el);
+            closeActive(closeBtn, enderEl, el);
+            function closeActive(ele, toele, onClick) {
+                ele.click(function (e) {
+                    toele.remove();
+                    onClick.removeClass('selected');
+                    e.stopPropagation();
+                });
+            }
+            window.setHideInterval(optioFild);
+        }
+
+
+
+    });
+
+
+</script>

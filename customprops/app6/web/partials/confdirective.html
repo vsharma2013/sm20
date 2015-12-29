@@ -1,0 +1,94 @@
+
+<div class='row'>
+	<button type="button" class="btn btn-warning pull-right leftpadding" ng-click="add()">Add</button>
+	<button type="button" class="btn btn-danger pull-right" ng-click="delete()">Delete</button>
+</div>
+<div class='row'>
+	<table>
+		<tr style='background-color: darkcyan;'>
+			<th>
+				&nbsp;&nbsp;&nbsp;
+			</th>
+			<th>
+				Name
+			</th>
+			<th>
+				Label
+			</th>
+			<th>
+				Mandatory
+			</th>
+			<th>
+				Editable
+			</th>
+			<th>
+				Type
+			</th>
+			<th>
+				UI Model
+			</th>
+			<th>
+				Default Value
+			</th>	
+			<th>
+				All Values
+			</th>	
+			<th>
+				Max Length
+			</th>
+			<th>
+				No of Decimals
+			</th>
+			<th>
+				Autosuggest URL
+			</th>		
+		</tr>
+		<tr ng-repeat='(key,val) in confObj'>
+			<td>
+				<input type='checkbox' ng-model="selected[key]"/>
+			</td>
+			<td>
+				{{key}}
+			</td>
+			<td>
+				<input type="text" ng-model='confObj[key].ui.label'/>
+			</td>
+			<td>
+				<input type='checkbox' ng-model='confObj[key].ui.isMandatory'/>
+			</td>
+			<td>
+				<input type='checkbox' ng-model='confObj[key].ui.allowEdit'/>
+			</td>
+			<td>
+				<select ng-model='confObj[key].ui.dataType'>
+					<option value='string'>string</option>
+					<option value='bool'>bool</option>
+					<option value='int'>int</option>
+				</select>
+			</td>
+			<td>
+				<select ng-model='confObj[key].ui.uiType'>
+					<option value='input'>input</option>
+					<option value='autosuggest'>autosuggest</option>
+					<option value='ddlist'>ddlist</option>
+					<option value='chkbox'>chkbox</option>
+				</select>
+			</td>
+			<td>
+				<input type="text" ng-model='confObj[key].ui.defaultVal'/>
+			</td>	
+			<td>
+				<input type="text" ng-model='confObj[key].ui.allVals' ng-list/>
+			</td>	
+			<td>
+				<input type="text" ng-model='confObj[key].ui.maxLength'/>
+			</td>
+			<td>
+				<input type="text" ng-model='confObj[key].ui.numDecimals'/>
+			</td>
+			<td>
+				<input type="text" ng-model='confObj[key].ui.autoSuggestURL'/>
+			</td>		
+		</tr>					
+	</table>
+</div>
