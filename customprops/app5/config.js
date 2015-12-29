@@ -7,12 +7,14 @@ export let tenants = {
 
 export let configdb = 'configdb';
 
+export let localPort = 3000;
+
 export let connectionString = 'mongodb://localhost/'+configdb; 
 
 export let dbOptions = {
-	// db: { native_parser: true },
-	// server: { poolSize: 5 },
-	// replset: { rs_name: 'myReplicaSetName' },
-	// user: 'myUserName',
-	// pass: 'myPassword'
+	db: { native_parser: true }
+	, server: { poolSize: 5, socketOptions: { keepAlive: 1, connectTimeoutMS: 3000 } }
+	// , replset: { rs_name: 'myReplicaSetName' }
+	// , user: 'myUserName'
+	// , pass: 'myPassword'
 }

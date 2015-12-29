@@ -9,6 +9,7 @@
   "dependencies": {
     "cluster": "^0.7.7",
     "co": "^4.6.0",
+    "kcors": "^1.0.1",
     "koa": "^1.1.2",
     "koa-body": "^1.4.0",
     "koa-json-logger": "^1.0.1",

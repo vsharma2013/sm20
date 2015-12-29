@@ -1,4 +1,5 @@
 import koa from 'koa';
+import cors from 'kcors';
 import mongoose from 'mongoose'; 	
 import koaJsonLogger from 'koa-json-logger';
 import * as routes from './routes';
@@ -29,8 +30,11 @@ export function start() {
 		jsonapi: true
 	}));
 
+	app.use(cors());
+
 	app.use(function *(next){
 	  this.db = db;
+	  this.type = 'application/json';
 	  yield next;
 	  console.log('%s - %s', this.method, this.url);
 	});
@@ -39,7 +43,7 @@ export function start() {
 		try{
 		    yield next; 
 		} catch (err) { //executed only when an error occurs & no other middleware responds to the request
-			view.onError(this, 'application failed to respond', 22);
+			// view.onError(this, 'application failed to respond', 22);
 			//delegate the error back to application
 			// this.app.emit('error', err, this);
 			this.throw('error occurred in application: %s', err);
@@ -48,8 +52,8 @@ export function start() {
 
 	routes.configure(app);
 
-	app.listen(3000);
+	app.listen(process.env.PORT || config.localPort);
 
-	console.log('server started listening on port 3000');
+	console.log('server started listening on port %s', process.env.PORT || config.localPort);
 }
 
