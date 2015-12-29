@@ -1,5 +1,6 @@
 import koa from 'koa';
-import mongoose from 'mongoose'; 
+import mongoose from 'mongoose'; 	
+import koaJsonLogger from 'koa-json-logger';
 import * as routes from './routes';
 import * as view from './views/jsonresponseview'; 
 import * as config from '../config';
@@ -22,6 +23,12 @@ export function start() {
 	  console.log('Mongoose connection disconnected'); 
 	});
 
+	app.use(koaJsonLogger({
+		name: 'my App',
+		path: 'log',
+		jsonapi: true
+	}));
+
 	app.use(function *(next){
 	  this.db = db;
 	  yield next;
@@ -34,7 +41,8 @@ export function start() {
 		} catch (err) { //executed only when an error occurs & no other middleware responds to the request
 			view.onError(this, 'application failed to respond', 22);
 			//delegate the error back to application
-			this.app.emit('error', err, this);
+			// this.app.emit('error', err, this);
+			this.throw('error occurred in application: %s', err);
 		}
 	});
 

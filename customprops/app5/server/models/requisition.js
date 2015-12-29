@@ -15,7 +15,6 @@ export function * getRequisition(db, params) {
 	var db2 = db.useDb(config.tenants[params.tenant]);
 	var Requisition = db2.model(model, ReqSchema);
 	let result = yield Requisition.find({'Id': parseInt(params.req)}).exec();
-	// console.log(docs);
 	return result;
 
 }
