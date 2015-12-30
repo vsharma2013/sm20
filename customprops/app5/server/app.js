@@ -30,7 +30,7 @@ export function start() {
 		jsonapi: true
 	}));
 
-	app.use(cors());
+	app.use(cors(config.corsOptions));
 
 	app.use(function *(next){
 	  this.db = db;
