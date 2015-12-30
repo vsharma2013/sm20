@@ -9,7 +9,7 @@
   </a>
   <ul>
     <li ng-repeat="prop in vm.setupWidgets">
-      <a class="waves-effect waves-block waves-light">
+      <a class="waves-effect waves-block waves-light" ng-click="vm.include(vm.settings.setup.primary[prop].ui.uiGroup, true)">
         <i class="icon iconSmall tooltipped" data-position="left" data-delay="50" data-tooltip="{{vm.settings.setup.primary[prop].ui.uiGroup}}">
           <svg>
             <use xlink:href={{vm.settings.setup.primary[prop].ui.icon}}></use>
@@ -25,7 +25,7 @@
       </i>
     </li>
     <li ng-repeat="prop in vm.setupCustomWidgets">
-      <a class="waves-effect waves-block waves-light">
+      <a class="waves-effect waves-block waves-light" ng-click="vm.include(vm.settings.setup.custom[prop].ui.uiGroup, false)">
         <i class="icon iconSmall tooltipped" data-position="left" data-delay="50" data-tooltip="{{vm.settings.setup.custom[prop].ui.uiGroup}}">
           <svg>
             <use xlink:href={{vm.settings.setup.custom[prop].ui.icon}}></use>

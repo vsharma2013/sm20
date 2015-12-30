@@ -10,7 +10,8 @@ function customProperties() {
             uitype: '=uitype',
             allowedit: '=allowedit',
             prop: '=prop',
-            label: '=label'
+            label: '=label',
+            allvals: '=allvals'
         },
         templateUrl: 'partials/customproperties.html',
         link: function (scope, element) {

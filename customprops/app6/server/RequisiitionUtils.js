@@ -77,7 +77,7 @@ var settings_abm = {
         },
         custom: {
             erp_order_type: {
-                ui: getUIPropSchema('string', 'ddlist', 'ERP Order Type', null, true, false, null, null, null, ['Internal Order', 'Sales Order', 'Cost Centre Order', 'MRP Order', 'Work Order'], 'ERP Order Type', '#icon_OrderERP', 2, 7),
+                ui: getUIPropSchema('string', 'ddlist', 'ERP Order Type', 'ERP Order Type', true, false, null, null, null, ['ERP Order Type', 'Internal Order', 'Sales Order', 'Cost Centre Order', 'MRP Order', 'Work Order'], 'ERP Order Type', '#icon_OrderERP', 2, 7),
                 db: {}
             },
             work_order: {

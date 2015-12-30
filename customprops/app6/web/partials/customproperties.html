@@ -12,5 +12,12 @@
 	<input ng-if="!allowedit" type="checkbox" ng-class="filled-in" value="{{prop}}" disabled="">
     <label class="active">{{label}}</label>
   </div>
+  <div ng-switch-when="ddlist">
+	<select name="mySelect" ng-model="prop">
+		<option ng-repeat='value in allvals track by $index' value='{{value}}'>{{value}}</option>
+	</select>
+    <!--<input ng-if="allowedit" ng-model="prop" type="text" class="validate" />
+    <input ng-if="!allowedit" value="{{prop}}" disabled="" type="text" class="validate" />-->
+  </div>
 </div>
-<label ng-if="uitype !== 'chkbox'" class="active">{{label}}</label>
+<label ng-if="uitype !== 'chkbox' && uitype !== 'ddlist'" class="active">{{label}}</label>
