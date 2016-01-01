@@ -2,11 +2,13 @@ import koa from 'koa';
 import cors from 'kcors';
 import mongoose from 'mongoose'; 	
 import koaJsonLogger from 'koa-json-logger';
+import common from 'koa-common';
 import * as routes from './routes';
 import * as view from './views/jsonresponseview'; 
 import * as config from '../config';
 
 var app = koa();
+
 
 export function start() {
 
@@ -27,15 +29,17 @@ export function start() {
 	app.use(koaJsonLogger({
 		name: 'my App',
 		path: 'log',
-		jsonapi: true
+		jsonapi: false
 	}));
 
-	app.use(cors());
+	app.use(common.static(__dirname+'./../web'));
+	app.use(cors(config.corsOptions));
 
 	app.use(function *(next){
 	  this.db = db;
 	  this.type = 'application/json';
 	  yield next;
+	  // this.body = "Hello World";
 	  console.log('%s - %s', this.method, this.url);
 	});
 

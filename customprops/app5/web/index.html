@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="catalogApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="catalogApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="catalogApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Smart 2.0</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://ui-grid.info/release/ui-grid.css" type="text/css"/>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/app.css" rel="stylesheet"/>        
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div ng-view></div>
+
+        <!-- In production use:
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+        -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+        <!-- // <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script> -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+        <script src="http://ui-grid.info/release/ui-grid.js"></script>
+        
+        <!-- Added here-->
+        <script src="js/app.js"></script>            
+        <script src="js/config.js"></script>  
+        <script src="js/filters/custompfilter.js"></script>        
+        <script src="js/services/requisionService.js"></script>
+        <script src="js/services/constantsService.js"></script>
+        <script src="js/directives/setupDirective.js"></script>
+        <script src="js/directives/itemDirective.js"></script>
+        <script src="js/directives/itemdetailsDirective.js"></script>
+        <script src="js/directives/customproperties.js"></script>
+        <script src="js/directives/confDirective.js"></script>
+        <script src="js/controllers/homecontroller.js"></script>
+        <script src="js/controllers/requisitionController.js"></script> 
+        <script src="js/controllers/configurationController.js"></script> 
+        <script src="js/controllers/modalController.js"></script> 
+    </body>
+</html>

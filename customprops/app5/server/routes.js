@@ -1,18 +1,22 @@
 import router from 'koa-router';
 import bodyParser from 'koa-body';
-import mount from 'koa-mount';
+// import mount from 'koa-mount';
 import * as requisitionController from './controllers/requisitionController';
+import * as configurationController from './controllers/configurationController';
 import * as view from './views/jsonresponseview'; 
 
 var controllerMethods = {
-	getRequisition : requisitionController.getRequisition,
-	saveRequisition : requisitionController.saveRequisition,
-	updateRequisition : requisitionController.updateRequisition
+	getrequisition : requisitionController.getRequisition,
+	saverequisition : requisitionController.saveRequisition,
+	updaterequisition : requisitionController.updateRequisition,
+	getconfiguration : configurationController.getConfiguration,
+	saveconfiguration : configurationController.saveConfiguration,
+	updateconfiguration : configurationController.updateConfiguration
 }
 
 function * getHandler(){
 	var params = this.params;
-	let data = yield controllerMethods.getRequisition(this.db, params);
+	let data = yield controllerMethods['get'+params.type](this.db, params);
 	view.onSuccess(this, data, 1);
 }
 
@@ -21,10 +25,10 @@ function * postHandler(){
 	params.data = this.request.body;
 	// console.log(this.request.body);
 	let data;
-	if(!params.req){
-		data = yield controllerMethods.saveRequisition(this.db, params);
+	if(!params.id){
+		data = yield controllerMethods['save'+params.type](this.db, params);
 	} else{
-		data = yield controllerMethods.updateRequisition(this.db, params);
+		data = yield controllerMethods['update'+params.type](this.db, params);
 	}
 	view.onSuccess(this, data, 1);
 }
@@ -32,12 +36,12 @@ function * postHandler(){
 export function configure(app) {
 	var parser = new bodyParser();
 	var APIv1 = new router();
-	var ReqRouter = new router();
-	APIv1.get('/:tenant/:req', getHandler);
-	APIv1.post('/:tenant/:req', parser, postHandler);
-	APIv1.post('/:tenant', parser, postHandler);	 
+	APIv1.get('/:type/:tenantId/:id', getHandler);
+	APIv1.post('/:type/:tenantId/:id', parser, postHandler);
+	APIv1.post('/:type/:tenantId', parser, postHandler);	 
 	// app.use(mount('/p2p', APIv1.middleware()));
-	ReqRouter.use('/p2p', APIv1.routes(), APIv1.allowedMethods())
+	var ReqRouter = new router();
+	ReqRouter.use('/p2p', APIv1.routes(), APIv1.allowedMethods());	
 	app.use(ReqRouter.routes());
 	app.use(ReqRouter.allowedMethods());
 }

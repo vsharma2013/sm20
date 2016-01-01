@@ -1,0 +1,20 @@
+<div ng-repeat='(key, val) in cpobject'>
+	<div class="col-md-6" ng-switch="getInputType(key)">
+		<label>{{val.ui.label}}</label>
+		<div ng-switch-when="txtbx">
+			<input type="text" ng-model="customProps[key]" class="form-control">
+		</div>
+		<div ng-switch-when="autosuggest">
+			<input type="text" ng-model="customProps[key]" uib-typeahead="state for state in val.ui.allVals" class="form-control">
+		</div>
+		<div ng-switch-when="checkbox">
+			<input type="checkbox" ng-model="customProps[key]" ng-disabled="val.ui.allowEdit">
+		</div>
+		<div ng-switch-when="ddlist">
+			<select name="mySelect" ng-model="customProps[key]" class="form-control">
+				<option ng-repeat='value in val.ui.allVals track by $index' value='{{value}}'>{{value}}</option>
+			</select>
+      	</div>
+		<div ng-switch-default class="form-control">{{customProps[key]}}</div>		
+	</div>
+</div>
