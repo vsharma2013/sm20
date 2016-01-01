@@ -19,13 +19,13 @@ angular.module('myApp', [
             resolve: {
                 requisition: ['requisionService', '$route', function (requisionService, $route) {
                     var reqid = 1;
-		    var tenantid = 1;
+                    var tenantid = 1;
                     if($route.current.params.reqid)
                         reqid = $route.current.params.reqid;
                     if($route.current.params.tenantid)
                         tenantid = $route.current.params.tenantid;
 
-                    return requisionService.getRequisition(reqid, tenantid);
+                    return requisionService.getRequisition(tenantid, reqid);
                 }],
                 settings: ['requisionService', '$route', function (requisionService, $route) {
                     var tenantid = 1;
