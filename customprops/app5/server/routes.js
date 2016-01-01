@@ -9,6 +9,7 @@ var controllerMethods = {
 	getrequisition : requisitionController.getRequisition,
 	saverequisition : requisitionController.saveRequisition,
 	updaterequisition : requisitionController.updateRequisition,
+	submitRequisition : requisitionController.submitRequisition,
 	getconfiguration : configurationController.getConfiguration,
 	saveconfiguration : configurationController.saveConfiguration,
 	updateconfiguration : configurationController.updateConfiguration
@@ -33,11 +34,19 @@ function * postHandler(){
 	view.onSuccess(this, data, 1);
 }
 
+function * submitHandler(){
+	var params = this.params;
+	params.data = this.request.body;
+	let data = yield controllerMethods.submitRequisition(this.db, params);
+	view.onSuccess(this, data, 1);
+}
+
 export function configure(app) {
 	var parser = new bodyParser();
 	var APIv1 = new router();
 	APIv1.get('/:type/:tenantId/:id', getHandler);
 	APIv1.post('/:type/:tenantId/:id', parser, postHandler);
+	APIv1.post('/submit/:tenantId/:id', parser, submitHandler);
 	APIv1.post('/:type/:tenantId', parser, postHandler);	 
 	// app.use(mount('/p2p', APIv1.middleware()));
 	var ReqRouter = new router();

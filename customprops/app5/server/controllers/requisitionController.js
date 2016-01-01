@@ -11,3 +11,7 @@ export function * saveRequisition(db, params){
 export function * updateRequisition(db, params){
 	return yield requisitionService.updateRequisition(db, params);	
 }
+
+export function * submitRequisition(db, params){
+	return yield requisitionService.submitRequisition(db, params);	
+}
