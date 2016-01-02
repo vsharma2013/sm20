@@ -16,7 +16,9 @@
     "koa-json-logger": "^1.0.1",
     "koa-mount": "^1.3.0",
     "koa-router": "^5.3.0",
-    "mongoose": "^4.3.4"
+    "mongoose": "^4.3.4",
+    "nools": "^0.4.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",

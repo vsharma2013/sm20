@@ -4,21 +4,17 @@ import * as config from '../../config';
 let model = 'requisition';
 
 var ReqSchema = new mongoose.Schema({
-	RequisitionName : String,
-	RequisitionNumber : String,
-	RequesterId : Number,
-	RequestorName : String,
-	OBO_Id : Number,
-	OBO_Name : String,
-	Shiptoid : Number,
-	Shiptoname : String,
-	Shiptoaddress : String,
-	Billtoid : Number,
-	Billtoname : String,
-	Billtoaddress : String,
-	Currency : String,
+	req_name : String,
+	req_number : String,
+	requester : String,
+	obo : String,
+	shipto : String,
+	shipto_address : String,
+	billto : String,
+	billto_address : String,
+	currency : String,
 	customProps : mongoose.Schema.Types.Mixed,
-	Items : [mongoose.Schema.Types.Mixed],
+	Items : [mongoose.Schema.Types.Mixed],	
   	id : Number
 });	
 
@@ -27,7 +23,7 @@ export function * getRequisition(db, params) {
 	
 	var db2 = db.useDb(config.tenants[params.tenantId]);
 	var Requisition = db2.model(model, ReqSchema);
-	let result = yield Requisition.find({'Id': parseInt(params.id)}).exec();
+	let result = yield Requisition.findOne({'id': parseInt(params.id)}).exec();
 	return result;
 
 }
@@ -48,8 +44,7 @@ export function * updateRequisition(db, params) {
 	var db2 = db.useDb(config.tenants[params.tenantId]);
 	var Requisition = db2.model(model, ReqSchema);
 	var options = { runValidators: true }
-	let result = yield Requisition.update({'Id': parseInt(params.id)}, params.data, options);
+	let result = yield Requisition.findOneAndUpdate({'id': parseInt(params.id)}, params.data, options);
 	return result;
 
-}
-	
+}	

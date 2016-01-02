@@ -16,7 +16,7 @@ function requisionService($http, ENV) {
     return dataService;
 
     function getSettings(tenantid) {
-        return $http.get(ENV.apiEndPoint + 'configuration/'+tenantid+'/config').success(function (response) {
+        return $http.get(ENV.apiEndPoint+'configuration/'+tenantid+'/config').success(function (response) {
             console.log(response);
             return response;
         }).error(function (error) {
@@ -24,14 +24,8 @@ function requisionService($http, ENV) {
         });
     }
 
-    function getRequisition(reqid, tenantid) {
-        var params={
-            params:{
-                r:reqid,
-                t:tenantid
-            } 
-        };       
-        return  $http.get(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid, params).success(function(response) {
+    function getRequisition(tenantid, reqid) {            
+        return  $http.get(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid).success(function(response) {
             console.log(response);
             return response;
         }).error(function(error) {
@@ -39,24 +33,24 @@ function requisionService($http, ENV) {
         });
     }
 
-    function saveRequisition(req){
-        return $http.post(ENV.apiEndPoint+'req/save', angular.toJson(req)).success(function(response) {
+    function saveRequisition(tenantid, reqid, data){
+        return $http.post(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid, angular.toJson(data)).success(function(response) {
            return response;
         }).error(function(error) {
            return error;
         });
     }
 
-    function submitRequisition(req){
-        return $http.post(ENV.apiEndPoint+'req/submit', angular.toJson(req)).success(function(response) {
+    function submitRequisition(tenantid, reqid, data){
+        return $http.post(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid+'/submit', angular.toJson(data)).success(function(response) {
            return response;
         }).error(function(error) {
            return error;
         });
     }
 
-    function saveSettings(settings){
-        return $http.post(ENV.apiEndPoint+'settings/save', angular.toJson(settings)).success(function(response) {
+    function saveSettings(tenantid, data){
+        return $http.post(ENV.apiEndPoint+'configuration/'+tenantid+'/config', angular.toJson(data)).success(function(response) {
            return response;
         }).error(function(error) {
            return error;
