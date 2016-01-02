@@ -5,7 +5,7 @@ angular.module('myApp').
 
 function configurationController(settings, requisionService) {
     var vm = this;
-    vm.settings = settings.data.result[0];
+    vm.settings = settings.data.result;
 
     vm.save=function(){
         requisionService.saveSettings(vm.settings).then(function(result){

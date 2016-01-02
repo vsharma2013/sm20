@@ -5,8 +5,8 @@ angular.module('myApp').
 
 function requisitionController(settings, requisition, requisionService) {
     var vm = this;
-    vm.requisition = requisition.data.result[0];
-    vm.settings = settings.data.result[0];
+    vm.requisition = requisition.data.result;
+    vm.settings = settings.data.result;
     vm.ui = {};
     vm.ui.settings = vm.settings;
     vm.ui.setupSec1Props = {};
