@@ -35,10 +35,6 @@ export function * submitRequisition(db, params){
 		return {success : true, message : validationResult.message};
 	} 
 	var ruleFlow = new RuleFlow();
-	ruleFlow.run(params.data, function(result) {
-		if(result.success)
-			return {success : true, message : result.results.join('\n')};
-		else
-			return {success : false, message : 'Error in executing submit rules'};
-	});
+	let data = yield ruleFlow.run(params.data);
+	return data;
 }

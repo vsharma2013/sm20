@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import koaJsonLogger from 'koa-json-logger';
 import common from 'koa-common';
 import * as routes from './routes';
-import * as view from './views/jsonresponseview'; 
+import view from './views/jsonresponseview'; 
 import * as config from '../config';
 
 var app = koa();

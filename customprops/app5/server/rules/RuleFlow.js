@@ -1,5 +1,6 @@
 import nools from 'nools';
 import ro from './RuleObjects';
+import co from 'co';
 import RuleDefinitions from './RuleDefinitions';
 import RuleActions from './RuleActions';
 
@@ -24,25 +25,33 @@ class RuleFlow{
 
 	}
 
-	run(requisition, cbOnDone){
+	* run(requisition){
 		session = flow.getSession();
 		session.assert(new ro.Requisition(requisition));
-		this.runMatch(cbOnDone);
+		return yield this.runMatch();
 	}
 
-	runMatch(cbOnDone){
+	* runMatch(){
 		var res = false;
-		session.match(function(err){
-		    if(err)
-		        console.error(err.stack);
-		    else
-		    	res = true;
-
+		var fn = co.wrap(function* (val) {
+			return session.match(function(err){
+				console.log("err", err);
+			});
+		});
+		return yield fn().then(function (val) {
+		    res = true;
 		    session.dispose();
 		    var r = ruleAct.getResults();
 		    ruleAct.clear();
-		    cbOnDone({success: res, results : r});
-		})
+		    return {success: res, results : r};
+		}, function (err) {
+			console.log('err',err);
+		  	console.error(err.stack);
+		  	session.dispose();
+		    var r = ruleAct.getResults();
+		    ruleAct.clear();
+		    return {success: res, results : r};
+		});
 	}
 }
 
