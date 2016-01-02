@@ -18,7 +18,7 @@ export function * getConfiguration(db, params) {
 	
 	var db2 = db.useDb(config.tenants[params.tenantId]);
 	var configuration = db2.model(model, SettingsSchema);
-	let result = yield configuration.findOne({'id': params.id}).exec();
+	let result = yield configuration.findOne({'id': 'config'}).exec();
 	return result;
 
 }
@@ -39,7 +39,7 @@ export function * updateConfiguration(db, params) {
 	delete params.data._id;
 	var configuration = db2.model(model, SettingsSchema);
 	var options = { runValidators: true }
-	let result = yield configuration.findOneAndUpdate({'id': params.id}, params.data, options);
+	let result = yield configuration.findOneAndUpdate({'id': 'config'}, params.data, options);
 	return result;
 
 }
