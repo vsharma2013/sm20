@@ -5,11 +5,13 @@ export let tenants = {
 	tenant3 : 'mylan'
 };	
 
-export let configdb = 'configdb';
+export const configdb = 'configdb';
 
-export let localPort = 3000;
+export const localPort = 3000;
 
-export let connectionString = 'mongodb://localhost/'+configdb; 
+export const securePort = 3001;
+
+export const connectionString = 'mongodb://localhost/'+configdb; 
 
 export let dbOptions = {
 	db: { native_parser: true }
@@ -27,3 +29,9 @@ export let corsOptions = {
 	// maxAge : '',
 	credentials : true
 }
+
+export let ssl = {
+	keyPath: 'key.pem',
+	certPath: 'key-cert.pem'
+};
+

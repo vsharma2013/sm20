@@ -1,8 +1,11 @@
 import koa from 'koa';
+import fs from 'fs';
+import https from 'https';
 import cors from 'kcors';
 import mongoose from 'mongoose'; 	
 import koaJsonLogger from 'koa-json-logger';
 import common from 'koa-common';
+import enforceHttps from 'koa-sslify';
 import * as routes from './routes';
 import view from './views/jsonresponseview'; 
 import * as config from '../config';
@@ -31,8 +34,11 @@ export function start() {
 		path: 'log',
 		jsonapi: false
 	}));
+	
+	app.use(enforceHttps());
 
 	app.use(common.static(__dirname+'./../web'));
+
 	app.use(cors(config.corsOptions));
 
 	app.use(function *(next){
@@ -58,6 +64,14 @@ export function start() {
 
 	app.listen(process.env.PORT || config.localPort);
 
-	console.log('server started listening on port %s', process.env.PORT || config.localPort);
+	
+	var sslOptions = {
+		key: fs.readFileSync(config.ssl.keyPath),
+		cert: fs.readFileSync(config.ssl.certPath)
+	};
+
+	https.createServer(sslOptions, app.callback()).listen(process.env.SSLPORT || config.securePort);
+
+	console.log('https server started listening on port %s', process.env.SSLPORT || config.securePort);
 }
 
