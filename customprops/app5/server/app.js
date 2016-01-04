@@ -7,6 +7,7 @@ import koaJsonLogger from 'koa-json-logger';
 import common from 'koa-common';
 import enforceHttps from 'koa-sslify';
 import gzip from 'koa-gzip';
+import auth from 'koa-basic-auth';
 import * as routes from './routes';
 import view from './views/jsonresponseview'; 
 import * as config from '../config';
@@ -62,6 +63,8 @@ export function start() {
 			this.throw('error occurred in application: %s', err);
 		}
 	});
+
+	app.use(auth({ name: 'username', pass: 'userkey' }));	
 
 	routes.configure(app);
 
