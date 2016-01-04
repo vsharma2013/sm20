@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import koaJsonLogger from 'koa-json-logger';
 import common from 'koa-common';
 import enforceHttps from 'koa-sslify';
+import gzip from 'koa-gzip';
 import * as routes from './routes';
 import view from './views/jsonresponseview'; 
 import * as config from '../config';
@@ -35,6 +36,8 @@ export function start() {
 		jsonapi: false
 	}));
 	
+	app.use(gzip());
+
 	app.use(enforceHttps());
 
 	app.use(common.static(__dirname+'./../web'));
@@ -63,7 +66,6 @@ export function start() {
 	routes.configure(app);
 
 	app.listen(process.env.PORT || config.localPort);
-
 	
 	var sslOptions = {
 		key: fs.readFileSync(config.ssl.keyPath),
