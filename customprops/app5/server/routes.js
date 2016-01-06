@@ -1,6 +1,7 @@
 import router from 'koa-router';
 import bodyParser from 'koa-body';
 // import mount from 'koa-mount';
+import auth from 'koa-basic-auth';
 import * as requisitionController from './controllers/requisitionController';
 import * as configurationController from './controllers/configurationController';
 import view from './views/jsonresponseview'; 
@@ -44,6 +45,7 @@ function * submitHandler(){
 export function configure(app) {
 	var parser = new bodyParser();
 	var APIv1 = new router();
+	APIv1.use('', auth({ name: 'username', pass: 'userkey' }));
 	APIv1.get('/:type/:tenantId/:id', getHandler);
 	APIv1.post('/:type/:tenantId/:id', parser, postHandler);
 	APIv1.post('/:type/:tenantId/:id/submit', parser, submitHandler);

@@ -16,7 +16,7 @@ function requisionService($http, ENV) {
     return dataService;
 
     function getSettings(tenantid) {
-        return $http.get(ENV.apiEndPoint+'configuration/'+tenantid+'/config').success(function (response) {
+        return $http.get(ENV.apiEndPoint+'configuration/'+tenantid+'/config', {headers: {'Authorization': 'Basic dXNlcm5hbWU6dXNlcmtleQ=='}}).success(function (response) {
             console.log(response);
             return response;
         }).error(function (error) {
@@ -25,7 +25,7 @@ function requisionService($http, ENV) {
     }
 
     function getRequisition(tenantid, reqid) {            
-        return  $http.get(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid).success(function(response) {
+        return  $http.get(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid, {headers: {'Authorization': 'Basic dXNlcm5hbWU6dXNlcmtleQ=='}}).success(function(response) {
             console.log(response);
             return response;
         }).error(function(error) {
@@ -34,7 +34,7 @@ function requisionService($http, ENV) {
     }
 
     function saveRequisition(tenantid, reqid, data){
-        return $http.post(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid, angular.toJson(data)).success(function(response) {
+        return $http.post(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid, angular.toJson(data), {headers: {'Authorization': 'Basic dXNlcm5hbWU6dXNlcmtleQ=='}}).success(function(response) {
            return response;
         }).error(function(error) {
            return error;
@@ -42,7 +42,7 @@ function requisionService($http, ENV) {
     }
 
     function submitRequisition(tenantid, reqid, data){
-        return $http.post(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid+'/submit', angular.toJson(data)).success(function(response) {
+        return $http.post(ENV.apiEndPoint+'requisition/'+tenantid+'/'+reqid+'/submit', angular.toJson(data), {headers: {'Authorization': 'Basic dXNlcm5hbWU6dXNlcmtleQ=='}}).success(function(response) {
            return response;
         }).error(function(error) {
            return error;
@@ -50,7 +50,7 @@ function requisionService($http, ENV) {
     }
 
     function saveSettings(tenantid, data){
-        return $http.post(ENV.apiEndPoint+'configuration/'+tenantid+'/config', angular.toJson(data)).success(function(response) {
+        return $http.post(ENV.apiEndPoint+'configuration/'+tenantid+'/config', angular.toJson(data), {headers: {'Authorization': 'Basic dXNlcm5hbWU6dXNlcmtleQ=='}}).success(function(response) {
            return response;
         }).error(function(error) {
            return error;

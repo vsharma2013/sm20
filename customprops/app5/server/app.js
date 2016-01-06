@@ -7,7 +7,7 @@ import koaJsonLogger from 'koa-json-logger';
 import common from 'koa-common';
 import enforceHttps from 'koa-sslify';
 import gzip from 'koa-gzip';
-import auth from 'koa-basic-auth';
+// import auth from 'koa-basic-auth';
 import * as routes from './routes';
 import view from './views/jsonresponseview'; 
 import * as config from '../config';
@@ -30,7 +30,7 @@ export function start() {
 	db.on('disconnected', function () {  
 	  console.log('Mongoose connection disconnected'); 
 	});
-
+ 
 	app.use(koaJsonLogger({
 		name: 'my App',
 		path: 'log',
@@ -64,7 +64,7 @@ export function start() {
 		}
 	});
 
-	app.use(auth({ name: 'username', pass: 'userkey' }));	
+	// app.use(auth({ name: 'username', pass: 'userkey' }));	
 
 	routes.configure(app);
 
