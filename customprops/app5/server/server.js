@@ -1,13 +1,14 @@
 import * as server from './app';
 import cluster from 'cluster';
 import os from 'os';
+import initdb from './initdb';
 
 //This sets up a cluster of backend servers
 if(cluster.isMaster) {
 	//number of node instances in the cluster
-	var numWorkers = os.cpus().length;
+	// var numWorkers = os.cpus().length;
 
-	// var numWorkers = 5;
+	var numWorkers = 1;
 
 	console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
@@ -27,4 +28,5 @@ if(cluster.isMaster) {
 } else {
 	//start the webservice
 	server.start();
+	initdb();
 }

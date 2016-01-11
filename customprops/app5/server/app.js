@@ -32,7 +32,7 @@ export function start() {
 	});
  
 	app.use(koaJsonLogger({
-		name: 'my App',
+		name: 'myApp',
 		path: 'log',
 		jsonapi: false
 	}));

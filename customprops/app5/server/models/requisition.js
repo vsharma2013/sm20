@@ -15,7 +15,7 @@ var ReqSchema = new mongoose.Schema({
 	currency : String,
 	customProps : mongoose.Schema.Types.Mixed,
 	Items : [mongoose.Schema.Types.Mixed],	
-  	id : Number
+  	id : String
 });	
 
 
