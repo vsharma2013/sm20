@@ -1,59 +1,54 @@
 var fs = require('fs');
-var abm_org = require('./ABM');
-var http = require('http');
+var compression = require('compression')
+var express = require('express');
+var app = new express();
+var port = process.env.port || 4000;
+var abm_new = fs.readFileSync('./ABM_new.JSON');
 
-function readFile () {
-	fs.readFile('/Users/vishal/devapps/bd/sales.csv', function(err, data){
-		throw '*** exception from callback';
-	});
-	throw 'exception from primary thread';
+function shouldCompress(req, res){
+	return true;
 }
 
-function run(){
-	try{
-		readFile();
-	}
-	catch(err){
-		console.log(err);
-	}
-}
+app.use(compression({filter : shouldCompress}));
 
-//setInterval(function(){ run(); }, 3000);
+app.use(function(err, req, res, next) {
+  console.log(err.stack);
+  res.status(500).json({success:false, data:'internal server error'});
+});
 
-function saveABMNew(){
-	var abm_new = JSON.parse(JSON.stringify(abm_org));
+app.use('/api', function(req, res){
+	res.end(abm_new);
+});
 
-	for(var i = 0 ; i < 1000; i++){
-		abm_new.Items.push(abm_org.Items[0]);
-		abm_new.Items.push(abm_org.Items[1]);
-	}
+app.use('/', function(req, res){
+	res.end('Hello World!!!');
+});
 
 
-	fs.writeFile('./ABM_new.json', JSON.stringify(abm_new), function(err, res){
-		if(err) 
-			console.log('**** Error in saving the json docment *****');
-		else 
-			console.log('Saved document successfully!!!');
-	});
-}
 
-//saveABMNew();
+app.listen(port);
+console.log('server running at port - ' + port);
 
-function runHttp(){
-	var abm_new = fs.readFileSync('./ABM_new.JSON');
 
-	http.createServer(function(req, res){
-		if(req.url === '/api'){
-			res.writeHead(200, 'text/json');
-			res.end(abm_new);
-		}
-		else{
-			res.writeHead(200, 'text/json');
-			res.end('hello world');
-		}
-	}).listen(4000);
+// var fs = require('fs');
+// var abm_org = require('./ABM');
+// var http = require('http');
 
-	console.log('server running at 4000');
-}
+// function saveABMNew(){
+// 	var abm_new = JSON.parse(JSON.stringify(abm_org));
 
-runHttp();
+// 	for(var i = 0 ; i < 1000; i++){
+// 		abm_new.Items.push(abm_org.Items[0]);
+// 		abm_new.Items.push(abm_org.Items[1]);
+// 	}
+
+
+// 	fs.writeFile('./ABM_new.json', JSON.stringify(abm_new), function(err, res){
+// 		if(err) 
+// 			console.log('**** Error in saving the json docment *****');
+// 		else 
+// 			console.log('Saved document successfully!!!');
+// 	});
+// }
+
+// //saveABMNew();
