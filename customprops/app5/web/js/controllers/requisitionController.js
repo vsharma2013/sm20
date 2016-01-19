@@ -1,12 +1,13 @@
 	'use strict';
 
 angular.module('myApp').
-	controller('requisitionController', ['settings', 'requisition', 'requisionService', requisitionController]);
+	controller('requisitionController', ['settings', 'requisition', 'requisionService', '$route', requisitionController]);
 
-function requisitionController(settings, requisition, requisionService) {
+function requisitionController(settings, requisition, requisionService, $route) {
     var vm = this;
-    vm.requisition = requisition.data.result[0];
-    vm.settings = settings.data.result[0];
+    var tenantid = $route.current.params.tenantid;
+    vm.requisition = requisition.data.result;
+    vm.settings = settings.data.result;
     vm.ui = {};
     vm.ui.settings = vm.settings;
     vm.ui.setupSec1Props = {};
@@ -42,15 +43,15 @@ function requisitionController(settings, requisition, requisionService) {
     vm.ui.viewtype = 'Detailed';
     vm.status = 'Submit';
 	vm.save	 = function(){
-		requisionService.saveRequisition(vm.requisition).then(function(result){
+		requisionService.saveRequisition(tenantid, vm.requisition.id, vm.requisition).then(function(result){
 			console.log(result);
-            alert(result.data.message);
+            alert(angular.toJson(result.data.result));
 		});
 	};
     vm.submit  = function(){
-        requisionService.submitRequisition(vm.requisition).then(function(result){
+        requisionService.submitRequisition(tenantid, vm.requisition.id, vm.requisition).then(function(result){
             console.log(result);
-            alert(result.data.message);
+            alert(angular.toJson(result.data.result));
         });
     };
 	vm.gridOptions = {

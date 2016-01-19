@@ -6,5 +6,5 @@ angular.module("myApp").
 	}).
 	constant("ENV", {
 		"name": "localhost",
-		"apiEndPoint": "http://localhost:3000/p2p/"
+		"apiEndPoint": "https://localhost:3001/p2p/"
 	})

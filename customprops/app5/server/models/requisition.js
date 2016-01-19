@@ -15,7 +15,7 @@ var ReqSchema = new mongoose.Schema({
 	currency : String,
 	customProps : mongoose.Schema.Types.Mixed,
 	Items : [mongoose.Schema.Types.Mixed],	
-  	id : Number
+  	id : String
 });	
 
 
@@ -23,7 +23,7 @@ export function * getRequisition(db, params) {
 	
 	var db2 = db.useDb(config.tenants[params.tenantId]);
 	var Requisition = db2.model(model, ReqSchema);
-	let result = yield Requisition.findOne({'id': parseInt(params.id)}).exec();
+	let result = yield Requisition.findOne({'id': params.id}).exec();
 	return result;
 
 }
@@ -44,7 +44,7 @@ export function * updateRequisition(db, params) {
 	var db2 = db.useDb(config.tenants[params.tenantId]);
 	var Requisition = db2.model(model, ReqSchema);
 	var options = { runValidators: true }
-	let result = yield Requisition.findOneAndUpdate({'id': parseInt(params.id)}, params.data, options);
+	let result = yield Requisition.findOneAndUpdate({'id': params.id}, params.data, options);
 	return result;
 
 }	

@@ -36,17 +36,17 @@ angular.module('myApp', [
                 }]
             }
         })
-        .when('/configuration/:reqid/', {
+        .when('/configuration/:tenantid/', {
             templateUrl: "partials/configuration.html",
             controller: 'configurationController',
             controllerAs: 'vm',
             resolve: {
                 settings: ['requisionService', '$route', function (requisionService, $route) {
-                    var reqid = 1;
-                    if($route.current.params.reqid)
-                        reqid = $route.current.params.reqid;
+                    var tenantid = 1;
+                    if($route.current.params.tenantid)
+                        tenantid = $route.current.params.tenantid;
                     
-                    return requisionService.getSettings(reqid);
+                    return requisionService.getSettings(tenantid);
                 }]
             }
         })

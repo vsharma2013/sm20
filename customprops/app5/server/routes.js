@@ -1,9 +1,10 @@
 import router from 'koa-router';
 import bodyParser from 'koa-body';
 // import mount from 'koa-mount';
+import auth from 'koa-basic-auth';
 import * as requisitionController from './controllers/requisitionController';
 import * as configurationController from './controllers/configurationController';
-import * as view from './views/jsonresponseview'; 
+import view from './views/jsonresponseview'; 
 
 var controllerMethods = {
 	getrequisition : requisitionController.getRequisition,
@@ -44,9 +45,10 @@ function * submitHandler(){
 export function configure(app) {
 	var parser = new bodyParser();
 	var APIv1 = new router();
+	APIv1.use('', auth({ name: 'username', pass: 'userkey' }));
 	APIv1.get('/:type/:tenantId/:id', getHandler);
 	APIv1.post('/:type/:tenantId/:id', parser, postHandler);
-	APIv1.post('/submit/:tenantId/:id', parser, submitHandler);
+	APIv1.post('/:type/:tenantId/:id/submit', parser, submitHandler);
 	APIv1.post('/:type/:tenantId', parser, postHandler);	 
 	// app.use(mount('/p2p', APIv1.middleware()));
 	var ReqRouter = new router();
