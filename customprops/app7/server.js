@@ -1,7 +1,6 @@
 
 var mongodb = require('mongodb').MongoClient;
-var mongoConnString = 'mongodb://localhost:27017,192.168.1.100:27107,192.168.1.108:27107/repldb?replicaSet=rs-1';
-
+var mongoConnString = 'mongodb://localhost:27017,192.168.1.106:27107,192.168.1.103:27107/repldb?replicaSet=rs-1';
 var sObj = '{"id" : 0, "name" : "", "ts" : 0}';
 
 var id = 1;
