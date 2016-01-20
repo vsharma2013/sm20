@@ -19,6 +19,4 @@ allKeys.forEach(function(key){
 	setup[key] = settingsGenerator.getCustomProperty(propUISchema[key]);
 });
 
-console.log(JSON.stringify(setup));
-
 module.exports = setup;

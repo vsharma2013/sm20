@@ -4,7 +4,7 @@ var express = require('express');
 var app = new express();
 var port = process.env.port || 4000;
 var abm_new = fs.readFileSync('./ABM_new.JSON');
-require('./settings/abm/setup');
+
 
 function shouldCompress(req, res){
 	return true;
