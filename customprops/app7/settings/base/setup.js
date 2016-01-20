@@ -11,14 +11,14 @@ var propUISchema = {
 };
 
 
-var setup_v1 = {};
+var setup = {};
 
 var allKeys = prim_keys.concat(cust_keys);
 
 allKeys.forEach(function(key){
-	setup_v1[key] = settingsGenerator.getCustomProperty(propUISchema[key]);
+	setup[key] = settingsGenerator.getCustomProperty(propUISchema[key]);
 });
 
-console.log(JSON.stringify(setup_v1));
+console.log(JSON.stringify(setup));
 
-module.exports = setup_v1;
+module.exports = setup;
