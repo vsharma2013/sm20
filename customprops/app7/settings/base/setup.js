@@ -6,6 +6,8 @@ var cust_keys = ["erp_order_type", "work_order", "deliverto", "is_urgent", "dist
 
 var propUISchema = {
 	req_name : { dataType : 'string', uiType : 'input', label : 'Requsition Name', defaultVal : 'ABM req name', section: 1, sort : 1 },
+    req_number: { dataType : 'string', uiType : 'input', label : 'Requsition Number', defaultVal : 'ABM test number', allowEdit : false, 
+                  isMandatory : true, section : 1, sort : 2},
 };
 
 
@@ -14,8 +16,9 @@ var setup_v1 = {};
 var allKeys = prim_keys.concat(cust_keys);
 
 allKeys.forEach(function(key){
-	setup_v1[key] = settingConstants.getCustomProperty(propUISchema[key]);
+	setup_v1[key] = settingsGenerator.getCustomProperty(propUISchema[key]);
 });
 
+console.log(JSON.stringify(setup_v1));
 
 module.exports = setup_v1;
