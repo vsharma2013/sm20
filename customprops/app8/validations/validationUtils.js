@@ -22,6 +22,10 @@ ValidationUtils.prototype.getString = function(str){
 	return res;
 }
 
+ValidationUtils.prototype.checkNonEmptyString = function(str){
+	return this.getNonEmptyString(str).success;
+}
+
 ValidationUtils.prototype.getNonEmptyString = function(str){
 	var res = this.getString(str);
 	res.success = res.success ? /([^\s])/.test(str) : false;

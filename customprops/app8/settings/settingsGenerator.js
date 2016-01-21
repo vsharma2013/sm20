@@ -1,6 +1,6 @@
 var _ = require('underscore');
 
-var settingsSchema = {
+var propSchema = {
 	dataType : null,
 	uiType : null,
 	label : null,
@@ -19,7 +19,7 @@ var settingsSchema = {
 };
 
 function getPropSettings(params){
-	var template = _.extend({}, settingsSchema);
+	var template = _.extend({}, propSchema);
 	var cp = _.extend(template, params);
 	return cp;
 }
