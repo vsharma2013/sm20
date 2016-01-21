@@ -7,7 +7,7 @@ function ValidationsBase(){
 
 ValidationsBase.prototype.validate = function(doc, settings){
 	var setUp = {};
-	var items = document.Items;
+	var items = doc.Items;
 	var itemAccSplits = {};
 
 	setUp = _.extend(setUp, doc);
@@ -21,14 +21,18 @@ ValidationsBase.prototype.validate = function(doc, settings){
 	}
 
 	var v1 = this.validateSetup(setUp, settings);
-	var v2 = this.validateItems(items, settings);
-	var v3 = this.validateSplits(itemAccSplits, settings);
+	//var v2 = this.validateItems(items, settings);
+	//var v3 = this.validateSplits(itemAccSplits, settings);
 
-	return v1.concat(v2).concat(v3);
+	var errors =  v1;//.concat(v2).concat(v3);
+	console.log('');
+	console.log(errors.join('\n\n'));
+	console.log('');
+	return errors;
 }
 
 ValidationsBase.prototype.validateSetup = function(obj, settings){
-	return this.validateObjectFromSettings(obj, settings);
+	return this.validateObjectFromSettings(obj, settings.setup);
 }
 
 ValidationsBase.prototype.validateItems = function(items, settings){
@@ -60,12 +64,11 @@ ValidationsBase.prototype.validateObjectFromSettings = function(obj, settings, e
 	var errors = [];
 	for(var key in obj){
 		var propSettings = settings[key];
+		if(vUtils.isArrayOrObject(obj[key])) continue;
 		if(propSettings){
-			if(!vUtils.isArrayOrObject(obj[key])){
-				var res = this.validatePropValFromSetting(key, obj[key], propSettings);
-				if(!res.sucess)
-					errors.push(errPrefix + res.value);
-			}
+			var res = this.validatePropValFromSetting(key, obj[key], propSettings);
+			if(!res.success)
+				errors.push(errPrefix + res.value);
 		}
 		else
 			errors.push('Save error: invalid key value pair : ' + key + ' - ' + obj[key]);
@@ -136,7 +139,7 @@ ValidationsBase.prototype.validateDate = function(key, value, setting){
 	var r = vUtils.getDate(value);
 	if(!r.success){
 		var msg = setting.isMandatory ? setting.label + ' is a mandatory date type value. ' : 
-										setting.label + ' should be an date type value. '};
+										setting.label + ' should be an date type value. ';
 		return { success : false, value : msg };
 	}
 	return { success : true, value : null };

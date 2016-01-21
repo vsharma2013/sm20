@@ -17,7 +17,7 @@ ValidationUtils.prototype.checkStringMaxLength = function(str, maxLength){
 ValidationUtils.prototype.getString = function(str){
 	var res = { success : false, value : null };
 	if(str && typeof(str) === 'string' && /([^\s])/.test(str)){
-		res = { success : true && value : str };
+		res = { success : true, value : str };
 	}
 	return res;
 }
@@ -64,7 +64,7 @@ ValidationUtils.prototype.getBool = function(b){
 	var aFalse = [false, 'false', 'no', 'No', 'NO', 0, '0'];
 
 	if(_.contains(aTrue, b))
-		return { success : true && value : true };
+		return { success : true, value : true };
 
 	if(_.contains(aFalse, b))
 		return {success : true, value : false };
