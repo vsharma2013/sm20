@@ -16,9 +16,15 @@ ValidationUtils.prototype.checkStringMaxLength = function(str, maxLength){
 
 ValidationUtils.prototype.getString = function(str){
 	var res = { success : false, value : null };
-	if(str && typeof(str) === 'string' && /([^\s])/.test(str)){
+	if(typeof(str) === 'string'){
 		res = { success : true, value : str };
 	}
+	return res;
+}
+
+ValidationUtils.prototype.getNonEmptyString = function(str){
+	var res = this.getString(str);
+	res.success = res.success ? /([^\s])/.test(str) : false;
 	return res;
 }
 

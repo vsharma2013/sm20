@@ -10,7 +10,7 @@ var uiSchema = {
     requester: { dataType : 'string', uiType : 'input', label : 'Requester', defaultVal : 'Admin', allowEdit : false, isMandatory : true,
                  section: 1, sort : 1},
 	
-	  shipto: { dataType : 'string', uiType : 'autosuggest', label : 'Requsition Number', defaultVal : 'ABM test number', allowEdit : true, 
+	  shipto: { dataType : 'string', uiType : 'autosuggest', label : 'Ship To', defaultVal : 'Navi Mumbai', allowEdit : true, 
               isMandatory : true, autoSuggestURL : 'https://AvailableShippingLocations' , uiGroup : 'Ship To', section : 2, sort : 1 },
 
     shipto_address : { dataType : 'string', uiType : 'input', label : 'Ship To Address', defaultVal : 'GEP, Building 3, Mindspace, Airoli, Navi Mumbai',
@@ -20,10 +20,10 @@ var uiSchema = {
                isMandatory : false, autoSuggestURL : 'https://AvailableBillingLocations' , uiGroup : 'Bill To', 
                icon: '#icon_BillTo', section : 2, sort : 3  },
 
-    billto_address : { dataType : 'string', uiType : 'input', label : 'On behalf of', defaultVal : '',
+    billto_address : { dataType : 'string', uiType : 'input', label : 'Bill To Address', defaultVal : 'GEP, Building 3, Mindspace, Airoli, Navi Mumbai',
                       allowEdit : true, isMandatory : false, uiGroup : 'Bill To', icon: '#icon_BillTo', section : 2, sort : 4},
 
-    obo : { dataType : 'string', uiType : 'autosuggest', label : 'Bill To', defaultVal : 'Navi Mumbai', allowEdit : true, 
+    obo : { dataType : 'string', uiType : 'autosuggest', label : 'On behalf of', defaultVal : 'Navi Mumbai', allowEdit : true, 
             isMandatory : false, autoSuggestURL : 'https://UsersFromSameBU' , icon: '#icon_OnBehalf', section : 2, sort : 6 },
 
 	  currency : { dataType : 'string', uiType : 'input', label : 'Currency', defaultVal : 'USD', allowEdit : false, isMandatory : true,

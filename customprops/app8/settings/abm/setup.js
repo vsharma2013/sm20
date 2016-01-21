@@ -15,8 +15,14 @@ var uiSchema = {
     deliverto : { dataType : 'string', uiType : 'input', label : 'Deliver to', defaultVal : '', icon : '#icon_DeliverTo',
                   maxLength : 2000, section : 2, sort : 5, isCustom : true},
 
-    job : { dataType : 'bool', uiType : 'chkbox', label : 'Mark as Urgent', defaultVal : false, allowEdit : true, isMandatory : true, 
-            section : 2, sort : 11, isCustom : true }
+    is_urgent : { dataType : 'bool', uiType : 'chkbox', label : 'Mark as Urgent', defaultVal : false, allowEdit : true, 
+                  isMandatory : true, section : 2, sort : 11},
+
+    district : { dataType : 'string', uiType : 'autosuggest', label : 'District', defaultVal : '8032-LL012-Atlanta', allowEdit : true, 
+                 isMandatory : true, autoSuggestURL : 'https://ListofCorrespondingOrgEntity' , section : 2, sort : 9},
+
+    job : { dataType : 'string', uiType : 'autosuggest', label : 'Job', defaultVal : 'Allied Waste Svc (BFI) - Lawre', allowEdit : true, 
+            isMandatory : true, autoSuggestURL : 'https://ListofCorrespondingOrgEntity' , section : 2, sort : 10, isCustom : true }
 };
 
 var cust_keys = Object.keys(uiSchema);

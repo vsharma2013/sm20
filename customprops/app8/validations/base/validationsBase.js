@@ -87,7 +87,7 @@ ValidationsBase.prototype.validatePropValFromSetting = function(key, value, sett
 }
 
 ValidationsBase.prototype.validateString = function(key, value, setting){
-	var r = vUtils.getString(value);
+	var r = setting.isMandatory ? vUtils.getNonEmptyString(value) : vUtils.getString(value);
 	if(r.success){
 		if(setting.maxLength && value.length > setting.maxLength)
 			return { success : false, value : setting.label + ' can have maximum ' + setting.maxLength + ' characters.'};
