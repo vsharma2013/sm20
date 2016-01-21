@@ -8,4 +8,4 @@ var settings = {
 	split : split
 };
 
-module.exports = setup;
+module.exports = settings;

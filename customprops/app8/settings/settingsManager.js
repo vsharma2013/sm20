@@ -1,8 +1,8 @@
 function getSettings(tenantId){
 	if(tenantId === 'abm')
-		return require('./settings/abm/settings');
+		return require('./abm/settings');
 	else if(tenantId === 'camc')
-		return require('./settings/camc/settings');
+		return require('./camc/settings');
 }
 
 module.exports = {

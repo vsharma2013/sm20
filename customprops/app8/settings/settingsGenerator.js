@@ -17,12 +17,12 @@ var settingsSchema = {
 	sort : null
 };
 
-function getCustomProperty(params){
+function getPropSettings(params){
 	var template = _.extend({}, settingsSchema);
 	var cp = _.extend(template, params);
 	return cp;
 }
 
 module.exports = {
-	getCustomProperty : getCustomProperty
+	getPropSettings : getPropSettings
 }
