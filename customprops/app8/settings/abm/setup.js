@@ -7,16 +7,16 @@ var erpOrderTypes = ['ERP Order Type', 'Internal Order', 'Sales Order', 'Cost Ce
 var uiSchema = {
 	
 	erp_order_type : { dataType : 'string', uiType : 'ddlist', label : 'ERP Order Type', defaultVal : 'ERP Order Type', allVals : erpOrderTypes,
-	                   uiGroup : 'ERP Order Type', icon : '#icon_OrderERP',  section: 1, sort : 7 },
+	                   uiGroup : 'ERP Order Type', icon : '#icon_OrderERP',  section: 1, sort : 7, isCustom : true },
     
     work_order: { dataType : 'string', uiType : 'input', label : 'Work Order', defaultVal : '', uiGroup : 'ERP Order Type', icon : '#icon_OrderERP',
-                  maxLength : 200, section : 2, sort : 8},
+                  maxLength : 200, section : 2, sort : 8, isCustom : true},
 
     deliverto : {dataType : 'string', uiType : 'input', label : 'Deliver to', defaultVal : '', icon : '#icon_DeliverTo',
-                  maxLength : 2000, section : 2, sort : 5},
+                  maxLength : 2000, section : 2, sort : 5, isCustom : true},
 
     job : { dataType : 'bool', uiType : 'chkbox', label : 'Mark as Urgent', defaultVal : false, allowEdit : true, isMandatory : true, 
-            section : 2, sort : 11 }
+            section : 2, sort : 11, isCustom : true }
 };
 
 var cust_keys = Object.keys(uiSchema);

@@ -14,7 +14,8 @@ var settingsSchema = {
 	uiGroup : null,
 	icon : null,
 	section : null,
-	sort : null
+	sort : null,
+	isCustom : false
 };
 
 function getPropSettings(params){
