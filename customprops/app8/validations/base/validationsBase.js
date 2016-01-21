@@ -104,7 +104,7 @@ ValidationsBase.prototype.validateDecimal = function(key, value, setting){
 	var r = vUtils.getFloat(value);
 	if(r.success){
 		if(setting.numDecimals && !vUtils.checkFloatWithDecimal(value, setting.numDecimals))
-			return { success : false, value : setting.label + ' can have maximum ' + setting.numDecimals + ' digits.'};
+			return { success : false, value : setting.label + ' can have maximum ' + setting.numDecimals + ' decimal digits.'};
 	}
 	else{
 		var msg = setting.isMandatory ? setting.label + ' is a mandatory floating point value. ' : 
