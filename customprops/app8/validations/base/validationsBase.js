@@ -6,11 +6,10 @@ function ValidationsBase(){
 }
 
 ValidationsBase.prototype.validate = function(doc, settings){
-	var setUp = {};
+	var setUp = _.extend({}, doc);
 	var items = doc.Items;
 	var itemAccSplits = {};
 
-	setUp = _.extend(setUp, doc);
 	setUp = _.extend(setUp, doc.customProps);
 
 	if(!vUtils.isEmptyArray(items)){
@@ -21,8 +20,8 @@ ValidationsBase.prototype.validate = function(doc, settings){
 	}
 
 	var v1 = this.validateSetup(setUp, settings.setup);
-	//var v2 = this.validateItems(items, settings.item);
-	//var v3 = this.validateSplits(itemAccSplits, settings.split);
+	var v2 = this.validateItems(items, settings.item);
+	var v3 = this.validateSplits(itemAccSplits, settings.split);
 
 	var errors =  v1;//.concat(v2).concat(v3);
 	console.log('');
