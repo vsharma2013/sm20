@@ -42,7 +42,7 @@ ValidationUtils.prototype.checkFloat = function(f){
 
 ValidationUtils.prototype.checkFloatWithDecimal = function(f, numDecimals){
 	var r = this.getFloat(f);
-	return r.success && this.checkInt(numDecimals) && r.value.toString().split('.')[1].length <= numDecimals;
+	return r.success && this.getFloat(numDecimals) && r.value.toString().split('.')[1].length <= numDecimals;
 }
 
 ValidationUtils.prototype.getFloat = function(f){
