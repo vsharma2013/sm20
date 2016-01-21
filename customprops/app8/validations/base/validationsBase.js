@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var vUtils = require('./../validationUtils');
+var msgs = require('./../validationMessages');
 
 function ValidationsBase(){
 
@@ -87,61 +88,47 @@ ValidationsBase.prototype.validatePropValFromSetting = function(key, value, sett
 }
 
 ValidationsBase.prototype.validateString = function(key, value, setting){
-	var r = setting.isMandatory ? vUtils.getNonEmptyString(value) : vUtils.getString(value);
+	var validatorFn = setting.isMandatory ? vUtils.getNonEmptyString : vUtils.getString;
+	var r = this.validateType(value, setting, validatorFn.bind(vUtils), msgs.string_mandatory, msgs.string_required);
 	if(r.success){
-		if(setting.maxLength && value.length > setting.maxLength)
-			return { success : false, value : setting.label + ' can have maximum ' + setting.maxLength + ' characters.'};
+		if(setting.maxLength && value.length > setting.maxLength){
+			r.success = false;
+			r.value = msgs.getMaxCharMsg(setting)
+		}
 	}
-	else{
-		var msg = setting.isMandatory ? setting.label + ' is a non-empty mandatory string value. ' : 
-		                                setting.label + ' should be a string value. ';
-		return { success : false, value : msg };
-	}
-	return { success : true, value : null };
+	return r;
 }
 
 ValidationsBase.prototype.validateDecimal = function(key, value, setting){
-	var r = vUtils.getFloat(value);
+	var r = this.validateType(value, setting, vUtils.getFloat, msgs.float_mandatory, msgs.float_required);
 	if(r.success){
-		if(setting.numDecimals && !vUtils.checkFloatWithDecimal(value, setting.numDecimals))
-			return { success : false, value : setting.label + ' can have maximum ' + setting.numDecimals + ' decimal digits.'};
+		if(setting.numDecimals && !vUtils.checkFloatWithDecimal(value, setting.numDecimals)){
+			r.success = false;
+			r.value = msgs.getMaxDecimalMsg(setting);
+		}
 	}
-	else{
-		var msg = setting.isMandatory ? setting.label + ' is a mandatory floating point value. ' : 
-		                                setting.label + ' should be a floating point value. ';
-		return { success : false, value : msg };
-	}
-	return { success : true, value : null };
+	return r;
 }
 
 ValidationsBase.prototype.validateBool = function(key, value, setting){
-	var r = vUtils.getBool(value);
-	if(!r.success){
-		var msg = setting.isMandatory ? setting.label + ' is a mandatory boolean value. ' : 
-										setting.label + ' should be a boolean value. ';
-		return { success : false, value : msg };								
-	}
-	return { success : true, value : null };
+	return this.validateType(value, setting, vUtils.getBool, msgs.bool_mandatory, msgs.bool_required);
 }
 
 ValidationsBase.prototype.validateInt = function(key, value, setting){
-	var r = vUtils.getInt(value);
-	if(!r.success){
-		var msg = setting.isMandatory ? setting.label + ' is a mandatory integer value. ' : 
-										setting.label + ' should be an integer value. ';
-		return { success : false, value : msg };
-	}
-	return { success : true, value : null };
+	return this.validateType(value, setting, vUtils.getInt, msgs.int_mandatory, msgs.int_required);
 }
 
 ValidationsBase.prototype.validateDate = function(key, value, setting){
-	var r = vUtils.getDate(value);
+	return this.validateType(value, setting, vUtils.getDate, msgs.date_mandatory, msgs.date_required);
+}
+
+ValidationsBase.prototype.validateType = function(value, setting, validatorFn, msg_mandatory, msg_general){
+	var r = validatorFn(value);
 	if(!r.success){
-		var msg = setting.isMandatory ? setting.label + ' is a mandatory date type value. ' : 
-										setting.label + ' should be an date type value. ';
+		var msg = setting.isMandatory ? setting.label + msg_mandatory : setting.label + msg_general;
 		return { success : false, value : msg };
 	}
-	return { success : true, value : null };
+	return { success : true, value : null};
 }
 
 module.exports = ValidationsBase;
