@@ -16,11 +16,9 @@ var uiSchema = {
     shipto_address : { dataType : 'string', uiType : 'input', label : 'Ship To Address', defaultVal : 'GEP, Building 3, Mindspace, Airoli, Navi Mumbai',
                       allowEdit : false, isMandatory : true, uiGroup : 'Ship To', section : 2, sort : 2},
 
-
     billto : { dataType : 'string', uiType : 'autosuggest', label : 'Bill To', defaultVal : 'Navi Mumbai', allowEdit : true, 
                isMandatory : false, autoSuggestURL : 'https://AvailableBillingLocations' , uiGroup : 'Bill To', 
                icon: '#icon_BillTo', section : 2, sort : 3  },
-
 
     billto_address : { dataType : 'string', uiType : 'input', label : 'On behalf of', defaultVal : '',
                       allowEdit : true, isMandatory : false, uiGroup : 'Bill To', icon: '#icon_BillTo', section : 2, sort : 4},
