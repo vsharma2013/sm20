@@ -20,9 +20,9 @@ ValidationsBase.prototype.validate = function(doc, settings){
 		});
 	}
 
-	var v1 = this.validateSetup(setUp, settings);
-	//var v2 = this.validateItems(items, settings);
-	//var v3 = this.validateSplits(itemAccSplits, settings);
+	var v1 = this.validateSetup(setUp, settings.setup);
+	//var v2 = this.validateItems(items, settings.item);
+	//var v3 = this.validateSplits(itemAccSplits, settings.split);
 
 	var errors =  v1;//.concat(v2).concat(v3);
 	console.log('');
@@ -32,7 +32,7 @@ ValidationsBase.prototype.validate = function(doc, settings){
 }
 
 ValidationsBase.prototype.validateSetup = function(obj, settings){
-	return this.validateObjectFromSettings(obj, settings.setup);
+	return this.validateObjectFromSettings(obj, settings);
 }
 
 ValidationsBase.prototype.validateItems = function(items, settings){
