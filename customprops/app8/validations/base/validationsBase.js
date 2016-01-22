@@ -24,7 +24,7 @@ ValidationsBase.prototype.validate = function(doc, settings){
 	var v2 = this.validateItems(items, settings.item);
 	var v3 = this.validateSplits(itemAccSplits, settings.split);
 
-	var errors =  v1;//.concat(v2).concat(v3);
+	var errors =  v1.concat(v2);//.concat(v3);
 	console.log('');
 	console.log(errors.join('\n\n'));
 	console.log('');

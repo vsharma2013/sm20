@@ -13,8 +13,8 @@ var propSchema = {
 	allVals : null,
 	uiGroup : null,
 	icon : null,
-	section : null,
-	sort : null,
+	section : 0,
+	sort : 0,
 	isCustom : false
 };
 
