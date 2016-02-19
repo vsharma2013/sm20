@@ -17,9 +17,8 @@ CsvGen.prototype.run = function* (){
 	let db = yield mongodb.connect(c_str);
 
 	let hDoc = yield db.collection('requisitions').findOne({id : id});
-	hDoc.billTo = {id : 1, name : 'bt', contact : 'ct', address : 'add'};
-	hDoc.department = {id : 1, name : 'dept'};
-	hDoc.erpOrderType = {id : 1, name : 'dept'};
+	
+	this.addMissinHeaders(hDoc);
 
 	let allHeaders = this.getHeaders(hDoc);
 
@@ -157,6 +156,13 @@ CsvGen.prototype.getKeyValueFromObj = function(key, obj){
 	}
 	if (!v) return null;
 	return v;
+}
+
+CsvGen.prototype.addMissinHeaders = function(doc){
+	var idName = {id : 1, name : ''};
+	doc.billTo = _.extend({contact : 'ct', address : 'add'}, idName);
+	doc.department = idName;
+	doc.erpOrderType = idName;
 }
 
 var csvGen = new CsvGen();
