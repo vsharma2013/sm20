@@ -5,8 +5,8 @@ var co = require('co');
 var _ = require('underscore');
 var fs = require('fs');
 
-var c_str = 'mongodb://localhost:27017/riteaid';
-c_str = 'mongodb://gep:gep123@ds060968.mongolab.com:60968/riteaid';
+var c_str = 'mongodb://localhost:27017/riteaid'; var file = './req-ra-local.csv'; var id = 20770;
+//c_str = 'mongodb://gep:gep123@ds060968.mongolab.com:60968/riteaid'; file = './req-ra-ci'; id = 54;
 var empty = `,""`;
 
 function CsvGen(){
@@ -16,7 +16,7 @@ function CsvGen(){
 CsvGen.prototype.run = function* (){
 	let db = yield mongodb.connect(c_str);
 
-	let hDoc = yield db.collection('requisitions').findOne({id : 54});
+	let hDoc = yield db.collection('requisitions').findOne({id : id});
 	hDoc.billTo = {id : 1, name : 'bt', contact : 'ct', address : 'add'};
 	hDoc.department = {id : 1, name : 'dept'};
 	hDoc.erpOrderType = {id : 1, name : 'dept'};
@@ -34,7 +34,7 @@ CsvGen.prototype.run = function* (){
 		csvs = csvs.concat(this.getCsvRows(allHeaders, doc));
 	});
 	
-	fs.writeFileSync('./req-ra-ci.csv', csvs.join('\n'));
+	fs.writeFileSync(file, csvs.join('\n'));
 	
 	return 'Done !!!';
 }

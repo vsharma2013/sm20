@@ -35,4 +35,4 @@ function error(err){
 	console.error(err.stack);
 }
 
-co(buildCsv, success, error);
+co(buildCsv).then(success, error);
