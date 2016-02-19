@@ -21,9 +21,15 @@ app.use(function(err, req, res, next) {
 
 
 var csvGen = require('./CsvGen');
+var coTest = require('./CoTester');
 
 function* buildCsv(){
 	var res = yield csvGen.buildCsv();
+	console.log(res);
+}
+
+function* runCO(){
+	var res = yield coTest.runCO();
 	console.log(res);
 }
 
@@ -35,4 +41,4 @@ function error(err){
 	console.error(err.stack);
 }
 
-co(buildCsv).then(success, error);
+co(runCO).then(success, error);
