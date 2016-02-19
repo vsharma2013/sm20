@@ -5,7 +5,8 @@ var co = require('co');
 var _ = require('underscore');
 var fs = require('fs');
 
-var c_str = 'mongodb://localhost:27017/riteaid'
+var c_str = 'mongodb://localhost:27017/riteaid';
+c_str = 'mongodb://gep:gep123@ds060968.mongolab.com:60968/riteaid';
 var empty = `,""`;
 
 function CsvGen(){
@@ -15,8 +16,11 @@ function CsvGen(){
 CsvGen.prototype.run = function* (){
 	let db = yield mongodb.connect(c_str);
 
-	let hDoc = yield db.collection('requisitions').findOne({id : 20770});
-	
+	let hDoc = yield db.collection('requisitions').findOne({id : 54});
+	hDoc.billTo = {id : 1, name : 'bt', contact : 'ct', address : 'add'};
+	hDoc.department = {id : 1, name : 'dept'};
+	hDoc.erpOrderType = {id : 1, name : 'dept'};
+
 	let allHeaders = this.getHeaders(hDoc);
 
 	let csvs = [];
@@ -30,7 +34,7 @@ CsvGen.prototype.run = function* (){
 		csvs = csvs.concat(this.getCsvRows(allHeaders, doc));
 	});
 	
-	fs.writeFileSync('./req.csv', csvs.join('\n'));
+	fs.writeFileSync('./req-ra-ci.csv', csvs.join('\n'));
 	
 	return 'Done !!!';
 }
@@ -156,18 +160,7 @@ CsvGen.prototype.getKeyValueFromObj = function(key, obj){
 }
 
 var csvGen = new CsvGen();
-csvGen.run();
 
-
-function success(val){
-	console.log(val)
-}
-
-function error(err){
-	console.error(err.stack);
-}
-
-co(csvGen.run.bind(csvGen)).then(success, error);
-
-
-module.exports = {};
+module.exports = {
+	buildCsv : csvGen.run.bind(csvGen)
+};
