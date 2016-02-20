@@ -41,4 +41,4 @@ function error(err){
 	console.error(err.stack);
 }
 
-co(runCO).then(success, error);
+co(buildCsv).then(success, error);

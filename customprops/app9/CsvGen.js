@@ -5,8 +5,9 @@ var co = require('co');
 var _ = require('underscore');
 var fs = require('fs');
 
-var c_str = 'mongodb://localhost:27017/riteaid'; var file = './req-ra-local.csv'; var id = 20770;
-//c_str = 'mongodb://gep:gep123@ds060968.mongolab.com:60968/riteaid'; file = './req-ra-ci'; id = 54;
+var c_str = 'mongodb://localhost:27017/riteaid'; var file = './req-ra-local.csv'; var id = 30;
+//c_str = 'mongodb://gep:gep123@ds060968.mongolab.com:60968/riteaid'; file = './req-ra-ci.csv'; id = 54;
+//c_str = 'mongodb://gep:gep123@ds060968.mongolab.com:60968/riteaid_qc'; file = './req-ra-qc.csv'; id = 54;
 var empty = `,""`;
 
 function CsvGen(){
@@ -16,126 +17,135 @@ function CsvGen(){
 CsvGen.prototype.run = function* (){
 	let db = yield mongodb.connect(c_str);
 
-	let hDoc = yield db.collection('requisitions').findOne({id : id});
-	
-	this.addMissinHeaders(hDoc);
-
-	let allHeaders = this.getHeaders(hDoc);
-
-	let csvs = [];
-	
-	csvs.push(this.getHeaderRow(allHeaders));
-	
-	//let docs = [hDoc];
 	let docs = yield db.collection('requisitions').find().toArray();
 
+	let docIdVsFlatDocs = {};
+	let hDoc = {};
+	let maxKeyCount = 0;
+
 	docs.map(doc => {
-		csvs = csvs.concat(this.getCsvRows(allHeaders, doc));
+		let fDocs = this.getFlatDocs(doc);
+		docIdVsFlatDocs[doc.id] = fDocs;
+		fDocs.map(fd => {
+			hDoc = _.extend(hDoc, fd);
+		});
 	});
+	
+	let csvs = [];
+	let hRow = this.getHeaderRow(hDoc);
+	let allHeaders = Object.keys(hDoc);
+	//csvs.push(hRow);
+
+	for(var docId in docIdVsFlatDocs){
+		let fDocs = docIdVsFlatDocs[docId];
+		fDocs.map(fd => {
+			csvs.push(this.getCsvRow(allHeaders, fd));
+		});
+	}
+
+	let sCsvs = _.sortBy(csvs, function(csv){
+		let arr = csv.split(',');
+		let cnt = 0;
+		arr.map(a => {
+			cnt = /([^\s])/.test(a) ? (cnt+1) : cnt;
+		});
+		return cnt;
+	}).reverse();
+
+	csvs = [hRow].concat(sCsvs);
 	
 	fs.writeFileSync(file, csvs.join('\n'));
 	
 	return 'Done !!!';
 }
 
-CsvGen.prototype.getHeaders = function(doc){
-	var items = doc.items;
-	delete doc.items;
-	let allHeaders = { header : [], item : [], split : [] };
+CsvGen.prototype.getFlatDocs = function(doc){
+	let fObjs = [];
 
-	allHeaders.header = this.getHeadersFromObj(doc);
-	
-	if(!_.isEmpty(items)){
-		
-		let splits = items[0].splits;
-		
-		if(!_.isEmpty(splits)) delete items[0].splits;
-		
-		allHeaders.item = this.getHeadersFromObj(items[0]);
-				
-		if(!_.isEmpty(splits)){
-			allHeaders.split = this.getHeadersFromObj(splits[0]);
-			items[0].splits = splits
-		}
+	let items = _.isEmpty(doc.items) ? [] : doc.items;
+	if(!_.isEmpty(items)) delete doc.items;
+
+	let itemIdVsSplits = {};
+
+	items.map(item => {
+		let splits = _.isEmpty(item.splits) ? [] : item.splits;
+		if(!_.isEmpty(splits)) {			
+			itemIdVsSplits[item.id] = splits;
+			delete item.splits;
+		};
+	});
+
+	let hObj = {};
+	for(let hKey in doc){
+		if(hKey.indexOf('_') === -1)
+			hObj = _.extend(hObj, this.deflateObject(hKey, doc[hKey]));		
 	}
-	doc.items = items;
-	return allHeaders;
-}
 
-CsvGen.prototype.getHeadersFromObj = function(obj, prefix){
-	let headers = [];
-	for(let k in obj){
-		if(k.indexOf('_') !== -1) continue;
-
-		let val = obj[k];
-		
-		if(_.isObject(val)){
-			for ( let k2 in val ){
-				let h = prefix ? `${prefix}_${k}_${k2}` : `${k}_${k2}`;
-				headers.push(h);
+	if(_.isEmpty(items))
+		fObjs.push(hObj);
+	else{
+		items.map(item => {
+			let iObj = _.extend({}, hObj);
+			for(let iKey in item){
+				iObj = _.extend(iObj, this.deflateObject('item_' + iKey, item[iKey]));
+				let splits = itemIdVsSplits[item.id];
+				if(_.isEmpty(splits)){
+					fObjs.push(iObj);
+				}
+				else{
+					splits.map(split => {
+						let sObj = _.extend({}, iObj);
+						for(let sKey in split){
+							sObj = _.extend(sObj, this.deflateObject('split_' + sKey, split[sKey]));
+						}
+						fObjs.push(sObj);
+					});
+				}
 			}
-		}
-		else{
-			let h = prefix ? `${prefix}_${k}` : k;
-			headers.push(h);
-		}
-	}
-	return headers;
-}
-
-CsvGen.prototype.getHeaderRow = function(allHeaders){
-	let header = '';
-	allHeaders.header.map(h => {
-		header += `"${h}",`;
-	});
-	allHeaders.item.map(i => {
-		header += `"item_${i}",`;
-	});
-	allHeaders.split.map(s => {
-		header += `"split_${s}",`;
-	});
-	return this.trimStr(header);
-}
-
-CsvGen.prototype.getCsvRows = function(allHeaders, doc){
-	let csvs = [];
-	let csv = '';
-
-	let h = this.getCsvFromObject(allHeaders.header, doc);
-	if(_.isEmpty(doc.items)){
-		allHeaders.item.map(item => {
-			let i = h + empty;
-			allHeaders.split.map(s => {
-				csv = i + empty;
-				csvs.push(csv);
-			}); 
 		});
-		return csvs;
 	}
 
-	doc.items.map(item => {
-		let i = h + ',' + this.getCsvFromObject(allHeaders.item, item);
-		if(_.isEmpty(item.splits)){
-			allHeaders.split.map(s => {
-				csv = i + empty;
-				csvs.push(csv);
-			}); 
-		}
-		else{
-			item.splits.map(s => {
-				csv = i + ',' + this.getCsvFromObject(allHeaders.split, s);
-				csvs.push(csv);
-			});
-		}
-		
+	doc.items = items;
+	items.map(item => {
+		item.splits = itemIdVsSplits[item.id];
 	});
-	return csvs;
+	return fObjs;
 }
 
-CsvGen.prototype.getCsvFromObject = function(csvHeaders, obj){
+CsvGen.prototype.deflateObject = function(key, obj){
+	if(!_.isObject(obj)){
+		let dObj = {};
+		dObj[key] = obj;
+		return dObj;
+	}
+
+	let dObj = {};
+	for(let k in obj){
+		dObj[`${key}_${k}`] = obj[k];
+	}
+	return dObj;
+}
+
+CsvGen.prototype.getHeaderRow = function(hDoc){
+	let hRow = '';
+	let toDelete = [];
+	for(let hKey in hDoc){
+		if(_.isObject(hDoc[hKey])) {
+			toDelete.push(hKey); 
+			continue;
+		}
+		hRow += `"${hKey}",`;
+	}
+	toDelete.map(d => {
+		delete hDoc[d];
+	});
+	return this.trimStr(hRow);
+}
+
+CsvGen.prototype.getCsvRow = function(allHeaders, doc){
 	let csv = '';
-	csvHeaders.map(h => {
-		let v = this.getKeyValueFromObj(h, obj);
+	allHeaders.map(h => {
+		let v = doc[h];
 		csv += v ? `"${v}",` : `"",`;
 	});
 	return this.trimStr(csv);
@@ -143,26 +153,6 @@ CsvGen.prototype.getCsvFromObject = function(csvHeaders, obj){
 
 CsvGen.prototype.trimStr = function(str){
 	return str.substr(0, str.length - 1);
-}
-
-CsvGen.prototype.getKeyValueFromObj = function(key, obj){
-	var v = obj;
-	var arr = key.split('_').reverse();
-	var k = arr.pop();
-	while (k) {
-		v = v[k];
-		if (!v) return null;
-		k = arr.pop();
-	}
-	if (!v) return null;
-	return v;
-}
-
-CsvGen.prototype.addMissinHeaders = function(doc){
-	var idName = {id : 1, name : ''};
-	doc.billTo = _.extend({contact : 'ct', address : 'add'}, idName);
-	doc.department = idName;
-	doc.erpOrderType = idName;
 }
 
 var csvGen = new CsvGen();
