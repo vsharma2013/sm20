@@ -15,48 +15,50 @@ function CsvGen(){
 }
 
 CsvGen.prototype.run = function* (){
-	let db = yield mongodb.connect(c_str);
-
-	let docs = yield db.collection('requisitions').find().toArray();
-
-	let docIdVsFlatDocs = {};
-	let hDoc = {};
-	let maxKeyCount = 0;
-
-	docs.map(doc => {
-		let fDocs = this.getFlatDocs(doc);
-		docIdVsFlatDocs[doc.id] = fDocs;
-		fDocs.map(fd => {
-			hDoc = _.extend(hDoc, fd);
-		});
-	});
+	
+	let docRes = yield this.getDocs();
+	let hDoc = docRes.hDoc;
+	let docs = docRes.docs;
+	
 	
 	let csvs = [];
 	let hRow = this.getHeaderRow(hDoc);
 	let allHeaders = Object.keys(hDoc);
-	//csvs.push(hRow);
 
-	for(var docId in docIdVsFlatDocs){
-		let fDocs = docIdVsFlatDocs[docId];
-		fDocs.map(fd => {
-			csvs.push(this.getCsvRow(allHeaders, fd));
-		});
-	}
+	docs.map(doc => {
+		csvs.push(this.getCsvRow(allHeaders, doc));
+	});
 
-	let sCsvs = _.sortBy(csvs, function(csv){
-		let arr = csv.split(',');
-		let cnt = 0;
-		arr.map(a => {
-			cnt = /([^\s])/.test(a) ? (cnt+1) : cnt;
-		});
-		return cnt;
-	}).reverse();
+	let sCsvs = this.sortCsvs(csvs);
 
 	csvs = [hRow].concat(sCsvs);
 	
 	fs.writeFileSync(file, csvs.join('\n'));
 	
 	return 'Done !!!';
+}
+
+CsvGen.prototype.getDocs = function* (){
+	let db = yield mongodb.connect(c_str);
+
+	let docs = yield db.collection('requisitions').find().toArray();
+
+	let hDoc = {};
+	let allDocs = [];
+
+	docs.map(doc => {
+		let fDocs = this.getFlatDocs(doc);
+		
+		fDocs.map(fd => {
+			hDoc = _.extend(hDoc, fd);
+			allDocs.push(fd);
+		});
+	});
+
+	return{
+		hDoc : hDoc,
+		docs : allDocs
+	}
 }
 
 CsvGen.prototype.getFlatDocs = function(doc){
@@ -155,6 +157,17 @@ CsvGen.prototype.trimStr = function(str){
 	return str.substr(0, str.length - 1);
 }
 
+CsvGen.prototype.sortCsvs = function(csvs){
+	let sCsvs = _.sortBy(csvs, function(csv){
+		let arr = csv.split(',');
+		let cnt = 0;
+		arr.map(a => {
+			cnt = /([^\s])/.test(a) ? (cnt+1) : cnt;
+		});
+		return cnt;
+	}).reverse();
+	return sCsvs;
+}
 var csvGen = new CsvGen();
 
 module.exports = {
