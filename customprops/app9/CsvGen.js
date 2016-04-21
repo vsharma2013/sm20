@@ -55,6 +55,7 @@ CsvGen.prototype.getDocs = function* (){
 		});
 	});
 
+	console.log(JSON.stringify(hDoc));
 	return{
 		hDoc : hDoc,
 		docs : allDocs
@@ -170,6 +171,33 @@ CsvGen.prototype.sortCsvs = function(csvs){
 }
 var csvGen = new CsvGen();
 
+function* updateLastDate(){
+	let db = yield mongodb.connect(c_str);
+	let start = Date.now();
+	let docs = yield db.collection('requisitions').find({},{id:1, _id:0}).sort({id:-1}).limit(1).toArray();
+	console.log(docs);
+	console.log("Time taken = " + (Date.now() - start))
+	// for(var i = 0 ; i < docs.length; i++){
+	// 	let doc = docs[i];
+	// 	if(doc.lastModifiedOn) continue;
+
+	// 	yield db.collection('requisitions').update(
+	// 		{
+	// 			id : doc.id
+	// 		},
+	// 		{
+	// 			$set : {'lastModifiedOn' : doc.createdOn}
+	// 		},
+	// 		{
+	// 			multi : true,
+	// 			upsert : false
+	// 		}
+	// 	);
+	// };
+}
+
+
 module.exports = {
-	buildCsv : csvGen.run.bind(csvGen)
+	buildCsv : csvGen.run.bind(csvGen),
+	updateLastDate : updateLastDate
 };
